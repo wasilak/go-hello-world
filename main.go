@@ -15,9 +15,11 @@ import (
 	"github.com/gorilla/sessions"
 )
 
+// Middleware type
 type Middleware func(http.HandlerFunc) http.HandlerFunc
 
-type ApiResponse struct {
+// APIResponse type
+type APIResponse struct {
 	Counter   int            `json:"counter"`
 	Host      string         `json:"host"`
 	Hostnames map[string]int `json:"hostnames"`
@@ -47,7 +49,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 	val := session.Values["apiResponse"]
 
-	response, ok := val.(ApiResponse)
+	response, ok := val.(APIResponse)
 
 	if !ok {
 		log.Println("session not initialized (yet)")
@@ -120,7 +122,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	gob.Register(ApiResponse{})
+	gob.Register(APIResponse{})
 
 	store = sessions.NewCookieStore([]byte(sessionKey))
 
