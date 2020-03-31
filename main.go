@@ -18,20 +18,28 @@ import (
 // Middleware type
 type Middleware func(http.HandlerFunc) http.HandlerFunc
 
+// HealthResponse type
+type HealthResponse struct {
+	Status string `json:"status"`
+}
+
+// APIResponseRequest type
+type APIResponseRequest struct {
+	Host       string   `json:"host"`
+	RemoteAddr string   `json:"remote_addr"`
+	RequestURI string   `json:"request_uri"`
+	Method     string   `json:"method"`
+	Proto      string   `json:"proto"`
+	UserAgent  string   `json:"user_agent"`
+	URL        *url.URL `json:"url"`
+}
+
 // APIResponse type
 type APIResponse struct {
-	Counter   int            `json:"counter"`
-	Host      string         `json:"host"`
-	Hostnames map[string]int `json:"hostnames"`
-	Request   struct {
-		Host       string   `json:"host"`
-		RemoteAddr string   `json:"remote_addr"`
-		RequestURI string   `json:"request_uri"`
-		Method     string   `json:"method"`
-		Proto      string   `json:"proto"`
-		UserAgent  string   `json:"user_agent"`
-		URL        *url.URL `json:"url"`
-	} `json:"request"`
+	Counter   int                `json:"counter"`
+	Host      string             `json:"host"`
+	Hostnames map[string]int     `json:"hostnames"`
+	Request   APIResponseRequest `json:"request"`
 }
 
 var (
@@ -39,6 +47,11 @@ var (
 	sessionKey string
 	store      *sessions.CookieStore
 )
+
+func healthHandler(w http.ResponseWriter, r *http.Request) {
+	response := HealthResponse{Status: "ok"}
+	json.NewEncoder(w).Encode(response)
+}
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 	session, err := store.Get(r, "session-go-hello-world")
@@ -65,13 +78,15 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	response.Hostnames[hostname]++
 
-	response.Request.Host = r.Host
-	response.Request.URL = r.URL
-	response.Request.RemoteAddr = r.RemoteAddr
-	response.Request.RequestURI = r.RequestURI
-	response.Request.Method = r.Method
-	response.Request.Proto = r.Proto
-	response.Request.UserAgent = r.UserAgent()
+	response.Request = APIResponseRequest{
+		Host:       r.Host,
+		URL:        r.URL,
+		RemoteAddr: r.RemoteAddr,
+		RequestURI: r.RequestURI,
+		Method:     r.Method,
+		Proto:      r.Proto,
+		UserAgent:  r.UserAgent(),
+	}
 
 	session.Values["apiResponse"] = response
 
@@ -112,6 +127,11 @@ func Logging() Middleware {
 }
 
 func main() {
+	flag.Usage = func() {
+		fmt.Fprintf(os.Stderr, "Usage: %s -session-key XXXX\n", os.Args[0])
+		flag.PrintDefaults()
+	}
+
 	flag.StringVar(&listenAddr, "listen-addr", ":5000", "server listen address")
 	flag.StringVar(&sessionKey, "session-key", os.Getenv("SESSION_KEY"), "base64 encoded session key or SESSION_KEY env var")
 	flag.Parse()
@@ -129,6 +149,7 @@ func main() {
 	router := mux.NewRouter()
 
 	router.HandleFunc("/", Chain(rootHandler, Logging()))
+	router.HandleFunc("/health", Chain(healthHandler, Logging()))
 
 	http.ListenAndServe(listenAddr, router)
 }
