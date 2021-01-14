@@ -1,10 +1,8 @@
-FROM  --platform=$BUILDPLATFORM golang:1-alpine as builder
+FROM  --platform=$BUILDPLATFORM quay.io/wasilak/golang:1.15-alpine as builder
 COPY --from=tonistiigi/xx:golang / /
 
 ARG TARGETPLATFORM
 ARG BUILDPLATFORM
-
-#RUN echo "I am running on $BUILDPLATFORM, building for $TARGETPLATFORM"
 
 RUN apk add --update --no-cache git
 
@@ -12,9 +10,9 @@ WORKDIR /go/src/github.com/wasilak/go-hello-world/
 
 COPY ./ .
 
-RUN go build ./...
+RUN go build .
 
-FROM alpine:3
+FROM --platform=$BUILDPLATFORM quay.io/wasilak/alpine:3
 
 COPY --from=builder /go/src/github.com/wasilak/go-hello-world/go-hello-world /usr/local/bin/go-hello-world
 

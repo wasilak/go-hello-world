@@ -45,7 +45,9 @@ type APIResponse struct {
 var (
 	listenAddr string
 	sessionKey string
+	logFile    string
 	store      *sessions.CookieStore
+	file       *os.File
 )
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -118,7 +120,15 @@ func Logging() Middleware {
 
 			// Do middleware things
 			start := time.Now()
-			defer func() { log.Println(r.URL.Path, time.Since(start)) }()
+			defer func() {
+				logLine := fmt.Sprintf("%s %s\n", r.URL.Path, time.Since(start))
+				log.Print(logLine)
+				if logFile != "" {
+					if _, err := file.WriteString(logLine); err != nil {
+						log.Println(err)
+					}
+				}
+			}()
 
 			// Call the next middleware/handler in chain
 			f(w, r)
@@ -134,7 +144,17 @@ func main() {
 
 	flag.StringVar(&listenAddr, "listen-addr", ":5000", "server listen address")
 	flag.StringVar(&sessionKey, "session-key", os.Getenv("SESSION_KEY"), "base64 encoded session key or SESSION_KEY env var")
+	flag.StringVar(&logFile, "log-file", os.Getenv("LOG_FILE"), "path to log")
 	flag.Parse()
+
+	var err error
+	if logFile != "" {
+		file, err = os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
+		if err != nil {
+			log.Fatalf("error opening file: %v", err)
+		}
+		defer file.Close()
+	}
 
 	if sessionKey == "" {
 		fmt.Println("Please provide session key using: -session-key or SESSION_KEY env var")
