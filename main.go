@@ -32,6 +32,7 @@ type APIResponseRequest struct {
 	Proto      string   `json:"proto"`
 	UserAgent  string   `json:"user_agent"`
 	URL        *url.URL `json:"url"`
+	Headers http.Header `json:"headers"`
 }
 
 // APIResponse type
@@ -46,7 +47,7 @@ var (
 	listenAddr string
 	sessionKey string
 	logFile    string
-	store      *sessions.CookieStore
+	store      *sessions.FilesystemStore
 	file       *os.File
 )
 
@@ -88,6 +89,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		Method:     r.Method,
 		Proto:      r.Proto,
 		UserAgent:  r.UserAgent(),
+		Headers: r.Header,
 	}
 
 	session.Values["apiResponse"] = response
@@ -164,7 +166,7 @@ func main() {
 
 	gob.Register(APIResponse{})
 
-	store = sessions.NewCookieStore([]byte(sessionKey))
+	store = sessions.NewFilesystemStore("", []byte(sessionKey))
 
 	router := mux.NewRouter()
 
