@@ -1,177 +1,167 @@
 package main
 
 import (
-	"encoding/gob"
 	"encoding/json"
-	"flag"
 	"fmt"
-	"log"
-	"net/http"
-	"net/url"
-	"os"
-	"time"
-
-	"github.com/gorilla/mux"
-	"github.com/gorilla/sessions"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
+	"github.com/gofiber/fiber/v2/middleware/session"
 )
 
-// Middleware type
-type Middleware func(http.HandlerFunc) http.HandlerFunc
+// Default middleware config
+var store *session.Store
 
-// HealthResponse type
-type HealthResponse struct {
-	Status string `json:"status"`
+type Header struct {
+	Name  string `json:"name"`
+	Value string `json:"value"`
 }
 
-// APIResponseRequest type
-type APIResponseRequest struct {
-	Host       string      `json:"host"`
-	RemoteAddr string      `json:"remote_addr"`
-	RequestURI string      `json:"request_uri"`
-	Method     string      `json:"method"`
-	Proto      string      `json:"proto"`
-	UserAgent  string      `json:"user_agent"`
-	URL        *url.URL    `json:"url"`
-	Headers    http.Header `json:"headers"`
+type Response struct {
+	Counter  int `json:"counter"`
+	Host  string `json:"host"`
+	Hostnames  map[string]int `json:"hostnames"`
+	Headers []Header `json:"headers"`
 }
 
-// APIResponse type
-type APIResponse struct {
-	Counter   int                `json:"counter"`
-	Host      string             `json:"host"`
-	Hostnames map[string]int     `json:"hostnames"`
-	Request   APIResponseRequest `json:"request"`
-}
-
-var (
-	listenAddr string
-	sessionKey string
-	logFile    string
-	store      *sessions.FilesystemStore
-	file       *os.File
-)
-
-func healthHandler(w http.ResponseWriter, r *http.Request) {
-	response := HealthResponse{Status: "ok"}
-	json.NewEncoder(w).Encode(response)
-}
-
-func rootHandler(w http.ResponseWriter, r *http.Request) {
-	session, err := store.Get(r, "session-go-hello-world")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	val := session.Values["apiResponse"]
-
-	response, ok := val.(APIResponse)
-
-	if !ok {
-		log.Println("session not initialized (yet)")
-	}
-
-	response.Counter++
-
-	hostname, _ := os.Hostname()
-	response.Host = hostname
-
-	if nil == response.Hostnames {
-		response.Hostnames = make(map[string]int)
-	}
-	response.Hostnames[hostname]++
-
-	response.Request = APIResponseRequest{
-		Host:       r.Host,
-		URL:        r.URL,
-		RemoteAddr: r.RemoteAddr,
-		RequestURI: r.RequestURI,
-		Method:     r.Method,
-		Proto:      r.Proto,
-		UserAgent:  r.UserAgent(),
-		Headers:    r.Header,
-	}
-
-	session.Values["apiResponse"] = response
-
-	err = session.Save(r, w)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	json.NewEncoder(w).Encode(response)
-}
-
-// Chain applies middlewares to a http.HandlerFunc
-func Chain(f http.HandlerFunc, middlewares ...Middleware) http.HandlerFunc {
-	for _, m := range middlewares {
-		f = m(f)
-	}
-	return f
-}
-
-// Logging logs all requests with its path and the time it took to process
-func Logging() Middleware {
-
-	// Create a new Middleware
-	return func(f http.HandlerFunc) http.HandlerFunc {
-
-		// Define the http.HandlerFunc
-		return func(w http.ResponseWriter, r *http.Request) {
-
-			// Do middleware things
-			start := time.Now()
-			defer func() {
-				logLine := fmt.Sprintf("%s %s\n", r.URL.Path, time.Since(start))
-				log.Print(logLine)
-				if logFile != "" {
-					if _, err := file.WriteString(logLine); err != nil {
-						log.Println(err)
-					}
-				}
-			}()
-
-			// Call the next middleware/handler in chain
-			f(w, r)
-		}
-	}
+func keyGen() string {
+	return "32543gv45b45"
 }
 
 func main() {
-	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: %s -session-key XXXX\n", os.Args[0])
-		flag.PrintDefaults()
+	app := fiber.New(fiber.Config{
+		DisableStartupMessage: true,
+	})
+
+	appLogger := logger.New(logger.Config{
+		Format: `{"pid": "${pid}", "requestid": "${locals:requestid}", "status": "${status}", "method": "${method}", "path": "${path}"}​` + "\n",
+	})
+
+	app.Use(appLogger)
+
+	var ConfigDefault = session.Config{
+	    CookieName:   "go_hello_world_session",
+	    KeyGenerator: keyGen,
 	}
 
-	flag.StringVar(&listenAddr, "listen-addr", ":5000", "server listen address")
-	flag.StringVar(&sessionKey, "session-key", os.Getenv("SESSION_KEY"), "base64 encoded session key or SESSION_KEY env var")
-	flag.StringVar(&logFile, "log-file", os.Getenv("LOG_FILE"), "path to log")
-	flag.Parse()
+	store := session.New(ConfigDefault)
 
-	var err error
-	if logFile != "" {
-		file, err = os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-		if err != nil {
-			log.Fatalf("error opening file: %v", err)
+	app.Get("/", func(c *fiber.Ctx) error {
+
+		// get session from storage
+    sess, err := store.Get(c)
+    if err != nil {
+        panic(err)
+    }
+
+    // save session
+    defer sess.Save()
+
+		var response Response
+
+		response.Host = string(c.Request().Host())
+
+		if val, ok := sess.Get("counter").(int); ok {
+			response.Counter = val
 		}
-		defer file.Close()
-	}
+		response.Counter = response.Counter + 1
+		sess.Set("counter", response.Counter)
+		// fmt.Printf("%+v\n", response.Counter)
 
-	if sessionKey == "" {
-		fmt.Println("Please provide session key using: -session-key or SESSION_KEY env var")
-		flag.Usage()
-		os.Exit(1)
-	}
+		if nil == sess.Get("hostnames") {
+			response.Hostnames = make(map[string]int)
+			response.Hostnames[response.Host]++
+			// sess.Set("hostnames", make(map[string]int))
 
-	gob.Register(APIResponse{})
+			bytes, err := json.Marshal(response.Hostnames)
+			if err != nil {
+				panic(err)
+			}
+			sess.Set("hostnames", string(bytes))
+		}
+		// response.Hostnames = sess.Get("hostnames").(map[string]int)
+		// response.Hostnames[response.Host]++
 
-	store = sessions.NewFilesystemStore("", []byte(sessionKey))
+		json.Unmarshal([]byte(sess.Get("hostnames").(string)), &response.Hostnames)
 
-	router := mux.NewRouter()
+		response.Hostnames[response.Host]++
 
-	router.HandleFunc("/", Chain(rootHandler, Logging()))
-	router.HandleFunc("/health", Chain(healthHandler, Logging()))
+		bytes, err := json.Marshal(response.Hostnames)
+		if err != nil {
+			panic(err)
+		}
+		sess.Set("hostnames", string(bytes))
 
-	http.ListenAndServe(listenAddr, router)
+		fmt.Printf("simple get %+v\n", response.Hostnames)
+		// fmt.Printf("get with conversion %+v\n", sess.Get("hostnames").(map[string]int))
+
+		// sess.Set("hostnames", response.Hostnames)
+
+
+		// if _, ok := sess.Get("hostnames").(map[string]int); !ok {
+		// if sess.Get("hostnames") == nil {
+		// 	m := make(map[string]int)
+		// 	// m[response.Host] = 1
+		// 	// // val[response.Host] = 1
+		// 	m[response.Host] = 1
+		// 	response.Hostnames = m
+
+		// 	fmt.Println("doesn't exists")
+		// } else {
+
+		// 	response.Hostnames[response.Host] = response.Hostnames[response.Host] + 1
+		// 	// sess.Set("hostnames", response.Hostnames)
+		// 	fmt.Println("does exist")
+		// }
+
+		// sess.Set("hostnames", response.Hostnames)
+
+		// if val, ok := response.Hostnames[response.Host]; ok {
+		// 	response.Hostnames[response.Host] = val + 1
+		// }
+		// response.Counter = response.Counter + 1
+		// sess.Set("hostnames", response.Hostnames)
+		// fmt.Printf("%+v\n", response.Hostnames)
+
+    // if counter == nil {
+    // 	sess.Set("counter", 1)
+    // } else {
+    // 	counterNewValue := counter.(int) + 1
+    // 	response.Counter = counterNewValue
+    // 	sess.Set("counter", counterNewValue)
+    // }
+
+    // hosts := sess.Get("hosts")
+
+    // if hosts == nil {
+    // 	var hostsSlice map[string]int
+    // 	sess.Set("hosts", hostsSlice)
+    // } else {
+    // 	hostsSliceFromSession := hosts.(map[string]int)
+    // 	if val, ok := hostsSliceFromSession[response.Host]; ok {
+    // 		hostsSliceFromSession[response.Host] = val + 1
+    // 	}
+    // 	response.Hostnames = hostsSliceFromSession
+    // 	sess.Set("hosts", hostsSliceFromSession)
+    // }
+
+		c.Request().Header.VisitAll(func(key, value []byte) {
+			tmp := Header{
+				Name:  string(key),
+				Value: string(value),
+			}
+			response.Headers = append(response.Headers, tmp)
+		})
+
+		// bytes, err := json.Marshal(response)
+		// if err != nil {
+		// 	panic(err)
+		// }
+
+		// fmt.Println(string(bytes))
+
+		return c.JSON(response)
+		// return c.Request().Header
+	})
+
+	app.Listen(":5000")
 }
