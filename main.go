@@ -35,11 +35,16 @@ type APIResponseRequest struct {
 	Headers    http.Header `json:"headers"`
 }
 
+// APIStats type
+type APIStats struct {
+	Counter   int                `json:"counter"`
+	Hostnames map[string]int     `json:"hostnames"`
+}
+
 // APIResponse type
 type APIResponse struct {
-	Counter   int                `json:"counter"`
 	Host      string             `json:"host"`
-	Hostnames map[string]int     `json:"hostnames"`
+	APIStats   APIStats                `json:"apistats"`
 	Request   APIResponseRequest `json:"request"`
 }
 
@@ -47,7 +52,7 @@ var (
 	listenAddr string
 	sessionKey string
 	logFile    string
-	store      *sessions.FilesystemStore
+	store      *sessions.CookieStore
 	file       *os.File
 )
 
@@ -63,23 +68,27 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	val := session.Values["apiResponse"]
+	APIStatsFromSession := session.Values["apistats"]
 
-	response, ok := val.(APIResponse)
+	var ok bool
+	var response APIResponse
+
+	response.APIStats, ok = APIStatsFromSession.(APIStats)
 
 	if !ok {
 		log.Println("session not initialized (yet)")
 	}
 
-	response.Counter++
+	response.APIStats.Counter++
 
 	hostname, _ := os.Hostname()
 	response.Host = hostname
 
-	if nil == response.Hostnames {
-		response.Hostnames = make(map[string]int)
+	if nil == response.APIStats.Hostnames {
+		response.APIStats.Hostnames = make(map[string]int)
 	}
-	response.Hostnames[hostname]++
+
+	response.APIStats.Hostnames[hostname]++
 
 	response.Request = APIResponseRequest{
 		Host:       r.Host,
@@ -92,7 +101,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		Headers:    r.Header,
 	}
 
-	session.Values["apiResponse"] = response
+	session.Values["apistats"] = response.APIStats
 
 	err = session.Save(r, w)
 	if err != nil {
@@ -164,9 +173,9 @@ func main() {
 		os.Exit(1)
 	}
 
-	gob.Register(APIResponse{})
+	gob.Register(APIStats{})
 
-	store = sessions.NewFilesystemStore("", []byte(sessionKey))
+	store = sessions.NewCookieStore([]byte(sessionKey))
 
 	router := mux.NewRouter()
 
