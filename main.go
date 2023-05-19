@@ -11,6 +11,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/arl/statsviz"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 )
@@ -37,15 +38,15 @@ type APIResponseRequest struct {
 
 // APIStats type
 type APIStats struct {
-	Counter   int                `json:"counter"`
-	Hostnames map[string]int     `json:"hostnames"`
+	Counter   int            `json:"counter"`
+	Hostnames map[string]int `json:"hostnames"`
 }
 
 // APIResponse type
 type APIResponse struct {
-	Host      string             `json:"host"`
-	APIStats   APIStats                `json:"apistats"`
-	Request   APIResponseRequest `json:"request"`
+	Host     string             `json:"host"`
+	APIStats APIStats           `json:"apistats"`
+	Request  APIResponseRequest `json:"request"`
 }
 
 var (
@@ -181,6 +182,9 @@ func main() {
 
 	router.HandleFunc("/", Chain(rootHandler, Logging()))
 	router.HandleFunc("/health", Chain(healthHandler, Logging()))
+
+	router.Methods("GET").Path("/debug/statsviz/ws").Name("GET /debug/statsviz/ws").HandlerFunc(statsviz.Ws)
+	router.Methods("GET").PathPrefix("/debug/statsviz/").Name("GET /debug/statsviz/").HandlerFunc(statsviz.Index)
 
 	http.ListenAndServe(listenAddr, router)
 }
