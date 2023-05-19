@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/gob"
 	"encoding/json"
 	"flag"
@@ -13,6 +14,13 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	"go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
+	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
+	"go.opentelemetry.io/otel/propagation"
+	"go.opentelemetry.io/otel/sdk/resource"
+	sdktrace "go.opentelemetry.io/otel/sdk/trace"
 )
 
 // Middleware type
@@ -37,23 +45,24 @@ type APIResponseRequest struct {
 
 // APIStats type
 type APIStats struct {
-	Counter   int                `json:"counter"`
-	Hostnames map[string]int     `json:"hostnames"`
+	Counter   int            `json:"counter"`
+	Hostnames map[string]int `json:"hostnames"`
 }
 
 // APIResponse type
 type APIResponse struct {
-	Host      string             `json:"host"`
-	APIStats   APIStats                `json:"apistats"`
-	Request   APIResponseRequest `json:"request"`
+	Host     string             `json:"host"`
+	APIStats APIStats           `json:"apistats"`
+	Request  APIResponseRequest `json:"request"`
 }
 
 var (
-	listenAddr string
-	sessionKey string
-	logFile    string
-	store      *sessions.CookieStore
-	file       *os.File
+	listenAddr  string
+	sessionKey  string
+	logFile     string
+	otelEnabled bool
+	store       *sessions.CookieStore
+	file        *os.File
 )
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -147,7 +156,36 @@ func Logging() Middleware {
 	}
 }
 
+func initTracer() {
+	ctx := context.Background()
+
+	client := otlptracehttp.NewClient()
+	exporter, err := otlptrace.New(ctx, client)
+	if err != nil {
+		log.Fatalf("failed to initialize exporter: %e", err)
+	}
+
+	res, err := resource.New(ctx)
+	if err != nil {
+		log.Fatalf("failed to initialize resource: %e", err)
+	}
+
+	// Create the trace provider
+	tp := sdktrace.NewTracerProvider(
+		sdktrace.WithBatcher(exporter),
+		sdktrace.WithResource(res),
+	)
+
+	// Set the global trace provider
+	otel.SetTracerProvider(tp)
+
+	// Set the propagator
+	propagator := propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{})
+	otel.SetTextMapPropagator(propagator)
+}
+
 func main() {
+
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, "Usage: %s -session-key XXXX\n", os.Args[0])
 		flag.PrintDefaults()
@@ -156,7 +194,12 @@ func main() {
 	flag.StringVar(&listenAddr, "listen-addr", ":5000", "server listen address")
 	flag.StringVar(&sessionKey, "session-key", os.Getenv("SESSION_KEY"), "base64 encoded session key or SESSION_KEY env var")
 	flag.StringVar(&logFile, "log-file", os.Getenv("LOG_FILE"), "path to log")
+	flag.BoolVar(&otelEnabled, "otel-enabled", false, "OpenTelemetry traces enabled")
 	flag.Parse()
+
+	if otelEnabled {
+		initTracer()
+	}
 
 	var err error
 	if logFile != "" {
@@ -181,6 +224,10 @@ func main() {
 
 	router.HandleFunc("/", Chain(rootHandler, Logging()))
 	router.HandleFunc("/health", Chain(healthHandler, Logging()))
+
+	if otelEnabled {
+		router.Use(otelmux.Middleware(os.Getenv("OTEL_SERVICE_NAME")))
+	}
 
 	http.ListenAndServe(listenAddr, router)
 }
