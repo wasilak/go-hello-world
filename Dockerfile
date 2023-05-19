@@ -1,4 +1,4 @@
-FROM  --platform=$BUILDPLATFORM quay.io/wasilak/golang:1.15-alpine as builder
+FROM  --platform=$BUILDPLATFORM quay.io/wasilak/golang:1.20-alpine as builder
 COPY --from=tonistiigi/xx:golang / /
 
 ARG TARGETPLATFORM
