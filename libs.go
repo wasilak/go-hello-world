@@ -6,10 +6,12 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
+	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
 	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
 	"go.opentelemetry.io/otel/propagation"
 	"go.opentelemetry.io/otel/sdk/resource"
@@ -87,7 +89,15 @@ func Logging() Middleware {
 func initTracer() {
 	ctx := context.Background()
 
-	client := otlptracehttp.NewClient()
+	var err error
+	var client otlptrace.Client
+
+	if os.Getenv("OTEL_EXPORTER_OTLP_PROTOCOL") == "grpc" {
+		client = otlptracegrpc.NewClient()
+	} else {
+		client = otlptracehttp.NewClient()
+	}
+
 	exporter, err := otlptrace.New(ctx, client)
 	if err != nil {
 		log.Fatalf("failed to initialize exporter: %e", err)
