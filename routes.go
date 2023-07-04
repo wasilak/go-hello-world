@@ -1,45 +1,44 @@
 package main
 
 import (
-	"context"
 	"encoding/json"
-	"log"
+	"fmt"
 	"net/http"
 	"os"
 
+	"go.opentelemetry.io/otel/codes"
 	"golang.org/x/exp/slog"
 )
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	response := HealthResponse{Status: "ok"}
+	_, spanJsonEncode := tracer.Start(r.Context(), "json encode response")
 	json.NewEncoder(w).Encode(response)
+	spanJsonEncode.End()
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
-	ctx := context.Background()
 
-	InitTracer(ctx)
-	// if otelEnabled {
-	// }
-
-	ctx, newSpan := tracer.Start(ctx, "rootHandler")
-	// defer newSpan.End()
+	ctx, spanSession := tracer.Start(r.Context(), "session")
 
 	session, err := store.Get(r, "session-go-hello-world")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		spanSession.SetStatus(codes.Error, "store.Get() failed")
+		spanSession.RecordError(err)
 		return
 	}
 
 	APIStatsFromSession := session.Values["apistats"]
 
+	ctx, spanResponse := tracer.Start(ctx, "response")
 	var ok bool
 	var response APIResponse
 
 	response.APIStats, ok = APIStatsFromSession.(APIStats)
 
 	if !ok {
-		log.Println("session not initialized (yet)")
+		slog.DebugCtx(ctx, "session not initialized (yet)")
 	}
 
 	response.APIStats.Counter++
@@ -63,6 +62,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		UserAgent:  r.UserAgent(),
 		Headers:    r.Header,
 	}
+	spanResponse.End()
 
 	session.Values["apistats"] = response.APIStats
 
@@ -72,8 +72,12 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	slog.InfoCtx(ctx, "root")
-	newSpan.End()
+	spanSession.AddEvent(fmt.Sprintf("%+v", response))
+	slog.DebugCtx(ctx, "rootHandler", "response", response)
 
+	spanSession.End()
+
+	_, spanJsonEncode := tracer.Start(ctx, "json encode response")
 	json.NewEncoder(w).Encode(response)
+	spanJsonEncode.End()
 }

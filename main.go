@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/gob"
 	"flag"
 	"fmt"
@@ -36,6 +37,12 @@ func main() {
 	flag.StringVar(&logFormat, "log-format", os.Getenv("LOG_FORMAT"), "text")
 	flag.BoolVar(&otelEnabled, "otel-enabled", false, "OpenTelemetry traces enabled")
 	flag.Parse()
+
+	ctx := context.Background()
+
+	if otelEnabled {
+		InitTracer(ctx)
+	}
 
 	LoggerInit(logLevel, logFormat)
 
