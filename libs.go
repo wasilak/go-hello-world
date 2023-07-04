@@ -63,7 +63,7 @@ func Logging() Middleware {
 			// Do middleware things
 			start := time.Now()
 			defer func() {
-				slog.Info("request", "path", r.URL.Path, "time", time.Since(start))
+				slog.InfoCtx(r.Context(), "request", "path", r.URL.Path, "time", time.Since(start))
 			}()
 
 			// Call the next middleware/handler in chain
