@@ -1,21 +1,13 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"log"
+	"crypto/rand"
+	"encoding/hex"
 	"net/http"
 	"net/url"
-	"os"
 	"time"
 
-	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc"
-	"go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp"
-	"go.opentelemetry.io/otel/propagation"
-	"go.opentelemetry.io/otel/sdk/resource"
-	sdktrace "go.opentelemetry.io/otel/sdk/trace"
+	"golang.org/x/exp/slog"
 )
 
 // Middleware type
@@ -71,13 +63,7 @@ func Logging() Middleware {
 			// Do middleware things
 			start := time.Now()
 			defer func() {
-				logLine := fmt.Sprintf("%s %s\n", r.URL.Path, time.Since(start))
-				log.Print(logLine)
-				if logFile != "" {
-					if _, err := file.WriteString(logLine); err != nil {
-						log.Println(err)
-					}
-				}
+				slog.Info("request", "path", r.URL.Path, "time", time.Since(start))
 			}()
 
 			// Call the next middleware/handler in chain
@@ -86,38 +72,12 @@ func Logging() Middleware {
 	}
 }
 
-func initTracer() {
-	ctx := context.Background()
-
-	var err error
-	var client otlptrace.Client
-
-	if os.Getenv("OTEL_EXPORTER_OTLP_PROTOCOL") == "grpc" {
-		client = otlptracegrpc.NewClient()
-	} else {
-		client = otlptracehttp.NewClient()
+func GenerateKey() (string, error) {
+	bytes := make([]byte, 32) //generate a random 32 byte key for AES-256
+	if _, err := rand.Read(bytes); err != nil {
+		return "", err
 	}
 
-	exporter, err := otlptrace.New(ctx, client)
-	if err != nil {
-		log.Fatalf("failed to initialize exporter: %e", err)
-	}
+	return hex.EncodeToString(bytes), nil //encode key in bytes to string for saving
 
-	res, err := resource.New(ctx)
-	if err != nil {
-		log.Fatalf("failed to initialize resource: %e", err)
-	}
-
-	// Create the trace provider
-	tp := sdktrace.NewTracerProvider(
-		sdktrace.WithBatcher(exporter),
-		sdktrace.WithResource(res),
-	)
-
-	// Set the global trace provider
-	otel.SetTracerProvider(tp)
-
-	// Set the propagator
-	propagator := propagation.NewCompositeTextMapPropagator(propagation.TraceContext{}, propagation.Baggage{})
-	otel.SetTextMapPropagator(propagator)
 }

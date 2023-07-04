@@ -4,7 +4,6 @@ import (
 	"encoding/gob"
 	"flag"
 	"fmt"
-	"log"
 	"net/http"
 	"os"
 
@@ -12,15 +11,16 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
+	"golang.org/x/exp/slog"
 )
 
 var (
 	listenAddr  string
 	sessionKey  string
-	logFile     string
+	logLevel    string
+	logFormat   string
 	otelEnabled bool
 	store       *sessions.CookieStore
-	file        *os.File
 )
 
 func main() {
@@ -32,27 +32,19 @@ func main() {
 
 	flag.StringVar(&listenAddr, "listen-addr", ":5000", "server listen address")
 	flag.StringVar(&sessionKey, "session-key", os.Getenv("SESSION_KEY"), "base64 encoded session key or SESSION_KEY env var")
-	flag.StringVar(&logFile, "log-file", os.Getenv("LOG_FILE"), "path to log")
+	flag.StringVar(&logLevel, "log-level", os.Getenv("LOG_LEVEL"), "info")
+	flag.StringVar(&logFormat, "log-format", os.Getenv("LOG_FORMAT"), "text")
 	flag.BoolVar(&otelEnabled, "otel-enabled", false, "OpenTelemetry traces enabled")
 	flag.Parse()
 
-	if otelEnabled {
-		initTracer()
-	}
-
-	var err error
-	if logFile != "" {
-		file, err = os.OpenFile(logFile, os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
-		if err != nil {
-			log.Fatalf("error opening file: %v", err)
-		}
-		defer file.Close()
-	}
+	LoggerInit(logLevel, logFormat)
 
 	if sessionKey == "" {
-		fmt.Println("Please provide session key using: -session-key or SESSION_KEY env var")
-		flag.Usage()
-		os.Exit(1)
+		randomizedSessionKey, err := GenerateKey()
+		if err != nil {
+			panic(err)
+		}
+		slog.Info("Session key not provided, generating random one", "sessionKey", randomizedSessionKey)
 	}
 
 	gob.Register(APIStats{})

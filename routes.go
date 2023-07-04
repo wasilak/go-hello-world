@@ -1,10 +1,13 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"log"
 	"net/http"
 	"os"
+
+	"golang.org/x/exp/slog"
 )
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -13,6 +16,15 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func rootHandler(w http.ResponseWriter, r *http.Request) {
+	ctx := context.Background()
+
+	InitTracer(ctx)
+	// if otelEnabled {
+	// }
+
+	ctx, newSpan := tracer.Start(ctx, "rootHandler")
+	// defer newSpan.End()
+
 	session, err := store.Get(r, "session-go-hello-world")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -59,6 +71,9 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
+
+	slog.InfoCtx(ctx, "root")
+	newSpan.End()
 
 	json.NewEncoder(w).Encode(response)
 }
