@@ -90,6 +90,7 @@ func InitTracer(ctx context.Context) {
 		resource.WithProcess(),
 		resource.WithTelemetrySDK(),
 		resource.WithOS(),
+		resource.WithFromEnv(),
 	)
 	if err != nil {
 		log.Fatalf("failed to initialize resource: %e", err)
