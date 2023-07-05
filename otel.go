@@ -84,7 +84,13 @@ func InitTracer(ctx context.Context) {
 		log.Fatalf("failed to initialize exporter: %e", err)
 	}
 
-	res, err := resource.New(ctx)
+	res, err := resource.New(ctx,
+		resource.WithHost(),
+		resource.WithContainer(),
+		resource.WithProcess(),
+		resource.WithTelemetrySDK(),
+		resource.WithOS(),
+	)
 	if err != nil {
 		log.Fatalf("failed to initialize resource: %e", err)
 	}
