@@ -11,7 +11,9 @@ import (
 	"github.com/arl/statsviz"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	otelgotracer "github.com/wasilak/otelgo/tracing"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
+	"go.opentelemetry.io/otel"
 	"golang.org/x/exp/slog"
 )
 
@@ -23,6 +25,8 @@ var (
 	otelEnabled bool
 	store       *sessions.CookieStore
 )
+
+var tracer = otel.Tracer("go-hello-world")
 
 func main() {
 
@@ -41,7 +45,7 @@ func main() {
 	ctx := context.Background()
 
 	if otelEnabled {
-		InitTracer(ctx)
+		otelgotracer.InitTracer(ctx)
 	}
 
 	LoggerInit(logLevel, logFormat)
