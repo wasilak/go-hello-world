@@ -5,7 +5,6 @@ import (
 	"encoding/hex"
 	"net/http"
 	"net/url"
-	"os"
 	"time"
 
 	"golang.org/x/exp/slog"
@@ -81,12 +80,4 @@ func GenerateKey() (string, error) {
 
 	return hex.EncodeToString(bytes), nil //encode key in bytes to string for saving
 
-}
-
-func getEnv(key, fallback string) string {
-	value, exists := os.LookupEnv(key)
-	if !exists {
-		value = fallback
-	}
-	return value
 }
