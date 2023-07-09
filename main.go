@@ -45,7 +45,7 @@ func main() {
 	ctx := context.Background()
 
 	if otelEnabled {
-		otelgotracer.InitTracer(ctx)
+		otelgotracer.InitTracer(ctx, true)
 	}
 
 	LoggerInit(logLevel, logFormat)
