@@ -2,41 +2,31 @@ package main
 
 import (
 	"context"
-	"encoding/gob"
 	"flag"
-	"fmt"
 	"net/http"
 	"os"
 
 	"github.com/arl/statsviz"
 	"github.com/gorilla/mux"
-	"github.com/gorilla/sessions"
 	otelgotracer "github.com/wasilak/otelgo/tracing"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
 	"go.opentelemetry.io/otel"
-	"golang.org/x/exp/slog"
+
+	"github.com/wasilak/loggergo"
 )
 
 var (
 	listenAddr  string
-	sessionKey  string
 	logLevel    string
 	logFormat   string
 	otelEnabled bool
-	store       *sessions.CookieStore
 )
 
 var tracer = otel.Tracer("go-hello-world")
 
 func main() {
 
-	flag.Usage = func() {
-		fmt.Fprintf(os.Stderr, "Usage: %s -session-key XXXX\n", os.Args[0])
-		flag.PrintDefaults()
-	}
-
 	flag.StringVar(&listenAddr, "listen-addr", ":5000", "server listen address")
-	flag.StringVar(&sessionKey, "session-key", os.Getenv("SESSION_KEY"), "base64 encoded session key or SESSION_KEY env var")
 	flag.StringVar(&logLevel, "log-level", os.Getenv("LOG_LEVEL"), "info")
 	flag.StringVar(&logFormat, "log-format", os.Getenv("LOG_FORMAT"), "text")
 	flag.BoolVar(&otelEnabled, "otel-enabled", false, "OpenTelemetry traces enabled")
@@ -48,19 +38,7 @@ func main() {
 		otelgotracer.InitTracer(ctx, true)
 	}
 
-	LoggerInit(logLevel, logFormat)
-
-	if sessionKey == "" {
-		randomizedSessionKey, err := GenerateKey()
-		if err != nil {
-			panic(err)
-		}
-		slog.Info("Session key not provided, generating random one", "sessionKey", randomizedSessionKey)
-	}
-
-	gob.Register(APIStats{})
-
-	store = sessions.NewCookieStore([]byte(sessionKey))
+	loggergo.LoggerInit(logLevel, logFormat)
 
 	router := mux.NewRouter()
 

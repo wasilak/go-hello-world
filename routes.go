@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"os"
 
-	"go.opentelemetry.io/otel/codes"
 	"golang.org/x/exp/slog"
 )
 
@@ -21,36 +20,11 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 	ctx, spanSession := tracer.Start(r.Context(), "session")
 
-	session, err := store.Get(r, "session-go-hello-world")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		spanSession.SetStatus(codes.Error, "store.Get() failed")
-		spanSession.RecordError(err)
-		return
-	}
-
-	APIStatsFromSession := session.Values["apistats"]
-
 	ctx, spanResponse := tracer.Start(ctx, "response")
-	var ok bool
 	var response APIResponse
-
-	response.APIStats, ok = APIStatsFromSession.(APIStats)
-
-	if !ok {
-		slog.DebugCtx(ctx, "session not initialized (yet)")
-	}
-
-	response.APIStats.Counter++
 
 	hostname, _ := os.Hostname()
 	response.Host = hostname
-
-	if nil == response.APIStats.Hostnames {
-		response.APIStats.Hostnames = make(map[string]int)
-	}
-
-	response.APIStats.Hostnames[hostname]++
 
 	response.Request = APIResponseRequest{
 		Host:       r.Host,
@@ -63,14 +37,6 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 		Headers:    r.Header,
 	}
 	spanResponse.End()
-
-	session.Values["apistats"] = response.APIStats
-
-	err = session.Save(r, w)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
 
 	spanSession.AddEvent(fmt.Sprintf("%+v", response))
 	slog.DebugCtx(ctx, "rootHandler", "response", response)

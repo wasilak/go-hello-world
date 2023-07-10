@@ -30,17 +30,10 @@ type APIResponseRequest struct {
 	Headers    http.Header `json:"headers"`
 }
 
-// APIStats type
-type APIStats struct {
-	Counter   int            `json:"counter"`
-	Hostnames map[string]int `json:"hostnames"`
-}
-
 // APIResponse type
 type APIResponse struct {
-	Host     string             `json:"host"`
-	APIStats APIStats           `json:"apistats"`
-	Request  APIResponseRequest `json:"request"`
+	Host    string             `json:"host"`
+	Request APIResponseRequest `json:"request"`
 }
 
 // Chain applies middlewares to a http.HandlerFunc
