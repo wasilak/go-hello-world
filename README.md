@@ -1,3 +1,9 @@
+# go-hello-world
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/7ada7f029e74c805ec1c/maintainability)](https://codeclimate.com/github/wasilak/go-hello-world/maintainability)
+
+Simple web app for testing e.g. container orchestrators, autoscalers etc.
+
 ```
 GOOS=linux GOARCH=amd64 go build ./...
 ```
