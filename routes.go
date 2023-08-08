@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"os"
 
-	"golang.org/x/exp/slog"
+	"log/slog"
 )
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -39,7 +39,7 @@ func rootHandler(w http.ResponseWriter, r *http.Request) {
 	spanResponse.End()
 
 	spanSession.AddEvent(fmt.Sprintf("%+v", response))
-	slog.DebugCtx(ctx, "rootHandler", "response", response)
+	slog.DebugContext(ctx, "rootHandler", "response", response)
 
 	spanSession.End()
 
