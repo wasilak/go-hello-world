@@ -63,8 +63,8 @@ github.com/tklauser/go-sysconf v0.3.12/go.mod h1:Ho14jnntGE1fpdOqQEEaiKRpvIavV0h
 github.com/tklauser/numcpus v0.6.0/go.mod h1:FEZLMke0lhOUG6w2JadTzp0a+Nl8PF/GFkQ5UVIcaL4=
 github.com/tklauser/numcpus v0.6.1 h1:ng9scYS7az0Bk4OZLvrNXNSAO2Pxr1XXRAPyjhIx+Fk=
 github.com/tklauser/numcpus v0.6.1/go.mod h1:1XfjsgE2zo8GVw7POkMbHENHzVg3GzmoZ9fESEdAacY=
-github.com/wasilak/loggergo v0.0.5 h1:bfUH2IAK3lKVTsLF/8bZ3X2c8NHK677iLzTHbfU7WyM=
-github.com/wasilak/loggergo v0.0.5/go.mod h1:yrAIrxHhAWESOofai7TLJhamCcVD0ov4pu8ziFGnx1Q=
+github.com/wasilak/loggergo v0.0.11 h1:RLDFaa+4UkxAQ4tcGiVVXahrj3P8pPsMmxV5FURLSOQ=
+github.com/wasilak/loggergo v0.0.11/go.mod h1:n+PEAzW0OB1n3FmoGWaFkdCQCEGEs565TRx33PN5fqk=
 github.com/wasilak/otelgo v0.0.5 h1:ystAuVLGL58Tz0uGjt+4BPa3jF6HPjVfj1K5x7FFRok=
 github.com/wasilak/otelgo v0.0.5/go.mod h1:4yy/EeyWx1JFIxN8MLTsMiQOICyOSDnV/jwWKgdEfZE=
 github.com/yusufpapurcu/wmi v1.2.3 h1:E1ctvB7uKFMOJw3fdOW32DwGE9I7t++CRUEMKvFoFiw=
