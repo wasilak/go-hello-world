@@ -16,10 +16,11 @@ import (
 )
 
 var (
-	listenAddr  string
-	logLevel    string
-	logFormat   string
-	otelEnabled bool
+	listenAddr             string
+	logLevel               string
+	logFormat              string
+	otelEnabled            bool
+	otelHostMetricsEnabled bool
 )
 
 var tracer = otel.Tracer("go-hello-world")
@@ -30,15 +31,21 @@ func main() {
 	flag.StringVar(&logLevel, "log-level", os.Getenv("LOG_LEVEL"), "info")
 	flag.StringVar(&logFormat, "log-format", os.Getenv("LOG_FORMAT"), "text")
 	flag.BoolVar(&otelEnabled, "otel-enabled", false, "OpenTelemetry traces enabled")
+	flag.BoolVar(&otelHostMetricsEnabled, "otel-host-metrics", false, "OpenTelemetry host metrics enabled")
 	flag.Parse()
 
 	ctx := context.Background()
 
 	if otelEnabled {
-		otelgotracer.InitTracer(ctx, true)
+		otelgotracer.InitTracer(ctx, otelHostMetricsEnabled)
 	}
 
-	loggergo.LoggerInit(logLevel, logFormat)
+	loggerConfig := loggergo.LoggerGoConfig{
+		Level:  logLevel,
+		Format: logFormat,
+	}
+
+	loggergo.LoggerInit(loggerConfig)
 
 	router := mux.NewRouter()
 
