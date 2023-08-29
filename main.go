@@ -6,6 +6,8 @@ import (
 	"net/http"
 	"os"
 
+	"log/slog"
+
 	"github.com/arl/statsviz"
 	"github.com/gorilla/mux"
 	otelgotracer "github.com/wasilak/otelgo/tracing"
@@ -37,7 +39,14 @@ func main() {
 	ctx := context.Background()
 
 	if otelEnabled {
-		otelgotracer.InitTracer(ctx, otelHostMetricsEnabled)
+		otelGoTracingConfig := otelgotracer.OtelGoTracingConfig{
+			HostMetricsEnabled: false,
+		}
+		err := otelgotracer.InitTracer(ctx, otelGoTracingConfig)
+		if err != nil {
+			slog.ErrorContext(ctx, err.Error())
+			os.Exit(1)
+		}
 	}
 
 	loggerConfig := loggergo.LoggerGoConfig{
@@ -45,7 +54,11 @@ func main() {
 		Format: logFormat,
 	}
 
-	loggergo.LoggerInit(loggerConfig)
+	_, err := loggergo.LoggerInit(loggerConfig)
+	if err != nil {
+		slog.ErrorContext(ctx, err.Error())
+		os.Exit(1)
+	}
 
 	router := mux.NewRouter()
 

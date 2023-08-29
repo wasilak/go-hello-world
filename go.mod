@@ -6,8 +6,8 @@ require (
 	github.com/arl/statsviz v0.5.2
 	github.com/gorilla/mux v1.8.0
 	github.com/stretchr/testify v1.8.4
-	github.com/wasilak/loggergo v0.0.13
-	github.com/wasilak/otelgo v0.0.5
+	github.com/wasilak/loggergo v1.0.3
+	github.com/wasilak/otelgo v1.0.3
 	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.43.0
 	go.opentelemetry.io/otel v1.17.0
 )
