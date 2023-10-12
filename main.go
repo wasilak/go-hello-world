@@ -65,8 +65,10 @@ func main() {
 	router.HandleFunc("/", Chain(rootHandler, Logging()))
 	router.HandleFunc("/health", Chain(healthHandler, Logging()))
 
-	router.Methods("GET").Path("/debug/statsviz/ws").Name("GET /debug/statsviz/ws").HandlerFunc(statsviz.Ws)
-	router.Methods("GET").PathPrefix("/debug/statsviz/").Name("GET /debug/statsviz/").HandlerFunc(statsviz.Index)
+	// Create statsviz server and register the handlers on the router.
+	srv, _ := statsviz.NewServer()
+	router.Methods("GET").Path("/debug/statsviz/ws").Name("GET /debug/statsviz/ws").HandlerFunc(srv.Ws())
+	router.Methods("GET").PathPrefix("/debug/statsviz/").Name("GET /debug/statsviz/").Handler(srv.Index())
 
 	if otelEnabled {
 		router.Use(otelmux.Middleware(os.Getenv("OTEL_SERVICE_NAME")))
