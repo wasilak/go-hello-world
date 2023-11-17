@@ -10,7 +10,7 @@ COPY ./ .
 
 RUN go build .
 
-FROM --platform=$BUILDPLATFORM quay.io/wasilak/alpine:3
+FROM quay.io/wasilak/alpine:3
 
 COPY --from=builder /src/go-hello-world /bin/go-hello-world
 
