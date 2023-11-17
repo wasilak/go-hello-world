@@ -1,12 +1,10 @@
-FROM  --platform=$BUILDPLATFORM quay.io/wasilak/golang:1.21-alpine as builder
-COPY --from=tonistiigi/xx:golang / /
+FROM  quay.io/wasilak/golang:1.21-alpine as builder
 
-ARG TARGETPLATFORM
-ARG BUILDPLATFORM
+LABEL org.opencontainers.image.source="https://github.com/wasilak/go-hello-world"
 
-RUN apk add --update --no-cache git
+RUN apk add --no-cache git
 
-WORKDIR /go/src/github.com/wasilak/go-hello-world/
+WORKDIR /src
 
 COPY ./ .
 
@@ -14,8 +12,8 @@ RUN go build .
 
 FROM --platform=$BUILDPLATFORM quay.io/wasilak/alpine:3
 
-COPY --from=builder /go/src/github.com/wasilak/go-hello-world/go-hello-world /usr/local/bin/go-hello-world
+COPY --from=builder /src/go-hello-world /bin/go-hello-world
 
 ENV SESSION_KEY=cmRiN3VuaTg2Zm9pZ29peWdp
 
-CMD ["/usr/local/bin/go-hello-world"]
+CMD ["/bin/go-hello-world"]
