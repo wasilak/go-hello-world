@@ -22,6 +22,7 @@ var (
 	logLevel               string
 	logFormat              string
 	otelEnabled            bool
+	profilingEnabled       bool
 	otelHostMetricsEnabled bool
 )
 
@@ -34,7 +35,12 @@ func main() {
 	flag.StringVar(&logFormat, "log-format", os.Getenv("LOG_FORMAT"), "text")
 	flag.BoolVar(&otelEnabled, "otel-enabled", false, "OpenTelemetry traces enabled")
 	flag.BoolVar(&otelHostMetricsEnabled, "otel-host-metrics", false, "OpenTelemetry host metrics enabled")
+	flag.BoolVar(&profilingEnabled, "profiling-enabled", false, "Profiling enabled")
 	flag.Parse()
+
+	if profilingEnabled {
+		initProfiling()
+	}
 
 	ctx := context.Background()
 
