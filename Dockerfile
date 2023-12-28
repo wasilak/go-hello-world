@@ -1,4 +1,4 @@
-FROM  quay.io/wasilak/golang:1.21-alpine as builder
+FROM  quay.io/wasilak/golang:1.21.5-alpine as builder
 
 LABEL org.opencontainers.image.source="https://github.com/wasilak/go-hello-world"
 
