@@ -30,7 +30,7 @@ var tracer = otel.Tracer("go-hello-world")
 
 func main() {
 
-	flag.StringVar(&listenAddr, "listen-addr", ":5000", "server listen address")
+	flag.StringVar(&listenAddr, "listen-addr", "127.0.0.1:5000", "server listen address")
 	flag.StringVar(&logLevel, "log-level", os.Getenv("LOG_LEVEL"), "info")
 	flag.StringVar(&logFormat, "log-format", os.Getenv("LOG_FORMAT"), "text")
 	flag.BoolVar(&otelEnabled, "otel-enabled", false, "OpenTelemetry traces enabled")

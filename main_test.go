@@ -50,7 +50,7 @@ func TestMainFunction(t *testing.T) {
 	time.Sleep(1 * time.Second)
 
 	// Make a request to the server
-	resp, err := http.Get(fmt.Sprintf("http://localhost%s", listenAddr))
+	resp, err := http.Get(fmt.Sprintf("http://%s", listenAddr))
 	if err != nil {
 		t.Fatalf("Failed to make request: %v", err)
 	}

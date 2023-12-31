@@ -85,8 +85,12 @@ github.com/tklauser/numcpus v0.7.0 h1:yjuerZP127QG9m5Zh/mSO4wqurYil27tHrqwRoRjpr
 github.com/tklauser/numcpus v0.7.0/go.mod h1:bb6dMVcj8A42tSE7i32fsIUCbQNllK5iDguyOZRUzAY=
 github.com/wasilak/loggergo v1.0.4 h1:INIS4HflnBARX6pC2AaQUniylxtY/AhdK00X6UsLb7Y=
 github.com/wasilak/loggergo v1.0.4/go.mod h1:grc/ElGlhJTJC31SZ6PU2LgY+ITWTg8YmRKc/0EDoMQ=
+github.com/wasilak/loggergo v1.0.5 h1:ULu4Ud9KTNbQRVoP/Gaj7dlUntG19sUWN7HQ739dJcg=
+github.com/wasilak/loggergo v1.0.5/go.mod h1:ViXxVm+721rc8o8IjCKD7BB46kjyqwc8VSAHiZ1oP7o=
 github.com/wasilak/otelgo v1.0.5 h1:NtSL9lDDBY7KNGNT0fsrsXwOR9nmvRIveQo4QUGM5xY=
 github.com/wasilak/otelgo v1.0.5/go.mod h1:k8HxxMRAbGU57LHSV+qDreQj78+ZGBIzEWwKA5UmonA=
+github.com/wasilak/otelgo v1.0.6 h1:Npzk4UllYIGBLyyZcbbUcN6Irhvy9jwjP1jOJQuHswc=
+github.com/wasilak/otelgo v1.0.6/go.mod h1:IfThI09RloZcQ9uP3q2cKRteaKCRJGv+pduvuVD2DwY=
 github.com/yusufpapurcu/wmi v1.2.3 h1:E1ctvB7uKFMOJw3fdOW32DwGE9I7t++CRUEMKvFoFiw=
 github.com/yusufpapurcu/wmi v1.2.3/go.mod h1:SBZ9tNy3G9/m5Oi98Zks0QjeHVDvuK0qfxQmPyzfmi0=
 go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.46.1 h1:Ifzy1lucGMQJh6wPRxusde8bWaDhYjSNOqDyn6Hb4TM=

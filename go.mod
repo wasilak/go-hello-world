@@ -1,14 +1,16 @@
 module github.com/wasilak/go-hello-world
 
-go 1.21.5
+go 1.21
+
+toolchain go1.21.5
 
 require (
 	github.com/arl/statsviz v0.6.0
 	github.com/gorilla/mux v1.8.1
 	github.com/grafana/pyroscope-go v1.0.4
 	github.com/stretchr/testify v1.8.4
-	github.com/wasilak/loggergo v1.0.4
-	github.com/wasilak/otelgo v1.0.5
+	github.com/wasilak/loggergo v1.0.5
+	github.com/wasilak/otelgo v1.0.6
 	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.46.1
 	go.opentelemetry.io/otel v1.21.0
 )
