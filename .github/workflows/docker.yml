@@ -19,6 +19,7 @@ jobs:
       REGISTRY: quay.io
       # github.repository as <account>/<repo>
       IMAGE_NAME: ${{ github.repository }}
+
     steps:
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
@@ -84,6 +85,9 @@ jobs:
       id-token: write
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
       - name: Extract Docker metadata
