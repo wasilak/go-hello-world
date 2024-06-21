@@ -55,7 +55,7 @@ func main() {
 		}
 	}
 
-	loggerConfig := loggergo.LoggerGoConfig{
+	loggerConfig := loggergo.Config{
 		Level:              *logLevel,
 		Format:             *logFormat,
 		OtelTracingEnabled: false,
