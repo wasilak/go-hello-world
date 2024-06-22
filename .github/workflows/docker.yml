@@ -5,9 +5,12 @@ on:
     branches: ["main"]
     # Publish semver tags as releases.
     tags: ["v*.*.*"]
+    paths-ignore:
+      - "charts/**"
   pull_request:
     branches: ["main"]
-
+    paths-ignore:
+      - "charts/**"
   workflow_dispatch:
 
 jobs:

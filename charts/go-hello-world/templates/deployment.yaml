@@ -19,7 +19,12 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
           command: ["/bin/go-hello-world"]
-          args: {{.Values.args}}
+          {{- if .Values.args }}
+          args:
+          {{- range $arg := .Values.args }}
+            - "$arg"
+          {{- end }}
+          {{- end }}
           ports:
             - name: http
               containerPort: 5000
