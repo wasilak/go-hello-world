@@ -1,3 +1,5 @@
+![icon_small](icon_small.jpg)
+
 # go-hello-world
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/7ada7f029e74c805ec1c/maintainability)](https://codeclimate.com/github/wasilak/go-hello-world/maintainability)

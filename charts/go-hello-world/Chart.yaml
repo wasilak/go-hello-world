@@ -1,6 +1,7 @@
 apiVersion: v2
 name: go-hello-world
 description: A Helm chart for go-hello-world
+# icon: https://raw.githubusercontent.com/kubernetes-sigs/cluster-api/main/site/static/images/kubernetes.png
 
 # A chart can be either an 'application' or a 'library' chart.
 #

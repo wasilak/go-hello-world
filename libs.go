@@ -5,6 +5,7 @@ import (
 	"encoding/hex"
 	"net/http"
 	"net/url"
+	"os"
 	"time"
 
 	"log/slog"
@@ -73,4 +74,15 @@ func GenerateKey() (string, error) {
 
 	return hex.EncodeToString(bytes), nil //encode key in bytes to string for saving
 
+}
+
+func GetAppName() string {
+	appName := os.Getenv("OTEL_SERVICE_NAME")
+	if appName == "" {
+		appName = os.Getenv("APP_NAME")
+		if appName == "" {
+			appName = "go-hello-world"
+		}
+	}
+	return appName
 }

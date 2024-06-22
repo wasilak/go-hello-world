@@ -5,7 +5,7 @@
 replicaCount: "1"
 
 image:
-  repository: quay.io/wasilak/go-hello-world
+  repository: ghcr.io/wasilak/go-hello-world
   pullPolicy: IfNotPresent
   tag: "latest"
 service:
@@ -15,3 +15,16 @@ service:
   targetPort: 5000
 
 imagePullPolicy: Always
+
+args:
+  - "-listen-addr=:5000"
+  - "-log-format=json"
+  - "-log-level=info"
+  # - "-otel-enabled"
+
+env:
+  []
+  # - name: "OTEL_SERVICE_NAME"
+  #   value: "go-hello-world"
+  # - name: "OTEL_EXPORTER_OTLP_ENDPOINT"
+  #   value: ""

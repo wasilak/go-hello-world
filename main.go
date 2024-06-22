@@ -18,23 +18,25 @@ import (
 	"github.com/wasilak/profilego"
 )
 
-var tracer = otel.Tracer("go-hello-world")
+var tracer = otel.Tracer(GetAppName())
 
 func main() {
 
 	listenAddr := flag.String("listen-addr", "127.0.0.1:5000", "server listen address")
-	logLevel := flag.String("log-level", os.Getenv("LOG_LEVEL"), "info")
-	logFormat := flag.String("log-format", os.Getenv("LOG_FORMAT"), "text")
+	logLevel := flag.String("log-level", os.Getenv("LOG_LEVEL"), "log level (debug, info, warn, error, fatal)")
+	logFormat := flag.String("log-format", os.Getenv("LOG_FORMAT"), "log format (json, plain, otel)")
+	devMode := flag.Bool("dev-mode", false, "Development mode")
 	otelEnabled := flag.Bool("otel-enabled", false, "OpenTelemetry traces enabled")
 	otelHostMetricsEnabled := flag.Bool("otel-host-metrics", false, "OpenTelemetry host metrics enabled")
 	otelRuntimeMetricsEnabled := flag.Bool("otel-runtime-metrics", false, "OpenTelemetry runtime metrics enabled")
 	profilingEnabled := flag.Bool("profiling-enabled", false, "Profiling enabled")
+	profilingAddress := flag.String("profiling-address", "127.0.0.1:4040", "Profiling address")
 	flag.Parse()
 
 	if *profilingEnabled {
 		profileGoConfig := profilego.ProfileGoConfig{
-			ApplicationName: "go-hello-world",
-			ServerAddress:   "",
+			ApplicationName: GetAppName(),
+			ServerAddress:   *profilingAddress,
 			Type:            "pyroscope",
 			Tags:            map[string]string{},
 		}
@@ -42,6 +44,14 @@ func main() {
 	}
 
 	ctx := context.Background()
+
+	loggerConfig := loggergo.Config{
+		Level:        *logLevel,
+		Format:       *logFormat,
+		OutputStream: os.Stdout,
+		DevMode:      *devMode,
+		Mode:         "console",
+	}
 
 	if *otelEnabled {
 		otelGoTracingConfig := otelgotracer.OtelGoTracingConfig{
@@ -53,16 +63,11 @@ func main() {
 			slog.ErrorContext(ctx, err.Error())
 			os.Exit(1)
 		}
-	}
 
-	loggerConfig := loggergo.Config{
-		Level:              *logLevel,
-		Format:             *logFormat,
-		OtelTracingEnabled: false,
-		OtelLoggerName:     "github.com/wasilak/go-hello-world",
-		OutputStream:       os.Stdout,
-		DevMode:            true,
-		Mode:               "otel",
+		loggerConfig.OtelServiceName = os.Getenv("OTEL_SERVICE_NAME")
+		loggerConfig.Mode = "fanout"
+		loggerConfig.OtelLoggerName = "github.com/wasilak/go-hello-world"
+		loggerConfig.OtelTracingEnabled = false
 	}
 
 	_, err := loggergo.LoggerInit(ctx, loggerConfig)

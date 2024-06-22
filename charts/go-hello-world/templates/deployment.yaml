@@ -18,6 +18,8 @@ spec:
         - name: "{{ .Chart.Name }}"
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
+          command: ["./go-hello-world"]
+          args: {{.Values.args}}
           ports:
             - name: http
               containerPort: 5000
@@ -29,3 +31,11 @@ spec:
               port: 5000
             initialDelaySeconds: 2
             periodSeconds: 3
+
+            {{- if .Values.env }}
+            env:
+            {{- range $env := .Values.env }}
+              - name: {{ $env.key }}
+                value: {{ $env.value }}
+            {{- end }}
+            {{- end }}
