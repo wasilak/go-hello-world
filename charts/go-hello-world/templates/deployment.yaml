@@ -22,7 +22,7 @@ spec:
           {{- if .Values.args }}
           args:
           {{- range $arg := .Values.args }}
-            - "$arg"
+            - "{{ $arg }}"
           {{- end }}
           {{- end }}
           ports:
