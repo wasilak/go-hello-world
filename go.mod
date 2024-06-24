@@ -6,7 +6,7 @@ require (
 	github.com/arl/statsviz v0.6.0
 	github.com/gorilla/mux v1.8.1
 	github.com/stretchr/testify v1.9.0
-	github.com/wasilak/loggergo v1.2.4
+	github.com/wasilak/loggergo v1.2.10
 	github.com/wasilak/otelgo v1.0.15
 	github.com/wasilak/profilego v1.0.4
 	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.52.0

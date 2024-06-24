@@ -65,8 +65,8 @@ github.com/tklauser/go-sysconf v0.3.14 h1:g5vzr9iPFFz24v2KZXs/pvpvh8/V9Fw6vQK5ZZ
 github.com/tklauser/go-sysconf v0.3.14/go.mod h1:1ym4lWMLUOhuBOPGtRcJm7tEGX4SCYNEEEtghGG/8uY=
 github.com/tklauser/numcpus v0.8.0 h1:Mx4Wwe/FjZLeQsK/6kt2EOepwwSl7SmJrK5bV/dXYgY=
 github.com/tklauser/numcpus v0.8.0/go.mod h1:ZJZlAY+dmR4eut8epnzf0u/VwodKmryxR8txiloSqBE=
-github.com/wasilak/loggergo v1.2.4 h1:sYQ0DA5jRfp/6TPR8dDXWEYSf7fwOeEii1L/CXNja8M=
-github.com/wasilak/loggergo v1.2.4/go.mod h1:82kUa8QdUQV9Nq32I/t0Y4QryLJRapGESV7DDNCfKEc=
+github.com/wasilak/loggergo v1.2.10 h1:hygXFXmZfNcLqZKfqxWYfFhedStNtoebmap3ySsKf8g=
+github.com/wasilak/loggergo v1.2.10/go.mod h1:82kUa8QdUQV9Nq32I/t0Y4QryLJRapGESV7DDNCfKEc=
 github.com/wasilak/otelgo v1.0.15 h1:uSVeuQxS8m522xe3OyPJ3qbtnXcfiW5ny1AvuQLHtP8=
 github.com/wasilak/otelgo v1.0.15/go.mod h1:7PiaT1gl+bUUV0EbTdrAc4k/K5SZKf1vd1Y4lJrw21M=
 github.com/wasilak/profilego v1.0.4 h1:lC5Ftq4yNhft8w5cSjbytSlU/7SCtlc7Vp3aGHepB+U=

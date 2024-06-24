@@ -46,11 +46,11 @@ func main() {
 	ctx := context.Background()
 
 	loggerConfig := loggergo.Config{
-		Level:        *logLevel,
-		Format:       *logFormat,
+		Level:        loggergo.LogLevelFromString(*logLevel),
+		Format:       loggergo.LogFormatFromString(*logFormat),
 		OutputStream: os.Stdout,
 		DevMode:      *devMode,
-		Mode:         "console",
+		Output:       loggergo.OutputConsole,
 	}
 
 	if *otelEnabled {
@@ -65,7 +65,7 @@ func main() {
 		}
 
 		loggerConfig.OtelServiceName = os.Getenv("OTEL_SERVICE_NAME")
-		loggerConfig.Mode = "fanout"
+		loggerConfig.Output = loggergo.OutputFanout
 		loggerConfig.OtelLoggerName = "github.com/wasilak/go-hello-world"
 		loggerConfig.OtelTracingEnabled = false
 	}
