@@ -34,7 +34,7 @@ func main() {
 	flag.Parse()
 
 	if *profilingEnabled {
-		profileGoConfig := profilego.ProfileGoConfig{
+		profileGoConfig := profilego.Config{
 			ApplicationName: GetAppName(),
 			ServerAddress:   *profilingAddress,
 			Type:            "pyroscope",
@@ -54,7 +54,7 @@ func main() {
 	}
 
 	if *otelEnabled {
-		otelGoTracingConfig := otelgotracer.OtelGoTracingConfig{
+		otelGoTracingConfig := otelgotracer.Config{
 			HostMetricsEnabled:    *otelHostMetricsEnabled,
 			RuntimeMetricsEnabled: *otelRuntimeMetricsEnabled,
 		}
