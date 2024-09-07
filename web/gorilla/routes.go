@@ -3,7 +3,6 @@ package gorilla
 import (
 	"encoding/json"
 	"net/http"
-	"os"
 
 	"log/slog"
 
@@ -25,21 +24,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 	ctx, spanResponse := tracer.Start(r.Context(), "response")
-
-	hostname, _ := os.Hostname()
-	response := web.APIResponse{
-		Host: hostname,
-		Request: web.APIResponseRequest{
-			Host:       r.Host,
-			URL:        r.URL,
-			RemoteAddr: r.RemoteAddr,
-			RequestURI: r.RequestURI,
-			Method:     r.Method,
-			Proto:      r.Proto,
-			UserAgent:  r.UserAgent(),
-			Headers:    r.Header,
-		},
-	}
+	response := web.ConstructResponse(r)
 	spanResponse.End()
 
 	slog.DebugContext(ctx, "rootHandler", "response", response)

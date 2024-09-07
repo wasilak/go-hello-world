@@ -3,12 +3,16 @@ module github.com/wasilak/go-hello-world
 go 1.23
 
 require (
+	github.com/766b/chi-prometheus v0.0.0-20211217152057-87afa9aa2ca8
 	github.com/arl/statsviz v0.6.0
+	github.com/go-chi/chi/v5 v5.1.0
 	github.com/gorilla/mux v1.8.1
 	github.com/labstack/echo-contrib v0.17.1
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/labstack/gommon v0.4.2
-	github.com/prometheus/client_golang v1.19.0
+	github.com/prometheus/client_golang v1.20.3
+	github.com/riandyrn/otelchi v0.9.0
+	github.com/samber/slog-chi v1.11.1
 	github.com/samber/slog-echo v1.14.6
 	github.com/stretchr/testify v1.9.0
 	github.com/wasilak/loggergo v1.5.0
@@ -27,6 +31,7 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
+	github.com/go-chi/chi v1.5.5 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-ole/go-ole v1.3.0 // indirect
@@ -42,11 +47,12 @@ require (
 	github.com/lufia/plan9stats v0.0.0-20240819163618-b1d8f4d146e7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
-	github.com/prometheus/common v0.53.0 // indirect
-	github.com/prometheus/procfs v0.13.0 // indirect
+	github.com/prometheus/common v0.59.1 // indirect
+	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/samber/lo v1.47.0 // indirect
 	github.com/samber/slog-multi v1.2.1 // indirect
 	github.com/shirou/gopsutil/v4 v4.24.8 // indirect

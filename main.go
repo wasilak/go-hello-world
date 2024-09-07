@@ -11,6 +11,7 @@ import (
 	"go.opentelemetry.io/otel"
 
 	"github.com/wasilak/go-hello-world/utils"
+	"github.com/wasilak/go-hello-world/web/chi"
 	"github.com/wasilak/go-hello-world/web/echo"
 	"github.com/wasilak/go-hello-world/web/gorilla"
 	"github.com/wasilak/loggergo"
@@ -93,5 +94,8 @@ func main() {
 	case "gorilla":
 		slog.DebugContext(ctx, "Starting Gorilla server")
 		gorilla.Init(ctx, listenAddr, otelEnabled, statsvizEnabled, tracer)
+	case "chi":
+		slog.DebugContext(ctx, "Starting Chi server")
+		chi.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer)
 	}
 }

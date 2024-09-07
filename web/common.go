@@ -3,6 +3,7 @@ package web
 import (
 	"net/http"
 	"net/url"
+	"os"
 )
 
 // HealthResponse type
@@ -26,4 +27,22 @@ type APIResponseRequest struct {
 type APIResponse struct {
 	Host    string             `json:"host"`
 	Request APIResponseRequest `json:"request"`
+}
+
+func ConstructResponse(r *http.Request) APIResponse {
+	hostname, _ := os.Hostname()
+	response := APIResponse{
+		Host: hostname,
+		Request: APIResponseRequest{
+			Host:       r.Host,
+			URL:        r.URL,
+			RemoteAddr: r.RemoteAddr,
+			RequestURI: r.RequestURI,
+			Method:     r.Method,
+			Proto:      r.Proto,
+			UserAgent:  r.UserAgent(),
+			Headers:    r.Header,
+		},
+	}
+	return response
 }
