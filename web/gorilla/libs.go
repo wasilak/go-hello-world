@@ -1,11 +1,8 @@
-package main
+package gorilla
 
 import (
-	"crypto/rand"
-	"encoding/hex"
 	"net/http"
 	"net/url"
-	"os"
 	"time"
 
 	"log/slog"
@@ -38,7 +35,7 @@ type APIResponse struct {
 }
 
 // Chain applies middlewares to a http.HandlerFunc
-func Chain(f http.HandlerFunc, middlewares ...Middleware) http.HandlerFunc {
+func chain(f http.HandlerFunc, middlewares ...Middleware) http.HandlerFunc {
 	for _, m := range middlewares {
 		f = m(f)
 	}
@@ -46,7 +43,7 @@ func Chain(f http.HandlerFunc, middlewares ...Middleware) http.HandlerFunc {
 }
 
 // Logging logs all requests with its path and the time it took to process
-func Logging() Middleware {
+func logging() Middleware {
 
 	// Create a new Middleware
 	return func(f http.HandlerFunc) http.HandlerFunc {
@@ -64,25 +61,4 @@ func Logging() Middleware {
 			f(w, r)
 		}
 	}
-}
-
-func GenerateKey() (string, error) {
-	bytes := make([]byte, 32) //generate a random 32 byte key for AES-256
-	if _, err := rand.Read(bytes); err != nil {
-		return "", err
-	}
-
-	return hex.EncodeToString(bytes), nil //encode key in bytes to string for saving
-
-}
-
-func GetAppName() string {
-	appName := os.Getenv("OTEL_SERVICE_NAME")
-	if appName == "" {
-		appName = os.Getenv("APP_NAME")
-		if appName == "" {
-			appName = "go-hello-world"
-		}
-	}
-	return appName
 }

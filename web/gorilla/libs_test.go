@@ -1,12 +1,9 @@
-package main
+package gorilla
 
 import (
-	"encoding/hex"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestChain(t *testing.T) {
@@ -38,7 +35,7 @@ func TestChain(t *testing.T) {
 	}
 
 	// Apply the middlewares using the Chain function
-	handler := Chain(mockHandler, middleware1, middleware2)
+	handler := chain(mockHandler, middleware1, middleware2)
 
 	// Create a test server with the wrapped handler
 	server := httptest.NewServer(handler)
@@ -72,7 +69,7 @@ func TestLoggingMiddleware(t *testing.T) {
 	})
 
 	// Create a test server with the middleware applied
-	handler := Logging()(mockHandler)
+	handler := logging()(mockHandler)
 	server := httptest.NewServer(handler)
 	defer server.Close()
 
@@ -94,33 +91,4 @@ func TestLoggingMiddleware(t *testing.T) {
 	if resp.StatusCode != http.StatusOK {
 		t.Errorf("Unexpected status code. Expected: %d, Got: %d", http.StatusOK, resp.StatusCode)
 	}
-}
-
-func TestGenerateKey(t *testing.T) {
-	t.Run("Valid Key Generation", func(t *testing.T) {
-		key, err := GenerateKey()
-		assert.NoError(t, err, "Expected no error during key generation")
-		assert.Len(t, key, 64, "Expected key length of 64 characters")
-	})
-
-	t.Run("Randomness", func(t *testing.T) {
-		// Generate multiple keys and verify they are different
-		keys := make(map[string]struct{})
-		for i := 0; i < 100; i++ {
-			key, err := GenerateKey()
-			assert.NoError(t, err, "Expected no error during key generation")
-			_, exists := keys[key]
-			assert.False(t, exists, "Expected unique keys")
-			keys[key] = struct{}{}
-		}
-	})
-
-	t.Run("Key Length", func(t *testing.T) {
-		key, err := GenerateKey()
-		assert.NoError(t, err, "Expected no error during key generation")
-
-		decoded, err := hex.DecodeString(key)
-		assert.NoError(t, err, "Expected no error during key decoding")
-		assert.Len(t, decoded, 32, "Expected key length of 32 bytes")
-	})
 }

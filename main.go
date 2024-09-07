@@ -3,17 +3,14 @@ package main
 import (
 	"context"
 	"flag"
-	"net/http"
 	"os"
 
 	"log/slog"
 
-	"github.com/arl/statsviz"
-	"github.com/gorilla/mux"
 	otelgotracer "github.com/wasilak/otelgo/tracing"
-	"go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
 	"go.opentelemetry.io/otel"
 
+	"github.com/wasilak/go-hello-world/web/gorilla"
 	"github.com/wasilak/loggergo"
 	"github.com/wasilak/profilego"
 )
@@ -21,16 +18,17 @@ import (
 var tracer = otel.Tracer(GetAppName())
 
 func main() {
+	ctx := context.Background()
 
-	listenAddr := flag.String("listen-addr", "127.0.0.1:5000", "server listen address")
+	listenAddr := flag.String("listen-addr", "127.0.0.1:3000", "server listen address")
 	logLevel := flag.String("log-level", os.Getenv("LOG_LEVEL"), "log level (debug, info, warn, error, fatal)")
 	logFormat := flag.String("log-format", os.Getenv("LOG_FORMAT"), "log format (json, plain, otel)")
-	devMode := flag.Bool("dev-mode", false, "Development mode")
 	otelEnabled := flag.Bool("otel-enabled", false, "OpenTelemetry traces enabled")
 	otelHostMetricsEnabled := flag.Bool("otel-host-metrics", false, "OpenTelemetry host metrics enabled")
 	otelRuntimeMetricsEnabled := flag.Bool("otel-runtime-metrics", false, "OpenTelemetry runtime metrics enabled")
 	profilingEnabled := flag.Bool("profiling-enabled", false, "Profiling enabled")
 	profilingAddress := flag.String("profiling-address", "127.0.0.1:4040", "Profiling address")
+	webFramework := flag.String("web-framework", "gorilla", "Web framework (gorilla, echo, gin, chi)")
 	flag.Parse()
 
 	if *profilingEnabled {
@@ -43,13 +41,11 @@ func main() {
 		profilego.Init(profileGoConfig)
 	}
 
-	ctx := context.Background()
-
 	loggerConfig := loggergo.Config{
 		Level:        loggergo.LogLevelFromString(*logLevel),
 		Format:       loggergo.LogFormatFromString(*logFormat),
 		OutputStream: os.Stdout,
-		DevMode:      *devMode,
+		DevMode:      loggergo.LogLevelFromString(*logLevel) == slog.LevelDebug && *logFormat == "plain",
 		Output:       loggergo.OutputConsole,
 	}
 
@@ -76,19 +72,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	router := mux.NewRouter()
+	slog.DebugContext(ctx, "flags", "listen-addr", *listenAddr, "log-level", *logLevel, "log-format", *logFormat, "otel-enabled", *otelEnabled, "profiling-enabled", *profilingEnabled, "profiling-address", *profilingAddress, "web-framework", *webFramework)
 
-	router.HandleFunc("/", Chain(rootHandler, Logging()))
-	router.HandleFunc("/health", Chain(healthHandler, Logging()))
-
-	// Create statsviz server and register the handlers on the router.
-	srv, _ := statsviz.NewServer()
-	router.Methods("GET").Path("/debug/statsviz/ws").Name("GET /debug/statsviz/ws").HandlerFunc(srv.Ws())
-	router.Methods("GET").PathPrefix("/debug/statsviz/").Name("GET /debug/statsviz/").Handler(srv.Index())
-
-	if *otelEnabled {
-		router.Use(otelmux.Middleware(os.Getenv("OTEL_SERVICE_NAME")))
+	if *webFramework == "gorilla" {
+		slog.DebugContext(ctx, "Starting Gorilla server")
+		gorilla.Init(ctx, listenAddr, otelEnabled, profilingEnabled, tracer)
 	}
-
-	http.ListenAndServe(*listenAddr, router)
 }

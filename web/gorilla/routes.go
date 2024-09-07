@@ -1,4 +1,4 @@
-package main
+package gorilla
 
 import (
 	"encoding/json"
@@ -10,9 +10,14 @@ import (
 )
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
+	slog.DebugContext(r.Context(), "healthHandler called")
+	w.WriteHeader(http.StatusOK)
 	response := HealthResponse{Status: "ok"}
 	_, spanJsonEncode := tracer.Start(r.Context(), "json encode response")
-	json.NewEncoder(w).Encode(response)
+	err := json.NewEncoder(w).Encode(response)
+	if err != nil {
+		slog.ErrorContext(r.Context(), "Failed to encode response", "error", err)
+	}
 	spanJsonEncode.End()
 }
 

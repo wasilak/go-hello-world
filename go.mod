@@ -11,6 +11,7 @@ require (
 	github.com/wasilak/profilego v1.0.7
 	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.54.0
 	go.opentelemetry.io/otel v1.29.0
+	go.opentelemetry.io/otel/trace v1.29.0
 )
 
 require (
@@ -57,7 +58,6 @@ require (
 	go.opentelemetry.io/otel/sdk v1.29.0 // indirect
 	go.opentelemetry.io/otel/sdk/log v0.5.0 // indirect
 	go.opentelemetry.io/otel/sdk/metric v1.29.0 // indirect
-	go.opentelemetry.io/otel/trace v1.29.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.3.1 // indirect
 	golang.org/x/net v0.28.0 // indirect
 	golang.org/x/sys v0.24.0 // indirect
