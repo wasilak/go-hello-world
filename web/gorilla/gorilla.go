@@ -4,11 +4,11 @@ import (
 	"context"
 	"log/slog"
 	"net/http"
-	"os"
 
 	"github.com/arl/statsviz"
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/wasilak/go-hello-world/utils"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -36,7 +36,7 @@ func Init(ctx context.Context, listenAddr *string, otelEnabled, statsvizEnabled 
 	}
 
 	if *otelEnabled {
-		router.Use(otelmux.Middleware(os.Getenv("OTEL_SERVICE_NAME")))
+		router.Use(otelmux.Middleware(utils.GetAppName()))
 	}
 
 	slog.DebugContext(ctx, "Starting server", "address", *listenAddr)

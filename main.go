@@ -63,7 +63,7 @@ func main() {
 			os.Exit(1)
 		}
 
-		loggerConfig.OtelServiceName = os.Getenv("OTEL_SERVICE_NAME")
+		loggerConfig.OtelServiceName = utils.GetAppName()
 		loggerConfig.Output = loggergo.OutputFanout
 		loggerConfig.OtelLoggerName = "github.com/wasilak/go-hello-world"
 		loggerConfig.OtelTracingEnabled = false
