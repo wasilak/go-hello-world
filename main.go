@@ -75,7 +75,16 @@ func main() {
 		os.Exit(1)
 	}
 
-	slog.DebugContext(ctx, "flags", "listen-addr", *listenAddr, "log-level", *logLevel, "log-format", *logFormat, "otel-enabled", *otelEnabled, "profiling-enabled", *profilingEnabled, "profiling-address", *profilingAddress, "web-framework", *webFramework)
+	slog.DebugContext(ctx, "flags",
+		"listen-addr", *listenAddr,
+		"log-level", *logLevel,
+		"log-format", *logFormat,
+		"otel-enabled", *otelEnabled,
+		"profiling-enabled", *profilingEnabled,
+		"profiling-address", *profilingAddress,
+		"web-framework", *webFramework,
+		"statsviz-enabled", *statsvizEnabled,
+	)
 
 	switch *webFramework {
 	case "echo":

@@ -16,6 +16,7 @@ import (
 var tracer trace.Tracer
 
 func Init(ctx context.Context, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
+	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
 	tracer = tr
 	router := mux.NewRouter()
 
@@ -28,6 +29,8 @@ func Init(ctx context.Context, listenAddr *string, otelEnabled, statsvizEnabled 
 	if *statsvizEnabled {
 		// Create statsviz server and register the handlers on the router.
 		srv, _ := statsviz.NewServer()
+
+		slog.DebugContext(ctx, "Statsviz enabled", "address", "/debug/statsviz/")
 		router.Methods("GET").Path("/debug/statsviz/ws").Name("GET /debug/statsviz/ws").HandlerFunc(srv.Ws())
 		router.Methods("GET").PathPrefix("/debug/statsviz/").Name("GET /debug/statsviz/").Handler(srv.Index())
 	}
@@ -35,8 +38,6 @@ func Init(ctx context.Context, listenAddr *string, otelEnabled, statsvizEnabled 
 	if *otelEnabled {
 		router.Use(otelmux.Middleware(os.Getenv("OTEL_SERVICE_NAME")))
 	}
-
-	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
 
 	slog.DebugContext(ctx, "Starting server", "address", *listenAddr)
 	http.ListenAndServe(*listenAddr, router)

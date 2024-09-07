@@ -20,6 +20,8 @@ import (
 var tracer trace.Tracer
 
 func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
+	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
+
 	tracer = tr
 
 	e := echo.New()
@@ -66,8 +68,6 @@ func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsv
 		// Serve static content for statsviz UI
 		e.GET("/debug/statsviz/*", echo.WrapHandler(mux))
 	}
-
-	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
 
 	slog.DebugContext(ctx, "Starting server", "address", *listenAddr)
 	e.Logger.Fatal(e.Start(*listenAddr))
