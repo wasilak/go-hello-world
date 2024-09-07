@@ -10,12 +10,14 @@ import (
 	otelgotracer "github.com/wasilak/otelgo/tracing"
 	"go.opentelemetry.io/otel"
 
+	"github.com/wasilak/go-hello-world/utils"
+	"github.com/wasilak/go-hello-world/web/echo"
 	"github.com/wasilak/go-hello-world/web/gorilla"
 	"github.com/wasilak/loggergo"
 	"github.com/wasilak/profilego"
 )
 
-var tracer = otel.Tracer(GetAppName())
+var tracer = otel.Tracer(utils.GetAppName())
 
 func main() {
 	ctx := context.Background()
@@ -26,6 +28,7 @@ func main() {
 	otelEnabled := flag.Bool("otel-enabled", false, "OpenTelemetry traces enabled")
 	otelHostMetricsEnabled := flag.Bool("otel-host-metrics", false, "OpenTelemetry host metrics enabled")
 	otelRuntimeMetricsEnabled := flag.Bool("otel-runtime-metrics", false, "OpenTelemetry runtime metrics enabled")
+	statsvizEnabled := flag.Bool("statsviz-enabled", false, "statsviz enabled")
 	profilingEnabled := flag.Bool("profiling-enabled", false, "Profiling enabled")
 	profilingAddress := flag.String("profiling-address", "127.0.0.1:4040", "Profiling address")
 	webFramework := flag.String("web-framework", "gorilla", "Web framework (gorilla, echo, gin, chi)")
@@ -33,7 +36,7 @@ func main() {
 
 	if *profilingEnabled {
 		profileGoConfig := profilego.Config{
-			ApplicationName: GetAppName(),
+			ApplicationName: utils.GetAppName(),
 			ServerAddress:   *profilingAddress,
 			Type:            "pyroscope",
 			Tags:            map[string]string{},
@@ -74,8 +77,12 @@ func main() {
 
 	slog.DebugContext(ctx, "flags", "listen-addr", *listenAddr, "log-level", *logLevel, "log-format", *logFormat, "otel-enabled", *otelEnabled, "profiling-enabled", *profilingEnabled, "profiling-address", *profilingAddress, "web-framework", *webFramework)
 
-	if *webFramework == "gorilla" {
+	switch *webFramework {
+	case "echo":
+		slog.DebugContext(ctx, "Starting Echo server")
+		echo.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer)
+	case "gorilla":
 		slog.DebugContext(ctx, "Starting Gorilla server")
-		gorilla.Init(ctx, listenAddr, otelEnabled, profilingEnabled, tracer)
+		gorilla.Init(ctx, listenAddr, otelEnabled, statsvizEnabled, tracer)
 	}
 }

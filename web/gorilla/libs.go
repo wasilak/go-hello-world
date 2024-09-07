@@ -1,38 +1,33 @@
 package gorilla
 
 import (
+	"fmt"
 	"net/http"
-	"net/url"
+	"strings"
 	"time"
 
 	"log/slog"
+
+	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/promauto"
+	"github.com/wasilak/go-hello-world/utils"
+)
+
+var (
+	httpDuration = promauto.NewHistogramVec(prometheus.HistogramOpts{
+		Name: fmt.Sprintf("%s_http_duration_seconds", strings.ReplaceAll(utils.GetAppName(), "-", "_")),
+		Help: "Duration of HTTP requests.",
+	}, []string{"path"})
+
+	requestCounter = promauto.NewCounterVec(prometheus.CounterOpts{
+		Name: fmt.Sprintf("%s_requests_count_total", strings.ReplaceAll(utils.GetAppName(), "-", "_")),
+		Help: "HTTP requests count.",
+	}, []string{"path", "host"})
 )
 
 // Middleware type
 type Middleware func(http.HandlerFunc) http.HandlerFunc
-
-// HealthResponse type
-type HealthResponse struct {
-	Status string `json:"status"`
-}
-
-// APIResponseRequest type
-type APIResponseRequest struct {
-	Host       string      `json:"host"`
-	RemoteAddr string      `json:"remote_addr"`
-	RequestURI string      `json:"request_uri"`
-	Method     string      `json:"method"`
-	Proto      string      `json:"proto"`
-	UserAgent  string      `json:"user_agent"`
-	URL        *url.URL    `json:"url"`
-	Headers    http.Header `json:"headers"`
-}
-
-// APIResponse type
-type APIResponse struct {
-	Host    string             `json:"host"`
-	Request APIResponseRequest `json:"request"`
-}
 
 // Chain applies middlewares to a http.HandlerFunc
 func chain(f http.HandlerFunc, middlewares ...Middleware) http.HandlerFunc {
@@ -61,4 +56,16 @@ func logging() Middleware {
 			f(w, r)
 		}
 	}
+}
+
+// prometheusMiddleware implements mux.MiddlewareFunc.
+func prometheusMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		route := mux.CurrentRoute(r)
+		path, _ := route.GetPathTemplate()
+		timer := prometheus.NewTimer(httpDuration.WithLabelValues(path))
+		requestCounter.With(prometheus.Labels{"path": path, "host": r.Host}).Inc()
+		next.ServeHTTP(w, r)
+		timer.ObserveDuration()
+	})
 }

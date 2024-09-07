@@ -8,20 +8,24 @@ import (
 
 	"github.com/arl/statsviz"
 	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
 	"go.opentelemetry.io/otel/trace"
 )
 
 var tracer trace.Tracer
 
-func Init(ctx context.Context, listenAddr *string, otelEnabled, profilingEnabled *bool, t trace.Tracer) {
-	tracer = t
+func Init(ctx context.Context, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
+	tracer = tr
 	router := mux.NewRouter()
+
+	router.Use(prometheusMiddleware)
+	router.Path("/metrics").Handler(promhttp.Handler())
 
 	router.HandleFunc("/", chain(rootHandler, logging()))
 	router.HandleFunc("/health", chain(healthHandler, logging()))
 
-	if *profilingEnabled {
+	if *statsvizEnabled {
 		// Create statsviz server and register the handlers on the router.
 		srv, _ := statsviz.NewServer()
 		router.Methods("GET").Path("/debug/statsviz/ws").Name("GET /debug/statsviz/ws").HandlerFunc(srv.Ws())
@@ -32,7 +36,7 @@ func Init(ctx context.Context, listenAddr *string, otelEnabled, profilingEnabled
 		router.Use(otelmux.Middleware(os.Getenv("OTEL_SERVICE_NAME")))
 	}
 
-	slog.DebugContext(ctx, "Features supported", "loggergo", true, "profiling", true, "tracing", true)
+	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
 
 	slog.DebugContext(ctx, "Starting server", "address", *listenAddr)
 	http.ListenAndServe(*listenAddr, router)
