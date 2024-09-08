@@ -20,8 +20,6 @@ import (
 var tracer trace.Tracer
 
 func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
-	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
-
 	tracer = tr
 
 	e := echo.New()

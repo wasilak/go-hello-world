@@ -14,6 +14,7 @@ import (
 	"github.com/wasilak/go-hello-world/utils"
 	"github.com/wasilak/go-hello-world/web/chi"
 	"github.com/wasilak/go-hello-world/web/echo"
+	"github.com/wasilak/go-hello-world/web/fiber"
 	"github.com/wasilak/go-hello-world/web/gin"
 	"github.com/wasilak/go-hello-world/web/gorilla"
 	"github.com/wasilak/loggergo"
@@ -34,7 +35,7 @@ func main() {
 	statsvizEnabled := flag.Bool("statsviz-enabled", false, "statsviz enabled")
 	profilingEnabled := flag.Bool("profiling-enabled", false, "Profiling enabled")
 	profilingAddress := flag.String("profiling-address", "127.0.0.1:4040", "Profiling address")
-	webFramework := flag.String("web-framework", "gorilla", "Web framework (gorilla, echo, gin, chi)")
+	webFramework := flag.String("web-framework", "gorilla", "Web framework (gorilla, echo, gin, chi, fiber)")
 	flag.Parse()
 
 	if *profilingEnabled {
@@ -93,17 +94,25 @@ func main() {
 	)
 
 	switch *webFramework {
-	case "echo":
-		slog.DebugContext(ctx, "Starting Echo server")
-		echo.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer)
 	case "gorilla":
 		slog.DebugContext(ctx, "Starting Gorilla server")
+		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
 		gorilla.Init(ctx, listenAddr, otelEnabled, statsvizEnabled, tracer)
+	case "echo":
+		slog.DebugContext(ctx, "Starting Echo server")
+		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
+		echo.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer)
 	case "chi":
 		slog.DebugContext(ctx, "Starting Chi server")
+		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
 		chi.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer)
 	case "gin":
 		slog.DebugContext(ctx, "Starting Gin server")
+		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
 		gin.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer, &traceProvider)
+	case "fiber":
+		slog.DebugContext(ctx, "Starting Fiber server")
+		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
+		fiber.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer)
 	}
 }

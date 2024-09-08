@@ -4,10 +4,14 @@ go 1.23
 
 require (
 	github.com/766b/chi-prometheus v0.0.0-20211217152057-87afa9aa2ca8
+	github.com/ansrivas/fiberprometheus/v2 v2.7.0
 	github.com/arl/statsviz v0.6.0
 	github.com/gin-contrib/gzip v1.0.1
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-chi/chi/v5 v5.1.0
+	github.com/gofiber/adaptor/v2 v2.2.1
+	github.com/gofiber/contrib/otelfiber/v2 v2.1.1
+	github.com/gofiber/fiber/v2 v2.52.5
 	github.com/gorilla/mux v1.8.1
 	github.com/labstack/echo-contrib v0.17.1
 	github.com/labstack/echo/v4 v4.12.0
@@ -18,6 +22,7 @@ require (
 	github.com/samber/slog-echo v1.14.6
 	github.com/samber/slog-gin v1.13.4
 	github.com/stretchr/testify v1.9.0
+	github.com/valyala/fasthttp v1.55.0
 	github.com/wasilak/loggergo v1.5.0
 	github.com/wasilak/otelgo v1.1.1
 	github.com/wasilak/profilego v1.0.7
@@ -31,6 +36,7 @@ require (
 
 require (
 	dario.cat/mergo v1.0.1 // indirect
+	github.com/andybalholm/brotli v1.1.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bytedance/sonic v1.12.1 // indirect
 	github.com/bytedance/sonic/loader v0.2.0 // indirect
@@ -65,6 +71,7 @@ require (
 	github.com/lufia/plan9stats v0.0.0-20240819163618-b1d8f4d146e7 // indirect
 	github.com/mattn/go-colorable v0.1.13 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/mattn/go-runewidth v0.0.15 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
@@ -74,6 +81,7 @@ require (
 	github.com/prometheus/client_model v0.6.1 // indirect
 	github.com/prometheus/common v0.59.1 // indirect
 	github.com/prometheus/procfs v0.15.1 // indirect
+	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/samber/lo v1.47.0 // indirect
 	github.com/samber/slog-multi v1.2.1 // indirect
 	github.com/shirou/gopsutil/v4 v4.24.8 // indirect
@@ -85,8 +93,10 @@ require (
 	github.com/ugorji/go/codec v1.2.12 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
+	github.com/valyala/tcplisten v1.0.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
 	gitlab.com/greyxor/slogor v1.2.11 // indirect
+	go.opentelemetry.io/contrib v1.20.0 // indirect
 	go.opentelemetry.io/contrib/bridges/otelslog v0.4.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/host v0.54.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.54.0 // indirect
