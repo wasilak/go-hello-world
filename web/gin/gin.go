@@ -19,9 +19,18 @@ import (
 
 var tracer trace.Tracer
 
+type slogWriter struct{}
+
+func (sw slogWriter) Write(p []byte) (n int, err error) {
+	slog.Default().Info(string(p))
+	return len(p), nil
+}
+
 func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer, traceProvider *trace.TracerProvider) {
 	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
 	tracer = tr
+
+	gin.DefaultWriter = slogWriter{}
 
 	// Create a Gin router
 	r := gin.Default()
