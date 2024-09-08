@@ -9,10 +9,12 @@ import (
 
 	otelgotracer "github.com/wasilak/otelgo/tracing"
 	"go.opentelemetry.io/otel"
+	"go.opentelemetry.io/otel/trace"
 
 	"github.com/wasilak/go-hello-world/utils"
 	"github.com/wasilak/go-hello-world/web/chi"
 	"github.com/wasilak/go-hello-world/web/echo"
+	"github.com/wasilak/go-hello-world/web/gin"
 	"github.com/wasilak/go-hello-world/web/gorilla"
 	"github.com/wasilak/loggergo"
 	"github.com/wasilak/profilego"
@@ -53,12 +55,15 @@ func main() {
 		Output:       loggergo.OutputConsole,
 	}
 
+	var traceProvider trace.TracerProvider
+	var err error
+
 	if *otelEnabled {
 		otelGoTracingConfig := otelgotracer.Config{
 			HostMetricsEnabled:    *otelHostMetricsEnabled,
 			RuntimeMetricsEnabled: *otelRuntimeMetricsEnabled,
 		}
-		_, _, err := otelgotracer.Init(ctx, otelGoTracingConfig)
+		_, traceProvider, err = otelgotracer.Init(ctx, otelGoTracingConfig)
 		if err != nil {
 			slog.ErrorContext(ctx, err.Error())
 			os.Exit(1)
@@ -70,7 +75,7 @@ func main() {
 		loggerConfig.OtelTracingEnabled = false
 	}
 
-	_, err := loggergo.LoggerInit(ctx, loggerConfig)
+	_, err = loggergo.LoggerInit(ctx, loggerConfig)
 	if err != nil {
 		slog.ErrorContext(ctx, err.Error())
 		os.Exit(1)
@@ -97,5 +102,8 @@ func main() {
 	case "chi":
 		slog.DebugContext(ctx, "Starting Chi server")
 		chi.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer)
+	case "gin":
+		slog.DebugContext(ctx, "Starting Gin server")
+		gin.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer, &traceProvider)
 	}
 }
