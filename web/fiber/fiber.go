@@ -59,21 +59,18 @@ func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsv
 
 	// Optional Statviz
 	if *statsvizEnabled {
-		ws := http.NewServeMux()
+		mux := http.NewServeMux()
 
-		// Create statsviz server.
-		srv, err := statsviz.NewServer()
-		if err != nil {
-			slog.ErrorContext(ctx, "Failed to create statsviz server", "error", err)
-			os.Exit(1)
-		}
+		// Register statsviz handlerson the mux.
+		statsviz.Register(mux)
 
-		// Register Statsviz server on the fasthttp router.
-		app.Use("/debug/statsviz", adaptor.HTTPHandler(srv.Index()))
-		ws.HandleFunc("/debug/statsviz/ws", srv.Ws())
+		// Register Statsviz routes on the Fiber app
+		app.Use("/debug/statsviz", adaptor.HTTPHandler(mux))
+		app.Get("/debug/statsviz/*", adaptor.HTTPHandler(mux))
 	}
 
 	slog.DebugContext(ctx, "Starting server", "address", *listenAddr)
+
 	if err := app.Listen(*listenAddr); err != nil {
 		slog.ErrorContext(ctx, "Server exited with error", "error", err)
 		os.Exit(1)
