@@ -6,10 +6,11 @@
   "labels": [
     "dependencies",
     "renovate",
-    "{{{category}}}",
-    "{{{datasource}}}",
-    "vulnerability={{{if isVulnerabilityAlert 'yes' 'no'}}}",
-    "{{{manager}}}"
+    "renovate::{{{category}}}",
+    "renovate::{{{datasource}}}",
+    "renovate::{{{updateType}}}",
+    "renovate::{{#if isVulnerabilityAlert}}vulnerability{{else}}not-vulnerability{{/if}}",
+    "renovate::{{{manager}}}"
   ],
   "pinDigests": false,
   "enabled": true,
