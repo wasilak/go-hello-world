@@ -8,7 +8,7 @@
     "renovate",
     "{{{category}}}",
     "{{{datasource}}}",
-    "vulnerability={{{isVulnerabilityAlert}}}",
+    "vulnerability={{{if isVulnerabilityAlert 'yes' 'no'}}}",
     "{{{manager}}}"
   ],
   "pinDigests": false,
