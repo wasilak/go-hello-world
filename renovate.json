@@ -5,11 +5,12 @@
   ],
   "labels": [
     "renovate::dependencies",
-    "renovate::{{{category}}}",
-    "renovate::{{{datasource}}}",
-    "renovate::{{{updateType}}}",
+    "renovate::{{category}}",
+    "renovate::{{datasource}}",
+    "renovate::{{updateType}}",
+    "{{#if datasource}}renovate::{{datasource}}{{/if}}",
     "renovate::{{#if isVulnerabilityAlert}}vulnerability{{else}}not-vulnerability{{/if}}",
-    "renovate::{{{manager}}}"
+    "renovate::{{manager}}"
   ],
   "pinDigests": false,
   "enabled": true,
