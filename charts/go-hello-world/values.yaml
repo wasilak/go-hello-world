@@ -16,6 +16,9 @@ service:
 
 imagePullPolicy: Always
 
+annotations: {}
+podAnnotations: {}
+
 args:
   - "-listen-addr=:5000"
   - "-log-format=json"
