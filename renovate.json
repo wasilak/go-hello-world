@@ -5,12 +5,12 @@
   ],
   "labels": [
     "renovate::dependencies",
-    "renovate::{{category}}",
-    "renovate::{{datasource}}",
-    "renovate::{{updateType}}",
+    "{{#if category}}renovate::{{category}}{{/if}}",
+    "{{#if updateType}}renovate::{{updateType}}{{/if}}",
     "{{#if datasource}}renovate::{{datasource}}{{/if}}",
-    "renovate::{{#if isVulnerabilityAlert}}vulnerability{{else}}not-vulnerability{{/if}}",
-    "renovate::{{manager}}"
+    "{{#if manager}}renovate::{{manager}}{{/if}}",
+    "{{#if vulnerabilitySeverity}}renovate::{{vulnerabilitySeverity}}{{/if}}",
+    "renovate::{{#if isVulnerabilityAlert}}vulnerability{{else}}not-vulnerability{{/if}}"
   ],
   "pinDigests": false,
   "enabled": true,
