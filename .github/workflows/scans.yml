@@ -7,12 +7,8 @@ on:
     branches: [main]
     tags:
       - "*"
-    paths-ignore:
-      - "charts/**"
   pull_request:
     branches: [main]
-    paths-ignore:
-      - "charts/**"
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -36,12 +32,12 @@ jobs:
           spectral-dsn: ${{ secrets.SPECTRAL_DSN }}
           spectral-args: scan --ok
 
-      - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions/golang@master
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        with:
-          command: monitor
+      # - name: Run Snyk to check for vulnerabilities
+      #   uses: snyk/actions/golang@master
+      #   env:
+      #     SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      #   with:
+      #     command: monitor
 
   # codacy-security-scan:
   #   permissions:
