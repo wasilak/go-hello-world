@@ -5,7 +5,11 @@
   ],
   "labels": [
     "dependencies",
-    "renovate"
+    "renovate",
+    "{{{category}}}",
+    "{{{datasource}}}",
+    "vulnerability={{{isVulnerabilityAlert}}}",
+    "{{{manager}}}"
   ],
   "pinDigests": false,
   "enabled": true,
@@ -20,19 +24,7 @@
         {
           "gomodTidy": true
         }
-      ],
-      "addLabels": [
-        "go"
-      ]
-    },
-    {
-      "matchManagers": [
-        "github-actions"
-      ],
-      "addLabels": [
-        "github-actions"
       ]
     }
   ]
 }
-
