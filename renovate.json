@@ -4,8 +4,7 @@
     "config:recommended"
   ],
   "labels": [
-    "dependencies",
-    "renovate",
+    "renovate::dependencies",
     "renovate::{{{category}}}",
     "renovate::{{{datasource}}}",
     "renovate::{{{updateType}}}",
