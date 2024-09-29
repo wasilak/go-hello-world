@@ -22,6 +22,8 @@
         }
       ],
       "labels": [
+        "dependencies",
+        "renovate",
         "go"
       ]
     },
@@ -30,6 +32,8 @@
         "github-actions"
       ],
       "labels": [
+        "dependencies",
+        "renovate",
         "github-actions"
       ]
     }
