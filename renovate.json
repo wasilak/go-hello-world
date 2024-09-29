@@ -21,9 +21,7 @@
           "gomodTidy": true
         }
       ],
-      "labels": [
-        "dependencies",
-        "renovate",
+      "addLabels": [
         "go"
       ]
     },
@@ -31,9 +29,7 @@
       "matchManagers": [
         "github-actions"
       ],
-      "labels": [
-        "dependencies",
-        "renovate",
+      "addLabels": [
         "github-actions"
       ]
     }
