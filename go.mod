@@ -19,7 +19,7 @@ require (
 	github.com/prometheus/client_golang v1.20.4
 	github.com/riandyrn/otelchi v0.9.0
 	github.com/samber/slog-chi v1.11.2
-	github.com/samber/slog-echo v1.14.6
+	github.com/samber/slog-echo v1.14.7
 	github.com/samber/slog-gin v1.13.4
 	github.com/stretchr/testify v1.9.0
 	github.com/valyala/fasthttp v1.55.0
