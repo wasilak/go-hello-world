@@ -254,6 +254,8 @@ go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.54
 go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.54.0/go.mod h1:DjeaP3aYwacDW8M4ha3ZHBBP5hOSuvRu+DGgT1H07sc=
 go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.55.0 h1:lRMfRoJnAaDWadgR58z6xyMIaH5UQ5SzFOhA+LfmUkA=
 go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.55.0/go.mod h1:7kJADjE+s91WUhMkzN7qTnDf2aUJZPzeD7RKw/uB5Xg=
+go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.56.0 h1:k5inBHeCb4SXSmzkZGNX5oJj2RGg0y8LyLNHKR4hlb8=
+go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.56.0/go.mod h1:Q3hUOabe0Dekk+iwIJZDB3AzB/TVaECQ03Es8OV+vZ0=
 go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.54.0 h1:o3U2xB4Cq6gB5Vr1mg9Mv7sciDewvbcNuGp+jL1BggY=
 go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.54.0/go.mod h1:i69n3/He6DVv7+gUXnxXbnYyVYiXbkyTJOyJRycLPnc=
 go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.55.0 h1:dJfUeXRQiU+7IhOeqXV7f1hJA47cCOBmCY8uyygIEZg=
