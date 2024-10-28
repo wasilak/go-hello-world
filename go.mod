@@ -22,7 +22,7 @@ require (
 	github.com/samber/slog-echo v1.14.7
 	github.com/samber/slog-gin v1.13.5
 	github.com/stretchr/testify v1.9.0
-	github.com/valyala/fasthttp v1.56.0
+	github.com/valyala/fasthttp v1.57.0
 	github.com/wasilak/loggergo v1.5.2
 	github.com/wasilak/otelgo v1.1.1
 	github.com/wasilak/profilego v1.0.8
@@ -36,7 +36,7 @@ require (
 
 require (
 	dario.cat/mergo v1.0.1 // indirect
-	github.com/andybalholm/brotli v1.1.0 // indirect
+	github.com/andybalholm/brotli v1.1.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bytedance/sonic v1.12.3 // indirect
 	github.com/bytedance/sonic/loader v0.2.0 // indirect
@@ -64,7 +64,7 @@ require (
 	github.com/grafana/pyroscope-go/godeltaprof v0.1.8 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.22.0 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.17.9 // indirect
+	github.com/klauspost/compress v1.17.11 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.8 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/lmittmann/tint v1.0.5 // indirect
