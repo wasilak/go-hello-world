@@ -20,7 +20,7 @@ require (
 	github.com/riandyrn/otelchi v0.10.1
 	github.com/samber/slog-chi v1.11.2
 	github.com/samber/slog-echo v1.14.7
-	github.com/samber/slog-gin v1.13.5
+	github.com/samber/slog-gin v1.13.6
 	github.com/stretchr/testify v1.9.0
 	github.com/valyala/fasthttp v1.57.0
 	github.com/wasilak/loggergo v1.5.2
