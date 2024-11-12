@@ -23,7 +23,7 @@ require (
 	github.com/samber/slog-gin v1.13.6
 	github.com/stretchr/testify v1.9.0
 	github.com/valyala/fasthttp v1.57.0
-	github.com/wasilak/loggergo v1.5.3
+	github.com/wasilak/loggergo v1.5.4
 	github.com/wasilak/otelgo v1.1.1
 	github.com/wasilak/profilego v1.0.8
 	github.com/zsais/go-gin-prometheus v0.1.0
@@ -95,7 +95,7 @@ require (
 	github.com/valyala/fasttemplate v1.2.2 // indirect
 	github.com/valyala/tcplisten v1.0.0 // indirect
 	github.com/yusufpapurcu/wmi v1.2.4 // indirect
-	gitlab.com/greyxor/slogor v1.5.0 // indirect
+	gitlab.com/greyxor/slogor v1.5.1 // indirect
 	go.opentelemetry.io/contrib v1.20.0 // indirect
 	go.opentelemetry.io/contrib/bridges/otelslog v0.7.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/host v0.54.0 // indirect
