@@ -14,10 +14,11 @@ import (
 )
 
 var tracer trace.Tracer
+var logLevel *slog.LevelVar
 
-func Init(ctx context.Context, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
-	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
+func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
 	tracer = tr
+	logLevel = logLevelConfig
 	router := mux.NewRouter()
 
 	router.Use(prometheusMiddleware)
@@ -25,6 +26,7 @@ func Init(ctx context.Context, listenAddr *string, otelEnabled, statsvizEnabled 
 
 	router.HandleFunc("/", chain(rootHandler, logging()))
 	router.HandleFunc("/health", chain(healthHandler, logging()))
+	router.HandleFunc("/logger", chain(loggerHandler, logging()))
 
 	if *statsvizEnabled {
 		// Create statsviz server and register the handlers on the router.

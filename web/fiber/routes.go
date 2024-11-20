@@ -1,11 +1,13 @@
 package fiber
 
 import (
+	"log/slog"
 	"net/http"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/valyala/fasthttp/fasthttpadaptor"
 	"github.com/wasilak/go-hello-world/web"
+	"github.com/wasilak/loggergo"
 )
 
 func mainRoute(c *fiber.Ctx) error {
@@ -24,6 +26,25 @@ func mainRoute(c *fiber.Ctx) error {
 
 func healthRoute(c *fiber.Ctx) error {
 	response := web.HealthResponse{Status: "ok"}
+	c.Set("Content-Type", "application/json")
+	return c.JSON(response)
+}
+
+func loggerRoute(c *fiber.Ctx) error {
+	newLogLevelParam := c.Query("level")
+
+	response := web.LoggerResponse{
+		LogLevelCurrent: logLevel.Level().String(),
+	}
+
+	newLogLevel := loggergo.LogLevelFromString(newLogLevelParam)
+
+	logLevel.Set(newLogLevel)
+
+	response.LogLevelPrevious = logLevel.Level().String()
+
+	slog.DebugContext(c.UserContext(), "log_level_changed", "from", response.LogLevelPrevious, "to", response.LogLevelCurrent)
+
 	c.Set("Content-Type", "application/json")
 	return c.JSON(response)
 }

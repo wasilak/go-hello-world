@@ -11,6 +11,12 @@ type HealthResponse struct {
 	Status string `json:"status"`
 }
 
+// LoggerResponse type
+type LoggerResponse struct {
+	LogLevelCurrent  string `json:"log_level_current"`
+	LogLevelPrevious string `json:"log_level_previous"`
+}
+
 // APIResponseRequest type
 type APIResponseRequest struct {
 	Host       string      `json:"host"`

@@ -19,10 +19,11 @@ import (
 )
 
 var tracer trace.Tracer
+var logLevel *slog.LevelVar
 
-func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
-	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
+func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
 	tracer = tr
+	logLevel = logLevelConfig
 
 	r := chi.NewRouter()
 
@@ -42,13 +43,14 @@ func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsv
 	r.Use(slogchi.New(slog.Default()))
 
 	// Debug Mode
-	if strings.EqualFold(*logLevel, "debug") {
+	if strings.EqualFold(logLevel.Level().String(), "debug") {
 		slog.DebugContext(ctx, "Debug mode enabled")
 	}
 
 	// Define Routes
 	r.Get("/", mainRoute)
 	r.Get("/health", healthRoute)
+	r.Get("/logger", loggerRoute)
 	r.Handle("/metrics", promhttp.Handler())
 
 	// Optional Statviz

@@ -18,9 +18,11 @@ import (
 )
 
 var tracer trace.Tracer
+var logLevel *slog.LevelVar
 
-func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
+func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
 	tracer = tr
+	logLevel = logLevelConfig
 
 	e := echo.New()
 
@@ -41,7 +43,7 @@ func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsv
 	e.HideBanner = true
 	e.HidePort = true
 
-	if strings.EqualFold(*logLevel, "debug") {
+	if strings.EqualFold(logLevel.Level().String(), "debug") {
 		e.Logger.SetLevel(log.DEBUG)
 		e.Debug = true
 	}
@@ -51,6 +53,7 @@ func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsv
 
 	e.GET("/", mainRoute)
 	e.GET("/health", healthRoute)
+	e.GET("/logger", loggerRoute)
 
 	e.GET("/metrics", echoprometheus.NewHandler())
 

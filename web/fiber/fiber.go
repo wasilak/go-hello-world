@@ -19,10 +19,11 @@ import (
 )
 
 var tracer trace.Tracer
+var logLevel *slog.LevelVar
 
-func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
-	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
+func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
 	tracer = tr
+	logLevel = logLevelConfig
 
 	// Initialize Fiber app
 	app := fiber.New(fiber.Config{
@@ -49,13 +50,14 @@ func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsv
 	})
 
 	// Debug Mode
-	if strings.EqualFold(*logLevel, "debug") {
+	if strings.EqualFold(logLevel.Level().String(), "debug") {
 		slog.DebugContext(ctx, "Debug mode enabled")
 	}
 
 	// Define Routes
 	app.Get("/", func(c *fiber.Ctx) error { return mainRoute(c) })
 	app.Get("/health", func(c *fiber.Ctx) error { return healthRoute(c) })
+	app.Get("/logger", func(c *fiber.Ctx) error { return loggerRoute(c) })
 
 	// Optional Statviz
 	if *statsvizEnabled {

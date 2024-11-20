@@ -18,6 +18,7 @@ import (
 )
 
 var tracer trace.Tracer
+var logLevel *slog.LevelVar
 
 type slogWriter struct{}
 
@@ -26,9 +27,9 @@ func (sw slogWriter) Write(p []byte) (n int, err error) {
 	return len(p), nil
 }
 
-func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer, traceProvider *trace.TracerProvider) {
-	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
+func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer, traceProvider *trace.TracerProvider) {
 	tracer = tr
+	logLevel = logLevelConfig
 
 	gin.DefaultWriter = slogWriter{}
 
@@ -52,7 +53,7 @@ func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsv
 	r.Use(gin.Recovery())
 
 	// Debug Mode
-	if strings.EqualFold(*logLevel, "debug") {
+	if strings.EqualFold(logLevel.Level().String(), "debug") {
 		gin.SetMode(gin.DebugMode)
 		slog.DebugContext(ctx, "Debug mode enabled")
 	}
@@ -60,6 +61,7 @@ func Init(ctx context.Context, listenAddr, logLevel *string, otelEnabled, statsv
 	// Define Routes
 	r.GET("/", mainRoute)
 	r.GET("/health", healthRoute)
+	r.GET("/logger", loggerRoute)
 	// r.GET("/metrics", gin.WrapH(promhttp.Handler()))
 
 	// Optional Statviz

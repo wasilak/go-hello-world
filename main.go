@@ -82,6 +82,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	logLevelConfig := loggergo.GetLogLevelAccessor()
+
 	slog.DebugContext(ctx, "flags",
 		"listen-addr", *listenAddr,
 		"log-level", *logLevel,
@@ -97,22 +99,22 @@ func main() {
 	case "gorilla":
 		slog.DebugContext(ctx, "Starting Gorilla server")
 		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
-		gorilla.Init(ctx, listenAddr, otelEnabled, statsvizEnabled, tracer)
+		gorilla.Init(ctx, logLevelConfig, listenAddr, otelEnabled, statsvizEnabled, tracer)
 	case "echo":
 		slog.DebugContext(ctx, "Starting Echo server")
 		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
-		echo.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer)
+		echo.Init(ctx, logLevelConfig, listenAddr, otelEnabled, statsvizEnabled, tracer)
 	case "chi":
 		slog.DebugContext(ctx, "Starting Chi server")
 		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
-		chi.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer)
+		chi.Init(ctx, logLevelConfig, listenAddr, otelEnabled, statsvizEnabled, tracer)
 	case "gin":
 		slog.DebugContext(ctx, "Starting Gin server")
 		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
-		gin.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer, &traceProvider)
+		gin.Init(ctx, logLevelConfig, listenAddr, otelEnabled, statsvizEnabled, tracer, &traceProvider)
 	case "fiber":
 		slog.DebugContext(ctx, "Starting Fiber server")
 		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
-		fiber.Init(ctx, listenAddr, logLevel, otelEnabled, statsvizEnabled, tracer)
+		fiber.Init(ctx, logLevelConfig, listenAddr, otelEnabled, statsvizEnabled, tracer)
 	}
 }

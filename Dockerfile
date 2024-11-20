@@ -1,19 +1,16 @@
-FROM  quay.io/wasilak/golang:1.23-alpine as builder
+FROM quay.io/wasilak/golang:1.23 AS builder
+
+COPY . /app
+WORKDIR /app
+
+RUN CGO_ENABLED=0 go build -o /go-hello-world
+
+FROM scratch
 
 LABEL org.opencontainers.image.source="https://github.com/wasilak/go-hello-world"
 
-RUN apk add --no-cache git
+COPY --from=builder /go-hello-world .
 
-WORKDIR /src
+ENV USER=root
 
-COPY ./ .
-
-RUN go build .
-
-FROM quay.io/wasilak/alpine:3
-
-COPY --from=builder /src/go-hello-world /bin/go-hello-world
-
-ENV SESSION_KEY=cmRiN3VuaTg2Zm9pZ29peWdp
-
-CMD ["/bin/go-hello-world"]
+ENTRYPOINT ["/go-hello-world"]
