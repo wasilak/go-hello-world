@@ -13,8 +13,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
       - name: Configure Git
         run: |
@@ -65,9 +63,10 @@ jobs:
           git commit -m "chore: bump chart version to ${{ env.NEW_CHART_VERSION }} and appVersion to ${{ env.TAG_VERSION }}"
           git push origin main
 
-      - name: Verify updated Chart.yaml
-        run: |
-          cat charts/go-hello-world/Chart.yaml
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
