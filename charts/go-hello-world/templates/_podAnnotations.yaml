@@ -1,0 +1,9 @@
+{{- define "podAnnotations" }}
+annotations:
+  chart: "{{ $.Chart.Name }}-{{ $.Chart.Version | replace "+" "_" }}"
+{{ if $.Values.annotations -}}
+  {{- range $key, $value := $.Values.annotations }}
+  "{{ $key }}": "{{ $value }}"
+  {{- end -}}
+{{- end }}
+{{- end -}}
