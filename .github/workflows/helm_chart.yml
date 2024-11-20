@@ -2,8 +2,8 @@ name: Helm Chart release
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - 'v*.*.*' # Trigger only on version tags
 
 jobs:
   release:
@@ -24,7 +24,41 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v4
 
+      - name: Extract version tag
+        id: extract_version
+        run: |
+          # Extract the current tag version (e.g., v1.2.3 -> 1.2.3)
+          echo "TAG_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
+
+      - name: Update Chart.yaml
+        id: update_chart
+        run: |
+          # Path to the Chart.yaml file
+          CHART_FILE="charts/go-hello-world/Chart.yaml"
+
+          # Extract the current version from Chart.yaml
+          CURRENT_VERSION=$(grep '^version:' $CHART_FILE | awk '{print $2}')
+
+          # Bump the minor version
+          MAJOR=$(echo "$CURRENT_VERSION" | cut -d. -f1)
+          MINOR=$(echo "$CURRENT_VERSION" | cut -d. -f2)
+          PATCH=$(echo "$CURRENT_VERSION" | cut -d. -f3)
+          NEW_VERSION="$MAJOR.$((MINOR + 1)).0"
+
+          # Update the version in Chart.yaml
+          sed -i "s/^version:.*/version: $NEW_VERSION/" $CHART_FILE
+          sed -i "s/^appVersion:.*/appVersion: $TAG_VERSION/" $CHART_FILE
+
+          # Output the new version for reference
+          echo "NEW_CHART_VERSION=$NEW_VERSION" >> $GITHUB_ENV
+
+      - name: Verify updated Chart.yaml
+        run: |
+          cat charts/go-hello-world/Chart.yaml
+
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.6.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        with:
+          charts_dir: charts/go-hello-world
