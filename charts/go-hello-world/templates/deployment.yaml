@@ -20,7 +20,7 @@ spec:
         - name: "{{ .Chart.Name }}"
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           imagePullPolicy: "{{ .Values.imagePullPolicy }}"
-          command: ["/bin/go-hello-world"]
+          command: ["/go-hello-world"]
           {{- if .Values.args }}
           args:
           {{- range $arg := .Values.args }}
