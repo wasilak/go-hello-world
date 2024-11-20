@@ -30,6 +30,12 @@ jobs:
           # Extract the current tag version (e.g., v1.2.3 -> 1.2.3)
           echo "TAG_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_ENV
 
+      - name: Checkout main branch
+        run: |
+          # Ensure the main branch is checked out
+          git fetch origin main
+          git checkout main
+
       - name: Update Chart.yaml
         id: update_chart
         run: |
@@ -56,8 +62,8 @@ jobs:
         run: |
           # Commit the updated Chart.yaml
           git add charts/go-hello-world/Chart.yaml
-          git commit -m "chore: bump chart version to $NEW_CHART_VERSION and appVersion to $TAG_VERSION"
-          git push origin HEAD
+          git commit -m "chore: bump chart version to ${{ env.NEW_CHART_VERSION }} and appVersion to ${{ env.TAG_VERSION }}"
+          git push origin main
 
       - name: Verify updated Chart.yaml
         run: |
