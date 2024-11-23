@@ -21,7 +21,7 @@ require (
 	github.com/samber/slog-chi v1.12.3
 	github.com/samber/slog-echo v1.14.7
 	github.com/samber/slog-gin v1.13.6
-	github.com/stretchr/testify v1.9.0
+	github.com/stretchr/testify v1.10.0
 	github.com/valyala/fasthttp v1.57.0
 	github.com/wasilak/loggergo v1.5.5
 	github.com/wasilak/otelgo v1.1.1
