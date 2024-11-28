@@ -17,7 +17,7 @@ require (
 	github.com/labstack/echo/v4 v4.12.0
 	github.com/labstack/gommon v0.4.2
 	github.com/prometheus/client_golang v1.20.5
-	github.com/riandyrn/otelchi v0.10.1
+	github.com/riandyrn/otelchi v0.11.0
 	github.com/samber/slog-chi v1.12.3
 	github.com/samber/slog-echo v1.14.7
 	github.com/samber/slog-gin v1.13.6
@@ -112,7 +112,7 @@ require (
 	go.opentelemetry.io/otel/metric v1.32.0 // indirect
 	go.opentelemetry.io/otel/sdk v1.32.0 // indirect
 	go.opentelemetry.io/otel/sdk/log v0.8.0 // indirect
-	go.opentelemetry.io/otel/sdk/metric v1.29.0 // indirect
+	go.opentelemetry.io/otel/sdk/metric v1.32.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.3.1 // indirect
 	golang.org/x/arch v0.11.0 // indirect
 	golang.org/x/crypto v0.29.0 // indirect
