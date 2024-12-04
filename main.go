@@ -76,7 +76,7 @@ func main() {
 		loggerConfig.OtelTracingEnabled = false
 	}
 
-	_, err = loggergo.LoggerInit(ctx, loggerConfig)
+	ctx, _, err = loggergo.Init(ctx, loggerConfig)
 	if err != nil {
 		slog.ErrorContext(ctx, err.Error())
 		os.Exit(1)
