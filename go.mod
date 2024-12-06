@@ -23,8 +23,8 @@ require (
 	github.com/samber/slog-gin v1.13.6
 	github.com/stretchr/testify v1.10.0
 	github.com/valyala/fasthttp v1.57.0
-	github.com/wasilak/loggergo v1.6.2
-	github.com/wasilak/otelgo v1.2.1
+	github.com/wasilak/loggergo v1.7.2
+	github.com/wasilak/otelgo v1.2.2
 	github.com/wasilak/profilego v1.0.8
 	github.com/zsais/go-gin-prometheus v0.1.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.57.0
@@ -58,7 +58,6 @@ require (
 	github.com/go-playground/validator/v10 v10.23.0 // indirect
 	github.com/goccy/go-json v0.10.3 // indirect
 	github.com/golang-cz/devslog v0.0.11 // indirect
-	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/grafana/pyroscope-go v1.2.0 // indirect
@@ -80,7 +79,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
-	github.com/prometheus/common v0.60.1 // indirect
+	github.com/prometheus/common v0.61.0 // indirect
 	github.com/prometheus/procfs v0.15.1 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/samber/lo v1.47.0 // indirect
@@ -121,8 +120,8 @@ require (
 	golang.org/x/text v0.21.0 // indirect
 	golang.org/x/time v0.8.0 // indirect
 	golang.org/x/tools v0.24.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20241202173237-19429a94021a // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20241202173237-19429a94021a // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20241206012308-a4fef0638583 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20241206012308-a4fef0638583 // indirect
 	google.golang.org/grpc v1.68.1 // indirect
 	google.golang.org/protobuf v1.35.2 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

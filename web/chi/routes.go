@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	"github.com/wasilak/go-hello-world/web"
-	"github.com/wasilak/loggergo"
+	loggergoLib "github.com/wasilak/loggergo/lib"
 )
 
 func mainRoute(w http.ResponseWriter, r *http.Request) {
@@ -30,7 +30,7 @@ func loggerRoute(w http.ResponseWriter, r *http.Request) {
 		LogLevelCurrent: logLevel.Level().String(),
 	}
 
-	newLogLevel := loggergo.LogLevelFromString(newLogLevelParam)
+	newLogLevel := loggergoLib.LogLevelFromString(newLogLevelParam)
 
 	logLevel.Set(newLogLevel)
 

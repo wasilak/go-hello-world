@@ -7,7 +7,7 @@ import (
 	"log/slog"
 
 	"github.com/wasilak/go-hello-world/web"
-	"github.com/wasilak/loggergo"
+	loggergoLib "github.com/wasilak/loggergo/lib"
 )
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
@@ -45,7 +45,7 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Parse and set the new log level
-	newLogLevel := loggergo.LogLevelFromString(newLogLevelParam)
+	newLogLevel := loggergoLib.LogLevelFromString(newLogLevelParam)
 	logLevel.Set(newLogLevel)
 
 	// Update the response with the previous log level (after setting the new one)

@@ -18,6 +18,8 @@ import (
 	"github.com/wasilak/go-hello-world/web/gin"
 	"github.com/wasilak/go-hello-world/web/gorilla"
 	"github.com/wasilak/loggergo"
+	loggergoLib "github.com/wasilak/loggergo/lib"
+	loggergoTypes "github.com/wasilak/loggergo/lib/types"
 	"github.com/wasilak/profilego"
 )
 
@@ -48,12 +50,12 @@ func main() {
 		profilego.Init(profileGoConfig)
 	}
 
-	loggerConfig := loggergo.Config{
-		Level:        loggergo.LogLevelFromString(*logLevel),
-		Format:       loggergo.LogFormatFromString(*logFormat),
+	loggerConfig := loggergoTypes.Config{
+		Level:        loggergoLib.LogLevelFromString(*logLevel),
+		Format:       loggergoLib.LogFormatFromString(*logFormat),
 		OutputStream: os.Stdout,
-		DevMode:      loggergo.LogLevelFromString(*logLevel) == slog.LevelDebug && *logFormat == "plain",
-		Output:       loggergo.OutputConsole,
+		DevMode:      loggergoLib.LogLevelFromString(*logLevel) == slog.LevelDebug && *logFormat == "plain",
+		Output:       loggergoTypes.OutputConsole,
 	}
 
 	var traceProvider trace.TracerProvider
@@ -71,7 +73,7 @@ func main() {
 		}
 
 		loggerConfig.OtelServiceName = utils.GetAppName()
-		loggerConfig.Output = loggergo.OutputFanout
+		loggerConfig.Output = loggergoTypes.OutputFanout
 		loggerConfig.OtelLoggerName = "github.com/wasilak/go-hello-world"
 		loggerConfig.OtelTracingEnabled = false
 	}

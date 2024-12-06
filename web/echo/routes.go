@@ -6,7 +6,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/wasilak/go-hello-world/web"
-	"github.com/wasilak/loggergo"
+	loggergoLib "github.com/wasilak/loggergo/lib"
 )
 
 func mainRoute(c echo.Context) error {
@@ -28,7 +28,7 @@ func loggerRoute(c echo.Context) error {
 		LogLevelCurrent: logLevel.Level().String(),
 	}
 
-	newLogLevel := loggergo.LogLevelFromString(newLogLevelParam)
+	newLogLevel := loggergoLib.LogLevelFromString(newLogLevelParam)
 
 	logLevel.Set(newLogLevel)
 

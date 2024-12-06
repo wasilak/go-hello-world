@@ -7,7 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/valyala/fasthttp/fasthttpadaptor"
 	"github.com/wasilak/go-hello-world/web"
-	"github.com/wasilak/loggergo"
+	loggergoLib "github.com/wasilak/loggergo/lib"
 )
 
 func mainRoute(c *fiber.Ctx) error {
@@ -37,7 +37,7 @@ func loggerRoute(c *fiber.Ctx) error {
 		LogLevelCurrent: logLevel.Level().String(),
 	}
 
-	newLogLevel := loggergo.LogLevelFromString(newLogLevelParam)
+	newLogLevel := loggergoLib.LogLevelFromString(newLogLevelParam)
 
 	logLevel.Set(newLogLevel)
 

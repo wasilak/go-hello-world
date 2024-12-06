@@ -6,7 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/wasilak/go-hello-world/web"
-	"github.com/wasilak/loggergo"
+	loggergoLib "github.com/wasilak/loggergo/lib"
 )
 
 func mainRoute(c *gin.Context) {
@@ -28,7 +28,7 @@ func loggerRoute(c *gin.Context) {
 		LogLevelCurrent: logLevel.Level().String(),
 	}
 
-	newLogLevel := loggergo.LogLevelFromString(newLogLevelParam)
+	newLogLevel := loggergoLib.LogLevelFromString(newLogLevelParam)
 
 	logLevel.Set(newLogLevel)
 
