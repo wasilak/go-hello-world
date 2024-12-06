@@ -200,6 +200,8 @@ github.com/wasilak/loggergo v1.6.1 h1:XNYEl91ll9qJl/nEndi7bBeJemMnpyVYZ6gS0FEXY4
 github.com/wasilak/loggergo v1.6.1/go.mod h1:3uc+RsYQPzjXuu4FdLdHEruCEn6px5ScWc4a3giywYc=
 github.com/wasilak/loggergo v1.6.2 h1:H7oMMH/hVkE+URhGiSA6XGmEI2Nh/PWw14Tyf1NgPpc=
 github.com/wasilak/loggergo v1.6.2/go.mod h1:3uc+RsYQPzjXuu4FdLdHEruCEn6px5ScWc4a3giywYc=
+github.com/wasilak/loggergo v1.7.2 h1:+aCWaQ21TVzYe0NGhPHZBqayvPLKfyF6+ZnfIfhJ4wo=
+github.com/wasilak/loggergo v1.7.2/go.mod h1:EuVq/UDSIPRjJmBnh0++6KF9UyEI/cOt5tCNc6lCZY4=
 github.com/wasilak/otelgo v1.1.1 h1:f8p0VYTwSfPl0OC9BwO5r1DkQ/oNt9YoHTy19RQCNjs=
 github.com/wasilak/otelgo v1.1.1/go.mod h1:inPRzMpVWJ54sDHq9Xdg0dhjHWzMME1uP4RSgr1S8lo=
 github.com/wasilak/otelgo v1.2.1 h1:mcGrKSK32kJUT/U+ltt0NheX8vFGiEjPWonmdKu3z0s=
