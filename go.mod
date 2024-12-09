@@ -22,7 +22,7 @@ require (
 	github.com/samber/slog-echo v1.14.7
 	github.com/samber/slog-gin v1.13.6
 	github.com/stretchr/testify v1.10.0
-	github.com/valyala/fasthttp v1.57.0
+	github.com/valyala/fasthttp v1.58.0
 	github.com/wasilak/loggergo v1.7.2
 	github.com/wasilak/otelgo v1.2.2
 	github.com/wasilak/profilego v1.0.8
