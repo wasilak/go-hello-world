@@ -26,6 +26,16 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 
 	e := echo.New()
 
+	e.HideBanner = true
+	e.HidePort = true
+
+	// setting log/slog log level as echo logger level
+	e.Logger.SetLevel(log.Lvl(logLevel.Level().Level()))
+
+	e.Debug = strings.EqualFold(logLevel.Level().String(), "debug")
+
+	e.Use(slogecho.New(slog.Default()))
+
 	if *otelEnabled {
 		e.Use(otelecho.Middleware(utils.GetAppName(), otelecho.WithSkipper(func(c echo.Context) bool {
 			return strings.Contains(c.Path(), "public/dist") || strings.Contains(c.Path(), "health")
@@ -40,15 +50,6 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 
 	e.Use(echoprometheus.NewMiddleware(strings.ReplaceAll(utils.GetAppName(), "-", "_")))
 
-	e.HideBanner = true
-	e.HidePort = true
-
-	if strings.EqualFold(logLevel.Level().String(), "debug") {
-		e.Logger.SetLevel(log.DEBUG)
-		e.Debug = true
-	}
-
-	e.Use(slogecho.New(slog.Default()))
 	e.Use(middleware.Recover())
 
 	e.GET("/", mainRoute)
