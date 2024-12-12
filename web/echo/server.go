@@ -10,7 +10,6 @@ import (
 	"github.com/labstack/echo-contrib/echoprometheus"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"github.com/labstack/gommon/log"
 	slogecho "github.com/samber/slog-echo"
 	"github.com/wasilak/go-hello-world/utils"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
@@ -28,9 +27,6 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 
 	e.HideBanner = true
 	e.HidePort = true
-
-	// setting log/slog log level as echo logger level
-	e.Logger.SetLevel(log.Lvl(logLevel.Level().Level()))
 
 	e.Debug = strings.EqualFold(logLevel.Level().String(), "debug")
 

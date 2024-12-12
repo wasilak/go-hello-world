@@ -4,6 +4,7 @@ import (
 	"context"
 	"flag"
 	"os"
+	"strings"
 
 	"log/slog"
 
@@ -96,6 +97,10 @@ func main() {
 		"web-framework", *webFramework,
 		"statsviz-enabled", *statsvizEnabled,
 	)
+
+	if strings.EqualFold(logLevelConfig.Level().String(), "debug") {
+		slog.DebugContext(ctx, "Debug mode enabled")
+	}
 
 	switch *webFramework {
 	case "gorilla":

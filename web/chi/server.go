@@ -42,11 +42,6 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 	// Custom Logging Middleware
 	r.Use(slogchi.New(slog.Default()))
 
-	// Debug Mode
-	if strings.EqualFold(logLevel.Level().String(), "debug") {
-		slog.DebugContext(ctx, "Debug mode enabled")
-	}
-
 	// Define Routes
 	r.Get("/", mainRoute)
 	r.Get("/health", healthRoute)

@@ -101,10 +101,6 @@ github.com/kylelemons/godebug v1.1.0 h1:RPNrshWIDI6G2gRW9EHilWtl7Z6Sb1BR0xunSBf0
 github.com/kylelemons/godebug v1.1.0/go.mod h1:9/0rRGxNHcop5bhtWyNeEfOS8JIWk580+fNqagV/RAw=
 github.com/labstack/echo-contrib v0.17.1 h1:7I/he7ylVKsDUieaGRZ9XxxTYOjfQwVzHzUYrNykfCU=
 github.com/labstack/echo-contrib v0.17.1/go.mod h1:SnsCZtwHBAZm5uBSAtQtXQHI3wqEA73hvTn0bYMKnZA=
-github.com/labstack/echo/v4 v4.13.0 h1:8DjSi4H/k+RqoOmwXkxW14A2H1pdPdS95+qmdJ4q1Tg=
-github.com/labstack/echo/v4 v4.13.0/go.mod h1:61j7WN2+bp8V21qerqRs4yVlVTGyOagMBpF0vE7VcmM=
-github.com/labstack/echo/v4 v4.13.1 h1:q3+CpQlYhJwpRr9+08pX0IdlabTIpnIhrg2AKPSKhFE=
-github.com/labstack/echo/v4 v4.13.1/go.mod h1:61j7WN2+bp8V21qerqRs4yVlVTGyOagMBpF0vE7VcmM=
 github.com/labstack/echo/v4 v4.13.2 h1:9aAt4hstpH54qIcqkuUXRLTf+v7yOTfMPWzDtuqLmtA=
 github.com/labstack/echo/v4 v4.13.2/go.mod h1:uc9gDtHB8UWt3FfbYx0HyxcCuvR4YuPYOxF/1QjoV/c=
 github.com/labstack/gommon v0.4.2 h1:F8qTUNXgG1+6WQmqoUWnz8WiEU60mXVVw0P4ht1WRA0=
@@ -158,6 +154,8 @@ github.com/samber/slog-chi v1.12.3 h1:jZ09VSMCEytjdAIiNS2pMe7a1mZSfhjI0pdvZv0nTn
 github.com/samber/slog-chi v1.12.3/go.mod h1:uKRFgoHdeoeme1SUzIbhxGoNfY/MluEtokKZigeG5Es=
 github.com/samber/slog-echo v1.14.7 h1:HLKW0WDOU/t4OoDbq+R/ZHc8qFpXj+2YdRVQxyRwW24=
 github.com/samber/slog-echo v1.14.7/go.mod h1:i8QlNMhE0rVr+Mjj5ZIm6DMuTQ87euvAL2jRAd5HNVY=
+github.com/samber/slog-fiber v1.16.5 h1:5mDJh1th1hNRhGbuEKem2JexmiDponF4zPIOi7Nr/Bw=
+github.com/samber/slog-fiber v1.16.5/go.mod h1:Bbs+6014y92FY+c+OaMBBF3xcprtKqeNETxArHXe+xQ=
 github.com/samber/slog-gin v1.13.6 h1:clWpgtdL/3KM1eGkUMUHTLNM1fG4nA3bHC1Pt7v0z44=
 github.com/samber/slog-gin v1.13.6/go.mod h1:iicbXYT1DozbzsbLfpRdXkAal3zmzIjayQCV5YR+A6M=
 github.com/samber/slog-multi v1.2.4 h1:k9x3JAWKJFPKffx+oXZ8TasaNuorIW4tG+TXxkt6Ry4=
@@ -190,8 +188,6 @@ github.com/ugorji/go/codec v1.2.12 h1:9LC83zGrHhuUA9l16C9AHXAqEV/2wBQ4nkvumAE65E
 github.com/ugorji/go/codec v1.2.12/go.mod h1:UNopzCgEMSXjBc6AOMqYvWC1ktqTAfzJZUZgYf6w6lg=
 github.com/valyala/bytebufferpool v1.0.0 h1:GqA5TC/0021Y/b9FG4Oi9Mr3q7XYx6KllzawFIhcdPw=
 github.com/valyala/bytebufferpool v1.0.0/go.mod h1:6bBcMArwyJ5K/AmCkWv1jt77kVWyCJ6HpOuEn7z0Csc=
-github.com/valyala/fasthttp v1.57.0 h1:Xw8SjWGEP/+wAAgyy5XTvgrWlOD1+TxbbvNADYCm1Tg=
-github.com/valyala/fasthttp v1.57.0/go.mod h1:h6ZBaPRlzpZ6O3H5t2gEk1Qi33+TmLvfwgLLp0t9CpE=
 github.com/valyala/fasthttp v1.58.0 h1:GGB2dWxSbEprU9j0iMJHgdKYJVDyjrOwF9RE59PbRuE=
 github.com/valyala/fasthttp v1.58.0/go.mod h1:SYXvHHaFp7QZHGKSHmoMipInhrI5StHrhDTYVEjK/Kw=
 github.com/valyala/fasttemplate v1.2.2 h1:lxLXG0uE3Qnshl9QyaK6XJxMXlQZELvChBOCmQD0Loo=
@@ -264,8 +260,6 @@ go.uber.org/goleak v1.3.0 h1:2K3zAYmnTNqV73imy9J1T3WC+gmCePx2hEGkimedGto=
 go.uber.org/goleak v1.3.0/go.mod h1:CoHD4mav9JJNrW/WLlf7HGZPjdw8EucARQHekz1X6bE=
 golang.org/x/arch v0.12.0 h1:UsYJhbzPYGsT0HbEdmYcqtCv8UNGvnaL561NnIUvaKg=
 golang.org/x/arch v0.12.0/go.mod h1:FEVrYAQjsQXMVJ1nsMoVVXPZg6p2JE2mx8psSWTDQys=
-golang.org/x/crypto v0.30.0 h1:RwoQn3GkWiMkzlX562cLB7OxWvjH1L8xutO2WoJcRoY=
-golang.org/x/crypto v0.30.0/go.mod h1:kDsLvtWBEx7MV9tJOj9bnXsPbxwJQ6csT/x4KIN4Ssk=
 golang.org/x/crypto v0.31.0 h1:ihbySMvVjLAeSH1IbfcRTkD/iNscyz8rGzjF/E5hV6U=
 golang.org/x/crypto v0.31.0/go.mod h1:kDsLvtWBEx7MV9tJOj9bnXsPbxwJQ6csT/x4KIN4Ssk=
 golang.org/x/net v0.32.0 h1:ZqPmj8Kzc+Y6e0+skZsuACbx+wzMgo5MQsJh9Qd6aYI=

@@ -5,7 +5,6 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
-	"strings"
 
 	"github.com/arl/statsviz"
 	"github.com/gofiber/adaptor/v2"
@@ -16,6 +15,8 @@ import (
 	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/contrib/otelfiber/v2"
 	"go.opentelemetry.io/otel/trace"
+
+	slogfiber "github.com/samber/slog-fiber"
 )
 
 var tracer trace.Tracer
@@ -44,15 +45,7 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 	app.Use(compress.New())
 
 	// Custom Logging Middleware
-	app.Use(func(c *fiber.Ctx) error {
-		slog.InfoContext(ctx, "Incoming request", "method", c.Method(), "path", c.Path())
-		return c.Next()
-	})
-
-	// Debug Mode
-	if strings.EqualFold(logLevel.Level().String(), "debug") {
-		slog.DebugContext(ctx, "Debug mode enabled")
-	}
+	app.Use(slogfiber.New(slog.Default()))
 
 	// Define Routes
 	app.Get("/", func(c *fiber.Ctx) error { return mainRoute(c) })

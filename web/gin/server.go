@@ -55,7 +55,6 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 	// Debug Mode
 	if strings.EqualFold(logLevel.Level().String(), "debug") {
 		gin.SetMode(gin.DebugMode)
-		slog.DebugContext(ctx, "Debug mode enabled")
 	}
 
 	// Define Routes
