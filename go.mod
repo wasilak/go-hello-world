@@ -15,13 +15,13 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/labstack/echo-contrib v0.17.1
 	github.com/labstack/echo/v4 v4.13.2
-	github.com/labstack/gommon v0.4.2
 	github.com/prometheus/client_golang v1.20.5
 	github.com/riandyrn/otelchi v0.11.0
 	github.com/samber/slog-chi v1.12.3
 	github.com/samber/slog-echo v1.14.7
 	github.com/samber/slog-fiber v1.16.5
 	github.com/samber/slog-gin v1.13.6
+	github.com/samber/slog-http v1.4.4
 	github.com/stretchr/testify v1.10.0
 	github.com/valyala/fasthttp v1.58.0
 	github.com/wasilak/loggergo v1.7.2
@@ -67,6 +67,7 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.17.11 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.9 // indirect
+	github.com/labstack/gommon v0.4.2 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/lmittmann/tint v1.0.5 // indirect
 	github.com/lufia/plan9stats v0.0.0-20240909124753-873cd0166683 // indirect
