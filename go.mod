@@ -24,7 +24,7 @@ require (
 	github.com/samber/slog-http v1.4.4
 	github.com/stretchr/testify v1.10.0
 	github.com/valyala/fasthttp v1.58.0
-	github.com/wasilak/loggergo v1.7.2
+	github.com/wasilak/loggergo v1.7.3
 	github.com/wasilak/otelgo v1.2.2
 	github.com/wasilak/profilego v1.0.8
 	github.com/zsais/go-gin-prometheus v0.1.0
@@ -99,7 +99,7 @@ require (
 	gitlab.com/greyxor/slogor v1.5.2 // indirect
 	go.opentelemetry.io/auto/sdk v1.1.0 // indirect
 	go.opentelemetry.io/contrib v1.32.0 // indirect
-	go.opentelemetry.io/contrib/bridges/otelslog v0.7.0 // indirect
+	go.opentelemetry.io/contrib/bridges/otelslog v0.8.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/host v0.57.0 // indirect
 	go.opentelemetry.io/contrib/instrumentation/runtime v0.57.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlplog/otlploggrpc v0.8.0 // indirect
@@ -109,11 +109,11 @@ require (
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace v1.32.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracegrpc v1.32.0 // indirect
 	go.opentelemetry.io/otel/exporters/otlp/otlptrace/otlptracehttp v1.32.0 // indirect
-	go.opentelemetry.io/otel/exporters/stdout/stdoutlog v0.8.0 // indirect
-	go.opentelemetry.io/otel/log v0.8.0 // indirect
+	go.opentelemetry.io/otel/exporters/stdout/stdoutlog v0.9.0 // indirect
+	go.opentelemetry.io/otel/log v0.9.0 // indirect
 	go.opentelemetry.io/otel/metric v1.33.0 // indirect
-	go.opentelemetry.io/otel/sdk v1.32.0 // indirect
-	go.opentelemetry.io/otel/sdk/log v0.8.0 // indirect
+	go.opentelemetry.io/otel/sdk v1.33.0 // indirect
+	go.opentelemetry.io/otel/sdk/log v0.9.0 // indirect
 	go.opentelemetry.io/otel/sdk/metric v1.32.0 // indirect
 	go.opentelemetry.io/proto/otlp v1.4.0 // indirect
 	golang.org/x/arch v0.12.0 // indirect
