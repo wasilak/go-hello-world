@@ -6,7 +6,7 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/valyala/fasthttp/fasthttpadaptor"
-	"github.com/wasilak/go-hello-world/web"
+	"github.com/wasilak/go-hello-world/web/common"
 	loggergoLib "github.com/wasilak/loggergo/lib"
 )
 
@@ -17,7 +17,7 @@ func mainRoute(c *fiber.Ctx) error {
 	req := new(http.Request)
 	fasthttpadaptor.ConvertRequest(c.Context(), req, false)
 
-	response := web.ConstructResponse(req)
+	response := common.ConstructResponse(req)
 	spanResponse.End()
 
 	c.Set("Content-Type", "application/json")
@@ -25,7 +25,7 @@ func mainRoute(c *fiber.Ctx) error {
 }
 
 func healthRoute(c *fiber.Ctx) error {
-	response := web.HealthResponse{Status: "ok"}
+	response := common.HealthResponse{Status: "ok"}
 	c.Set("Content-Type", "application/json")
 	return c.JSON(response)
 }
@@ -33,7 +33,7 @@ func healthRoute(c *fiber.Ctx) error {
 func loggerRoute(c *fiber.Ctx) error {
 	newLogLevelParam := c.Query("level")
 
-	response := web.LoggerResponse{
+	response := common.LoggerResponse{
 		LogLevelCurrent: logLevel.Level().String(),
 	}
 

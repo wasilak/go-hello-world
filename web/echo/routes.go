@@ -5,26 +5,26 @@ import (
 	"net/http"
 
 	"github.com/labstack/echo/v4"
-	"github.com/wasilak/go-hello-world/web"
+	"github.com/wasilak/go-hello-world/web/common"
 	loggergoLib "github.com/wasilak/loggergo/lib"
 )
 
 func mainRoute(c echo.Context) error {
 	_, spanResponse := tracer.Start(c.Request().Context(), "response")
-	response := web.ConstructResponse(c.Request())
+	response := common.ConstructResponse(c.Request())
 	spanResponse.End()
 	return c.JSON(http.StatusOK, response)
 }
 
 func healthRoute(c echo.Context) error {
-	response := web.HealthResponse{Status: "ok"}
+	response := common.HealthResponse{Status: "ok"}
 	return c.JSON(http.StatusOK, response)
 }
 
 func loggerRoute(c echo.Context) error {
 	newLogLevelParam := c.QueryParam("level")
 
-	response := web.LoggerResponse{
+	response := common.LoggerResponse{
 		LogLevelCurrent: logLevel.Level().String(),
 	}
 

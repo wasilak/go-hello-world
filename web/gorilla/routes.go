@@ -6,14 +6,14 @@ import (
 
 	"log/slog"
 
-	"github.com/wasilak/go-hello-world/web"
+	"github.com/wasilak/go-hello-world/web/common"
 	loggergoLib "github.com/wasilak/loggergo/lib"
 )
 
 func healthHandler(w http.ResponseWriter, r *http.Request) {
 	slog.DebugContext(r.Context(), "healthHandler called")
 	w.WriteHeader(http.StatusOK)
-	response := web.HealthResponse{Status: "ok"}
+	response := common.HealthResponse{Status: "ok"}
 	_, spanJsonEncode := tracer.Start(r.Context(), "json encode response")
 	err := json.NewEncoder(w).Encode(response)
 	if err != nil {
@@ -25,7 +25,7 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 func rootHandler(w http.ResponseWriter, r *http.Request) {
 
 	ctx, spanResponse := tracer.Start(r.Context(), "response")
-	response := web.ConstructResponse(r)
+	response := common.ConstructResponse(r)
 	spanResponse.End()
 
 	slog.DebugContext(ctx, "rootHandler", "response", response)
@@ -40,7 +40,7 @@ func loggerHandler(w http.ResponseWriter, r *http.Request) {
 	newLogLevelParam := r.URL.Query().Get("level")
 
 	// Prepare the response structure
-	response := web.LoggerResponse{
+	response := common.LoggerResponse{
 		LogLevelCurrent: logLevel.Level().String(),
 	}
 

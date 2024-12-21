@@ -1,54 +1,34 @@
 package web
 
 import (
-	"net/http"
-	"net/url"
-	"os"
+	"context"
+	"log/slog"
+
+	"github.com/wasilak/go-hello-world/web/chi"
+	"github.com/wasilak/go-hello-world/web/common"
+	"github.com/wasilak/go-hello-world/web/echo"
+	"github.com/wasilak/go-hello-world/web/fiber"
+	"github.com/wasilak/go-hello-world/web/gin"
+	"github.com/wasilak/go-hello-world/web/gorilla"
+	"golang.org/x/text/cases"
+	"golang.org/x/text/language"
 )
 
-// HealthResponse type
-type HealthResponse struct {
-	Status string `json:"status"`
-}
+func RunWebServer(ctx context.Context, webFramework string, frameworkOptions common.FrameworkOptions) {
+	caser := cases.Title(language.English)
+	slog.DebugContext(ctx, "Starting server", "type", caser.String(webFramework))
+	slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
 
-// LoggerResponse type
-type LoggerResponse struct {
-	LogLevelCurrent  string `json:"log_level_current"`
-	LogLevelPrevious string `json:"log_level_previous"`
-}
-
-// APIResponseRequest type
-type APIResponseRequest struct {
-	Host       string      `json:"host"`
-	RemoteAddr string      `json:"remote_addr"`
-	RequestURI string      `json:"request_uri"`
-	Method     string      `json:"method"`
-	Proto      string      `json:"proto"`
-	UserAgent  string      `json:"user_agent"`
-	URL        *url.URL    `json:"url"`
-	Headers    http.Header `json:"headers"`
-}
-
-// APIResponse type
-type APIResponse struct {
-	Host    string             `json:"host"`
-	Request APIResponseRequest `json:"request"`
-}
-
-func ConstructResponse(r *http.Request) APIResponse {
-	hostname, _ := os.Hostname()
-	response := APIResponse{
-		Host: hostname,
-		Request: APIResponseRequest{
-			Host:       r.Host,
-			URL:        r.URL,
-			RemoteAddr: r.RemoteAddr,
-			RequestURI: r.RequestURI,
-			Method:     r.Method,
-			Proto:      r.Proto,
-			UserAgent:  r.UserAgent(),
-			Headers:    r.Header,
-		},
+	switch webFramework {
+	case "gorilla":
+		gorilla.Init(ctx, frameworkOptions)
+	case "echo":
+		echo.Init(ctx, frameworkOptions)
+	case "chi":
+		chi.Init(ctx, frameworkOptions)
+	case "gin":
+		gin.Init(ctx, frameworkOptions)
+	case "fiber":
+		fiber.Init(ctx, frameworkOptions)
 	}
-	return response
 }

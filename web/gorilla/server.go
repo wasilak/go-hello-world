@@ -10,6 +10,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	sloghttp "github.com/samber/slog-http"
 	"github.com/wasilak/go-hello-world/utils"
+	"github.com/wasilak/go-hello-world/web/common"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -17,9 +18,9 @@ import (
 var tracer trace.Tracer
 var logLevel *slog.LevelVar
 
-func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
-	tracer = tr
-	logLevel = logLevelConfig
+func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
+	tracer = frameworkOptions.Tracer
+	logLevel = frameworkOptions.LogLevelConfig
 	router := mux.NewRouter()
 
 	// Prometheus middleware and metrics endpoint
@@ -31,7 +32,7 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 	router.HandleFunc("/health", healthHandler)
 	router.HandleFunc("/logger", loggerHandler)
 
-	if *statsvizEnabled {
+	if frameworkOptions.StatsvizEnabled {
 		// Create statsviz server and register the handlers on the router
 		srv, _ := statsviz.NewServer()
 
@@ -40,7 +41,7 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 		router.Methods("GET").PathPrefix("/debug/statsviz/").Name("GET /debug/statsviz/").Handler(srv.Index())
 	}
 
-	if *otelEnabled {
+	if frameworkOptions.OtelEnabled {
 		router.Use(otelmux.Middleware(utils.GetAppName()))
 	}
 
@@ -48,6 +49,6 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 	handler := sloghttp.Recovery(router)            // Recovery middleware
 	handler = sloghttp.New(slog.Default())(handler) // Logging middleware
 
-	slog.DebugContext(ctx, "Starting server", "address", *listenAddr)
-	http.ListenAndServe(*listenAddr, handler) // Use the wrapped handler
+	slog.DebugContext(ctx, "Starting server", "address", frameworkOptions.ListenAddr)
+	http.ListenAndServe(frameworkOptions.ListenAddr, handler) // Use the wrapped handler
 }

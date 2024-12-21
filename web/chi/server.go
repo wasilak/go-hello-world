@@ -15,22 +15,23 @@ import (
 	"github.com/riandyrn/otelchi"
 	slogchi "github.com/samber/slog-chi"
 	"github.com/wasilak/go-hello-world/utils"
+	"github.com/wasilak/go-hello-world/web/common"
 	"go.opentelemetry.io/otel/trace"
 )
 
 var tracer trace.Tracer
 var logLevel *slog.LevelVar
 
-func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
-	tracer = tr
-	logLevel = logLevelConfig
+func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
+	tracer = frameworkOptions.Tracer
+	logLevel = frameworkOptions.LogLevelConfig
 
 	r := chi.NewRouter()
 
 	r.Use(chiprometheus.NewMiddleware(strings.ReplaceAll(utils.GetAppName(), "-", "_")))
 
 	// OpenTelemetry Middleware
-	if *otelEnabled {
+	if frameworkOptions.OtelEnabled {
 		r.Use(otelchi.Middleware(utils.GetAppName(), otelchi.WithFilter(func(r *http.Request) bool {
 			return !strings.Contains(r.URL.Path, "public/dist") && !strings.Contains(r.URL.Path, "health")
 		})))
@@ -49,7 +50,7 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 	r.Handle("/metrics", promhttp.Handler())
 
 	// Optional Statviz
-	if *statsvizEnabled {
+	if frameworkOptions.StatsvizEnabled {
 		// Create statsviz server.
 		srv, _ := statsviz.NewServer()
 
@@ -60,8 +61,8 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 		r.Handle("/debug/statsviz/*", srv.Index())
 	}
 
-	slog.DebugContext(ctx, "Starting server", "address", *listenAddr)
-	if err := http.ListenAndServe(*listenAddr, r); err != nil {
+	slog.DebugContext(ctx, "Starting server", "address", frameworkOptions.ListenAddr)
+	if err := http.ListenAndServe(frameworkOptions.ListenAddr, r); err != nil {
 		slog.ErrorContext(ctx, "Server exited with error", "error", err)
 		os.Exit(1)
 	}

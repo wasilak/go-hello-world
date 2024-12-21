@@ -12,6 +12,7 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 	slogecho "github.com/samber/slog-echo"
 	"github.com/wasilak/go-hello-world/utils"
+	"github.com/wasilak/go-hello-world/web/common"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
 	"go.opentelemetry.io/otel/trace"
 )
@@ -19,9 +20,9 @@ import (
 var tracer trace.Tracer
 var logLevel *slog.LevelVar
 
-func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
-	tracer = tr
-	logLevel = logLevelConfig
+func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
+	tracer = frameworkOptions.Tracer
+	logLevel = frameworkOptions.LogLevelConfig
 
 	e := echo.New()
 
@@ -32,7 +33,7 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 
 	e.Use(slogecho.New(slog.Default()))
 
-	if *otelEnabled {
+	if frameworkOptions.OtelEnabled {
 		e.Use(otelecho.Middleware(utils.GetAppName(), otelecho.WithSkipper(func(c echo.Context) bool {
 			return strings.Contains(c.Path(), "public/dist") || strings.Contains(c.Path(), "health")
 		})))
@@ -54,7 +55,7 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 
 	e.GET("/metrics", echoprometheus.NewHandler())
 
-	if *statsvizEnabled {
+	if frameworkOptions.StatsvizEnabled {
 		// Create statsviz server and register the handlers on the router.
 		mux := http.NewServeMux()
 
@@ -67,6 +68,6 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 		e.GET("/debug/statsviz/*", echo.WrapHandler(mux))
 	}
 
-	slog.DebugContext(ctx, "Starting server", "address", *listenAddr)
-	e.Logger.Fatal(e.Start(*listenAddr))
+	slog.DebugContext(ctx, "Starting server", "address", frameworkOptions.ListenAddr)
+	e.Logger.Fatal(e.Start(frameworkOptions.ListenAddr))
 }

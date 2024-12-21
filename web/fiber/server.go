@@ -11,6 +11,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
 	"github.com/wasilak/go-hello-world/utils"
+	"github.com/wasilak/go-hello-world/web/common"
 
 	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/contrib/otelfiber/v2"
@@ -22,9 +23,9 @@ import (
 var tracer trace.Tracer
 var logLevel *slog.LevelVar
 
-func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string, otelEnabled, statsvizEnabled *bool, tr trace.Tracer) {
-	tracer = tr
-	logLevel = logLevelConfig
+func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
+	tracer = frameworkOptions.Tracer
+	logLevel = frameworkOptions.LogLevelConfig
 
 	// Initialize Fiber app
 	app := fiber.New(fiber.Config{
@@ -37,7 +38,7 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 	app.Use(prometheus.Middleware)
 
 	// OpenTelemetry Middleware
-	if *otelEnabled {
+	if frameworkOptions.OtelEnabled {
 		app.Use(otelfiber.Middleware())
 	}
 
@@ -53,7 +54,7 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 	app.Get("/logger", func(c *fiber.Ctx) error { return loggerRoute(c) })
 
 	// Optional Statviz
-	if *statsvizEnabled {
+	if frameworkOptions.StatsvizEnabled {
 		mux := http.NewServeMux()
 
 		// Register statsviz handlerson the mux.
@@ -64,9 +65,9 @@ func Init(ctx context.Context, logLevelConfig *slog.LevelVar, listenAddr *string
 		app.Get("/debug/statsviz/*", adaptor.HTTPHandler(mux))
 	}
 
-	slog.DebugContext(ctx, "Starting server", "address", *listenAddr)
+	slog.DebugContext(ctx, "Starting server", "address", frameworkOptions.ListenAddr)
 
-	if err := app.Listen(*listenAddr); err != nil {
+	if err := app.Listen(frameworkOptions.ListenAddr); err != nil {
 		slog.ErrorContext(ctx, "Server exited with error", "error", err)
 		os.Exit(1)
 	}

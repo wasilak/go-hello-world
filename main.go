@@ -13,11 +13,8 @@ import (
 	"go.opentelemetry.io/otel/trace"
 
 	"github.com/wasilak/go-hello-world/utils"
-	"github.com/wasilak/go-hello-world/web/chi"
-	"github.com/wasilak/go-hello-world/web/echo"
-	"github.com/wasilak/go-hello-world/web/fiber"
-	"github.com/wasilak/go-hello-world/web/gin"
-	"github.com/wasilak/go-hello-world/web/gorilla"
+	"github.com/wasilak/go-hello-world/web"
+	"github.com/wasilak/go-hello-world/web/common"
 	"github.com/wasilak/loggergo"
 	loggergoLib "github.com/wasilak/loggergo/lib"
 	loggergoTypes "github.com/wasilak/loggergo/lib/types"
@@ -102,26 +99,14 @@ func main() {
 		slog.DebugContext(ctx, "Debug mode enabled")
 	}
 
-	switch *webFramework {
-	case "gorilla":
-		slog.DebugContext(ctx, "Starting Gorilla server")
-		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
-		gorilla.Init(ctx, logLevelConfig, listenAddr, otelEnabled, statsvizEnabled, tracer)
-	case "echo":
-		slog.DebugContext(ctx, "Starting Echo server")
-		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
-		echo.Init(ctx, logLevelConfig, listenAddr, otelEnabled, statsvizEnabled, tracer)
-	case "chi":
-		slog.DebugContext(ctx, "Starting Chi server")
-		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
-		chi.Init(ctx, logLevelConfig, listenAddr, otelEnabled, statsvizEnabled, tracer)
-	case "gin":
-		slog.DebugContext(ctx, "Starting Gin server")
-		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
-		gin.Init(ctx, logLevelConfig, listenAddr, otelEnabled, statsvizEnabled, tracer, &traceProvider)
-	case "fiber":
-		slog.DebugContext(ctx, "Starting Fiber server")
-		slog.DebugContext(ctx, "Features supported", "loggergo", true, "statsviz", true, "tracing", true)
-		fiber.Init(ctx, logLevelConfig, listenAddr, otelEnabled, statsvizEnabled, tracer)
+	frameworkOptions := common.FrameworkOptions{
+		ListenAddr:      *listenAddr,
+		OtelEnabled:     *otelEnabled,
+		StatsvizEnabled: *statsvizEnabled,
+		Tracer:          tracer,
+		LogLevelConfig:  logLevelConfig,
+		TraceProvider:   traceProvider,
 	}
+
+	web.RunWebServer(ctx, *webFramework, frameworkOptions)
 }
