@@ -1,39 +1,28 @@
 package echo
 
 import (
-	"log/slog"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
 	"github.com/wasilak/go-hello-world/web/common"
-	loggergoLib "github.com/wasilak/loggergo/lib"
 )
 
-func mainRoute(c echo.Context) error {
-	_, spanResponse := tracer.Start(c.Request().Context(), "response")
-	response := common.ConstructResponse(c.Request())
-	spanResponse.End()
-	return c.JSON(http.StatusOK, response)
+func (s *Server) mainRoute(c echo.Context) error {
+	c.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	return c.JSON(http.StatusOK, s.SetMainResponse(c.Request().Context(), c.Request()))
 }
 
-func healthRoute(c echo.Context) error {
-	response := common.HealthResponse{Status: "ok"}
-	return c.JSON(http.StatusOK, response)
+func (s *Server) healthRoute(c echo.Context) error {
+	c.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	return c.JSON(http.StatusOK, common.HealthResponse{Status: "ok"})
 }
 
-func loggerRoute(c echo.Context) error {
-	newLogLevelParam := c.QueryParam("level")
+func (s *Server) loggerRoute(c echo.Context) error {
+	c.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	return c.JSON(http.StatusOK, s.SetLogLevelResponse(c.Request().Context(), c.QueryParam("level")))
+}
 
-	response := common.LoggerResponse{
-		LogLevelCurrent: logLevel.Level().String(),
-	}
-
-	newLogLevel := loggergoLib.LogLevelFromString(newLogLevelParam)
-
-	logLevel.Set(newLogLevel)
-
-	response.LogLevelPrevious = logLevel.Level().String()
-
-	slog.DebugContext(c.Request().Context(), "log_level_changed", "from", response.LogLevelPrevious, "to", response.LogLevelCurrent)
-	return c.JSON(http.StatusOK, response)
+func (s *Server) switchRoute(c echo.Context) error {
+	c.Response().Header().Set(echo.HeaderContentType, echo.MIMEApplicationJSON)
+	return c.JSON(http.StatusOK, s.SetFrameworkResponse(c.Request().Context(), c.QueryParam("name")))
 }

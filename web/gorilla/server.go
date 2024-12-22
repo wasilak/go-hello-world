@@ -4,6 +4,8 @@ import (
 	"context"
 	"log/slog"
 	"net/http"
+	"os"
+	"sync"
 
 	"github.com/arl/statsviz"
 	"github.com/gorilla/mux"
@@ -12,15 +14,15 @@ import (
 	"github.com/wasilak/go-hello-world/utils"
 	"github.com/wasilak/go-hello-world/web/common"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux"
-	"go.opentelemetry.io/otel/trace"
 )
 
-var tracer trace.Tracer
-var logLevel *slog.LevelVar
+type Server struct {
+	Server *http.Server
+	wg     sync.WaitGroup
+	*common.WebServer
+}
 
-func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
-	tracer = frameworkOptions.Tracer
-	logLevel = frameworkOptions.LogLevelConfig
+func (s *Server) setup(ctx context.Context) {
 	router := mux.NewRouter()
 
 	// Prometheus middleware and metrics endpoint
@@ -28,11 +30,12 @@ func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
 	router.Path("/metrics").Handler(promhttp.Handler())
 
 	// Application-specific routes
-	router.HandleFunc("/", rootHandler)
-	router.HandleFunc("/health", healthHandler)
-	router.HandleFunc("/logger", loggerHandler)
+	router.HandleFunc("/", s.rootHandler)
+	router.HandleFunc("/health", s.healthHandler)
+	router.HandleFunc("/logger", s.loggerHandler)
+	router.HandleFunc("/framework", s.switchRoute)
 
-	if frameworkOptions.StatsvizEnabled {
+	if s.FrameworkOptions.StatsvizEnabled {
 		// Create statsviz server and register the handlers on the router
 		srv, _ := statsviz.NewServer()
 
@@ -41,7 +44,7 @@ func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
 		router.Methods("GET").PathPrefix("/debug/statsviz/").Name("GET /debug/statsviz/").Handler(srv.Index())
 	}
 
-	if frameworkOptions.OtelEnabled {
+	if s.FrameworkOptions.OtelEnabled {
 		router.Use(otelmux.Middleware(utils.GetAppName()))
 	}
 
@@ -49,6 +52,55 @@ func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
 	handler := sloghttp.Recovery(router)            // Recovery middleware
 	handler = sloghttp.New(slog.Default())(handler) // Logging middleware
 
-	slog.DebugContext(ctx, "Starting server", "address", frameworkOptions.ListenAddr)
-	http.ListenAndServe(frameworkOptions.ListenAddr, handler) // Use the wrapped handler
+	s.Server = &http.Server{
+		Addr:    s.FrameworkOptions.ListenAddr,
+		Handler: handler,
+	}
+}
+
+func (s *Server) Start(ctx context.Context) {
+	s.MU.Lock()
+	defer s.MU.Unlock()
+
+	s.wg.Add(1)
+
+	if s.Running {
+		slog.DebugContext(ctx, "Web server is already running")
+		return
+	}
+
+	go func() {
+		defer s.wg.Done()
+		if s.Server == nil {
+			s.setup(ctx)
+		}
+		slog.DebugContext(ctx, "Starting server", "address", s.FrameworkOptions.ListenAddr)
+		if err := s.Server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			slog.ErrorContext(ctx, "Server exited with error", "error", err)
+			os.Exit(1)
+		}
+	}()
+
+	s.Running = true
+}
+
+// Stop gracefully stops the web server.
+func (s *Server) Stop(ctx context.Context) {
+	s.MU.Lock()
+	defer s.MU.Unlock()
+
+	if !s.Running {
+		slog.DebugContext(ctx, "Web server is not running")
+		return
+	}
+
+	slog.InfoContext(ctx, "Stopping web server")
+
+	if err := s.Server.Shutdown(ctx); err != nil {
+		slog.ErrorContext(ctx, "Error stopping web server", "error", err)
+	} else {
+		slog.InfoContext(ctx, "Web server stopped successfully")
+	}
+
+	s.Running = false
 }

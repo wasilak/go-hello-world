@@ -15,60 +15,99 @@ import (
 
 	"github.com/ansrivas/fiberprometheus/v2"
 	"github.com/gofiber/contrib/otelfiber/v2"
-	"go.opentelemetry.io/otel/trace"
 
 	slogfiber "github.com/samber/slog-fiber"
 )
 
-var tracer trace.Tracer
-var logLevel *slog.LevelVar
+type Server struct {
+	Server *fiber.App
+	*common.WebServer
+}
 
-func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
-	tracer = frameworkOptions.Tracer
-	logLevel = frameworkOptions.LogLevelConfig
+func (s *Server) setup(ctx context.Context) {
 
 	// Initialize Fiber app
-	app := fiber.New(fiber.Config{
+	s.Server = fiber.New(fiber.Config{
 		DisableStartupMessage: true, // Disable the Fiber banner
 	})
 
 	// Prometheus Middleware
 	prometheus := fiberprometheus.New(utils.GetAppName())
-	prometheus.RegisterAt(app, "/metrics")
-	app.Use(prometheus.Middleware)
+	prometheus.RegisterAt(s.Server, "/metrics")
+	s.Server.Use(prometheus.Middleware)
 
 	// OpenTelemetry Middleware
-	if frameworkOptions.OtelEnabled {
-		app.Use(otelfiber.Middleware())
+	if s.FrameworkOptions.OtelEnabled {
+		s.Server.Use(otelfiber.Middleware())
 	}
 
 	// Gzip Middleware
-	app.Use(compress.New())
+	s.Server.Use(compress.New())
 
 	// Custom Logging Middleware
-	app.Use(slogfiber.New(slog.Default()))
+	s.Server.Use(slogfiber.New(slog.Default()))
 
 	// Define Routes
-	app.Get("/", func(c *fiber.Ctx) error { return mainRoute(c) })
-	app.Get("/health", func(c *fiber.Ctx) error { return healthRoute(c) })
-	app.Get("/logger", func(c *fiber.Ctx) error { return loggerRoute(c) })
+	s.Server.Get("/", s.mainRoute)
+	s.Server.Get("/health", s.healthRoute)
+	s.Server.Get("/logger", s.loggerRoute)
+	s.Server.Get("/framework", s.switchRoute)
 
 	// Optional Statviz
-	if frameworkOptions.StatsvizEnabled {
+	if s.FrameworkOptions.StatsvizEnabled {
 		mux := http.NewServeMux()
 
 		// Register statsviz handlerson the mux.
 		statsviz.Register(mux)
 
 		// Register Statsviz routes on the Fiber app
-		app.Use("/debug/statsviz", adaptor.HTTPHandler(mux))
-		app.Get("/debug/statsviz/*", adaptor.HTTPHandler(mux))
+		s.Server.Use("/debug/statsviz", adaptor.HTTPHandler(mux))
+		s.Server.Get("/debug/statsviz/*", adaptor.HTTPHandler(mux))
 	}
 
-	slog.DebugContext(ctx, "Starting server", "address", frameworkOptions.ListenAddr)
+	slog.DebugContext(ctx, "Starting server", "address", s.FrameworkOptions.ListenAddr)
+}
 
-	if err := app.Listen(frameworkOptions.ListenAddr); err != nil {
-		slog.ErrorContext(ctx, "Server exited with error", "error", err)
-		os.Exit(1)
+func (s *Server) Start(ctx context.Context) {
+	s.MU.Lock()
+	defer s.MU.Unlock()
+
+	if s.Running {
+		slog.DebugContext(ctx, "Web server is already running")
+		return
 	}
+
+	go func() {
+		s.setup(ctx)
+		slog.DebugContext(ctx, "Starting server", "address", s.FrameworkOptions.ListenAddr)
+		if err := s.Server.Listen(s.FrameworkOptions.ListenAddr); err != nil {
+			slog.ErrorContext(ctx, "Server exited with error", "error", err)
+			os.Exit(1)
+		}
+	}()
+
+	s.Running = true
+}
+
+// Stop gracefully stops the web server.
+func (s *Server) Stop(ctx context.Context) {
+	s.MU.Lock()
+	defer s.MU.Unlock()
+
+	if !s.Running {
+		slog.DebugContext(ctx, "Web server is not running")
+		return
+	}
+
+	slog.InfoContext(ctx, "Stopping web server")
+	// shutdownCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	// defer cancel()
+
+	if err := s.Server.Shutdown(); err != nil {
+		slog.ErrorContext(ctx, "Error stopping web server", "error", err)
+	} else {
+		slog.InfoContext(ctx, "Web server stopped successfully")
+	}
+
+	s.Running = false
 }

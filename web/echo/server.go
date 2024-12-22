@@ -5,57 +5,62 @@ import (
 	"log/slog"
 	"net/http"
 	"strings"
+	"time"
 
 	"github.com/arl/statsviz"
 	"github.com/labstack/echo-contrib/echoprometheus"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
+	"github.com/prometheus/client_golang/prometheus"
 	slogecho "github.com/samber/slog-echo"
 	"github.com/wasilak/go-hello-world/utils"
 	"github.com/wasilak/go-hello-world/web/common"
 	"go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho"
-	"go.opentelemetry.io/otel/trace"
 )
 
-var tracer trace.Tracer
-var logLevel *slog.LevelVar
+type Server struct {
+	Server *echo.Echo
+	*common.WebServer
+}
 
-func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
-	tracer = frameworkOptions.Tracer
-	logLevel = frameworkOptions.LogLevelConfig
+func (s *Server) setup() {
+	s.Server = echo.New()
 
-	e := echo.New()
+	s.Server.HideBanner = true
+	s.Server.HidePort = true
 
-	e.HideBanner = true
-	e.HidePort = true
+	s.Server.Debug = strings.EqualFold(s.FrameworkOptions.LogLevelConfig.Level().String(), "debug")
 
-	e.Debug = strings.EqualFold(logLevel.Level().String(), "debug")
+	s.Server.Use(slogecho.New(slog.Default()))
 
-	e.Use(slogecho.New(slog.Default()))
-
-	if frameworkOptions.OtelEnabled {
-		e.Use(otelecho.Middleware(utils.GetAppName(), otelecho.WithSkipper(func(c echo.Context) bool {
+	if s.FrameworkOptions.OtelEnabled {
+		s.Server.Use(otelecho.Middleware(utils.GetAppName(), otelecho.WithSkipper(func(c echo.Context) bool {
 			return strings.Contains(c.Path(), "public/dist") || strings.Contains(c.Path(), "health")
 		})))
 	}
 
-	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{
+	s.Server.Use(middleware.GzipWithConfig(middleware.GzipConfig{
 		Skipper: func(c echo.Context) bool {
 			return strings.Contains(c.Path(), "metrics")
 		},
 	}))
 
-	e.Use(echoprometheus.NewMiddleware(strings.ReplaceAll(utils.GetAppName(), "-", "_")))
+	echoprometheusConfig := echoprometheus.MiddlewareConfig{
+		Subsystem:  strings.ReplaceAll(utils.GetAppName(), "-", "_"),
+		Registerer: prometheus.Registerer(prometheus.NewRegistry()),
+	}
+	s.Server.Use(echoprometheus.NewMiddlewareWithConfig(echoprometheusConfig))
 
-	e.Use(middleware.Recover())
+	s.Server.Use(middleware.Recover())
 
-	e.GET("/", mainRoute)
-	e.GET("/health", healthRoute)
-	e.GET("/logger", loggerRoute)
+	s.Server.GET("/", s.mainRoute)
+	s.Server.GET("/health", s.healthRoute)
+	s.Server.GET("/logger", s.loggerRoute)
+	s.Server.GET("/framework", s.switchRoute)
 
-	e.GET("/metrics", echoprometheus.NewHandler())
+	s.Server.GET("/metrics", echoprometheus.NewHandler())
 
-	if frameworkOptions.StatsvizEnabled {
+	if s.FrameworkOptions.StatsvizEnabled {
 		// Create statsviz server and register the handlers on the router.
 		mux := http.NewServeMux()
 
@@ -63,11 +68,49 @@ func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
 		statsviz.Register(mux)
 
 		// Use echo WrapHandler to wrap statsviz ServeMux as echo HandleFunc
-		e.GET("/debug/statsviz/", echo.WrapHandler(mux))
+		s.Server.GET("/debug/statsviz/", echo.WrapHandler(mux))
 		// Serve static content for statsviz UI
-		e.GET("/debug/statsviz/*", echo.WrapHandler(mux))
+		s.Server.GET("/debug/statsviz/*", echo.WrapHandler(mux))
+	}
+}
+
+func (s *Server) Start(ctx context.Context) {
+	s.MU.Lock()
+	defer s.MU.Unlock()
+
+	if s.Running {
+		slog.DebugContext(ctx, "Web server is already running")
+		return
 	}
 
-	slog.DebugContext(ctx, "Starting server", "address", frameworkOptions.ListenAddr)
-	e.Logger.Fatal(e.Start(frameworkOptions.ListenAddr))
+	go func() {
+		s.setup()
+		slog.DebugContext(ctx, "Starting server", "address", s.FrameworkOptions.ListenAddr)
+		s.Server.Start(s.FrameworkOptions.ListenAddr)
+	}()
+
+	s.Running = true
+}
+
+// Stop gracefully stops the web server.
+func (s *Server) Stop(ctx context.Context) {
+	s.MU.Lock()
+	defer s.MU.Unlock()
+
+	if !s.Running {
+		slog.DebugContext(ctx, "Web server is not running")
+		return
+	}
+
+	slog.InfoContext(ctx, "Stopping web server")
+	shutdownCtx, cancel := context.WithTimeout(ctx, 5*time.Second)
+	defer cancel()
+
+	if err := s.Server.Shutdown(shutdownCtx); err != nil {
+		slog.ErrorContext(ctx, "Error stopping web server", "error", err)
+	} else {
+		slog.InfoContext(ctx, "Web server stopped successfully")
+	}
+
+	s.Running = false
 }

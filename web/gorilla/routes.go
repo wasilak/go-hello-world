@@ -7,14 +7,13 @@ import (
 	"log/slog"
 
 	"github.com/wasilak/go-hello-world/web/common"
-	loggergoLib "github.com/wasilak/loggergo/lib"
 )
 
-func healthHandler(w http.ResponseWriter, r *http.Request) {
+func (s *Server) healthHandler(w http.ResponseWriter, r *http.Request) {
 	slog.DebugContext(r.Context(), "healthHandler called")
 	w.WriteHeader(http.StatusOK)
 	response := common.HealthResponse{Status: "ok"}
-	_, spanJsonEncode := tracer.Start(r.Context(), "json encode response")
+	_, spanJsonEncode := s.FrameworkOptions.Tracer.Start(r.Context(), "json encode response")
 	err := json.NewEncoder(w).Encode(response)
 	if err != nil {
 		slog.ErrorContext(r.Context(), "Failed to encode response", "error", err)
@@ -22,40 +21,31 @@ func healthHandler(w http.ResponseWriter, r *http.Request) {
 	spanJsonEncode.End()
 }
 
-func rootHandler(w http.ResponseWriter, r *http.Request) {
-
-	ctx, spanResponse := tracer.Start(r.Context(), "response")
-	response := common.ConstructResponse(r)
-	spanResponse.End()
-
-	slog.DebugContext(ctx, "rootHandler", "response", response)
-
-	_, spanJsonEncode := tracer.Start(ctx, "json encode response")
-	json.NewEncoder(w).Encode(response)
-	spanJsonEncode.End()
+func (s *Server) rootHandler(w http.ResponseWriter, r *http.Request) {
+	json.NewEncoder(w).Encode(s.SetMainResponse(r.Context(), r))
 }
 
-func loggerHandler(w http.ResponseWriter, r *http.Request) {
+func (s *Server) loggerHandler(w http.ResponseWriter, r *http.Request) {
 	// Extract the new log level parameter from the query
 	newLogLevelParam := r.URL.Query().Get("level")
 
-	// Prepare the response structure
-	response := common.LoggerResponse{
-		LogLevelCurrent: logLevel.Level().String(),
+	response := s.SetLogLevelResponse(r.Context(), newLogLevelParam)
+
+	// Encode and write the response as JSON
+	w.Header().Set("Content-Type", "application/json")
+	if err := json.NewEncoder(w).Encode(response); err != nil {
+		// Log encoding failure
+		slog.ErrorContext(r.Context(), "Failed to encode response", "error", err)
+		http.Error(w, "Failed to encode response", http.StatusInternalServerError)
+		return
 	}
+}
 
-	// Parse and set the new log level
-	newLogLevel := loggergoLib.LogLevelFromString(newLogLevelParam)
-	logLevel.Set(newLogLevel)
+func (s *Server) switchRoute(w http.ResponseWriter, r *http.Request) {
+	// Extract the new log level parameter from the query
+	newFrameworkParam := r.URL.Query().Get("name")
 
-	// Update the response with the previous log level (after setting the new one)
-	response.LogLevelPrevious = logLevel.Level().String()
-
-	// Log the change using structured logging
-	slog.DebugContext(r.Context(), "log_level_changed",
-		"from", response.LogLevelPrevious,
-		"to", response.LogLevelCurrent,
-	)
+	response := s.SetFrameworkResponse(r.Context(), newFrameworkParam)
 
 	// Encode and write the response as JSON
 	w.Header().Set("Content-Type", "application/json")

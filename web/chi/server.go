@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"sync"
 
 	chiprometheus "github.com/766b/chi-prometheus"
 	"github.com/arl/statsviz"
@@ -16,22 +17,27 @@ import (
 	slogchi "github.com/samber/slog-chi"
 	"github.com/wasilak/go-hello-world/utils"
 	"github.com/wasilak/go-hello-world/web/common"
-	"go.opentelemetry.io/otel/trace"
 )
 
-var tracer trace.Tracer
-var logLevel *slog.LevelVar
+type Server struct {
+	Server *http.Server
+	wg     sync.WaitGroup
+	*common.WebServer
+}
 
-func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
-	tracer = frameworkOptions.Tracer
-	logLevel = frameworkOptions.LogLevelConfig
+var promMiddleware func(next http.Handler) http.Handler
+
+func (s *Server) setup() {
 
 	r := chi.NewRouter()
 
-	r.Use(chiprometheus.NewMiddleware(strings.ReplaceAll(utils.GetAppName(), "-", "_")))
+	if promMiddleware == nil {
+		promMiddleware = chiprometheus.NewMiddleware(strings.ReplaceAll(utils.GetAppName(), "-", "_"))
+	}
+	r.Use(promMiddleware)
 
 	// OpenTelemetry Middleware
-	if frameworkOptions.OtelEnabled {
+	if s.FrameworkOptions.OtelEnabled {
 		r.Use(otelchi.Middleware(utils.GetAppName(), otelchi.WithFilter(func(r *http.Request) bool {
 			return !strings.Contains(r.URL.Path, "public/dist") && !strings.Contains(r.URL.Path, "health")
 		})))
@@ -44,13 +50,14 @@ func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
 	r.Use(slogchi.New(slog.Default()))
 
 	// Define Routes
-	r.Get("/", mainRoute)
-	r.Get("/health", healthRoute)
-	r.Get("/logger", loggerRoute)
+	r.Get("/", s.mainRoute)
+	r.Get("/health", s.healthRoute)
+	r.Get("/logger", s.loggerRoute)
+	r.Get("/framework", s.switchRoute)
 	r.Handle("/metrics", promhttp.Handler())
 
 	// Optional Statviz
-	if frameworkOptions.StatsvizEnabled {
+	if s.FrameworkOptions.StatsvizEnabled {
 		// Create statsviz server.
 		srv, _ := statsviz.NewServer()
 
@@ -61,9 +68,56 @@ func Init(ctx context.Context, frameworkOptions common.FrameworkOptions) {
 		r.Handle("/debug/statsviz/*", srv.Index())
 	}
 
-	slog.DebugContext(ctx, "Starting server", "address", frameworkOptions.ListenAddr)
-	if err := http.ListenAndServe(frameworkOptions.ListenAddr, r); err != nil {
-		slog.ErrorContext(ctx, "Server exited with error", "error", err)
-		os.Exit(1)
+	s.Server = &http.Server{
+		Addr:    s.FrameworkOptions.ListenAddr,
+		Handler: r,
 	}
+}
+
+func (s *Server) Start(ctx context.Context) {
+	s.MU.Lock()
+	defer s.MU.Unlock()
+
+	s.wg.Add(1)
+
+	if s.Running {
+		slog.DebugContext(ctx, "Web server is already running")
+		return
+	}
+
+	go func() {
+		defer s.wg.Done()
+
+		if s.Server == nil {
+			s.setup()
+		}
+		slog.DebugContext(ctx, "Starting server", "address", s.FrameworkOptions.ListenAddr)
+		if err := s.Server.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			slog.ErrorContext(ctx, "Server exited with error", "error", err)
+			os.Exit(1)
+		}
+	}()
+
+	s.Running = true
+}
+
+// Stop gracefully stops the web server.
+func (s *Server) Stop(ctx context.Context) {
+	s.MU.Lock()
+	defer s.MU.Unlock()
+
+	if !s.Running {
+		slog.DebugContext(ctx, "Web server is not running")
+		return
+	}
+
+	slog.InfoContext(ctx, "Stopping web server")
+
+	if err := s.Server.Shutdown(ctx); err != nil {
+		slog.ErrorContext(ctx, "Error stopping web server", "error", err)
+	} else {
+		slog.InfoContext(ctx, "Web server stopped successfully")
+	}
+
+	s.Running = false
 }

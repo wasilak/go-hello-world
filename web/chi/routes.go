@@ -2,40 +2,27 @@ package chi
 
 import (
 	"encoding/json"
-	"log/slog"
 	"net/http"
 
 	"github.com/wasilak/go-hello-world/web/common"
-	loggergoLib "github.com/wasilak/loggergo/lib"
 )
 
-func mainRoute(w http.ResponseWriter, r *http.Request) {
-	_, spanResponse := tracer.Start(r.Context(), "response")
-	response := common.ConstructResponse(r)
-	spanResponse.End()
+func (s *Server) mainRoute(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	json.NewEncoder(w).Encode(s.SetMainResponse(r.Context(), r))
 }
 
-func healthRoute(w http.ResponseWriter, r *http.Request) {
-	response := common.HealthResponse{Status: "ok"}
+func (s *Server) healthRoute(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(response)
+	json.NewEncoder(w).Encode(common.HealthResponse{Status: "ok"})
 }
 
-func loggerRoute(w http.ResponseWriter, r *http.Request) {
-	newLogLevelParam := r.URL.Query().Get("level")
+func (s *Server) loggerRoute(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(s.SetLogLevelResponse(r.Context(), r.URL.Query().Get("level")))
+}
 
-	response := common.LoggerResponse{
-		LogLevelCurrent: logLevel.Level().String(),
-	}
-
-	newLogLevel := loggergoLib.LogLevelFromString(newLogLevelParam)
-
-	logLevel.Set(newLogLevel)
-
-	response.LogLevelPrevious = logLevel.Level().String()
-
-	slog.DebugContext(r.Context(), "log_level_changed", "from", response.LogLevelPrevious, "to", response.LogLevelCurrent)
-	json.NewEncoder(w).Encode(response)
+func (s *Server) switchRoute(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(s.SetFrameworkResponse(r.Context(), r.URL.Query().Get("name")))
 }

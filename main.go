@@ -4,7 +4,9 @@ import (
 	"context"
 	"flag"
 	"os"
+	"os/signal"
 	"strings"
+	"syscall"
 
 	"log/slog"
 
@@ -24,7 +26,18 @@ import (
 var tracer = otel.Tracer(utils.GetAppName())
 
 func main() {
-	ctx := context.Background()
+	// Create a context that listens for system signals
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// Setup signal handling
+	go func() {
+		sigChan := make(chan os.Signal, 1)
+		signal.Notify(sigChan, syscall.SIGTERM, syscall.SIGINT)
+		sig := <-sigChan
+		slog.DebugContext(ctx, "Received signal, shutting down", "signal", sig.String())
+		cancel() // Cancel the context
+	}()
 
 	listenAddr := flag.String("listen-addr", "127.0.0.1:3000", "server listen address")
 	logLevel := flag.String("log-level", os.Getenv("LOG_LEVEL"), "log level (debug, info, warn, error, fatal)")
@@ -108,5 +121,16 @@ func main() {
 		TraceProvider:   traceProvider,
 	}
 
-	web.RunWebServer(ctx, *webFramework, frameworkOptions)
+	// Create a channel to signal framework changes
+	common.FrameworkChannel = make(chan string)
+
+	go web.RunWebServer(ctx, frameworkOptions)
+
+	common.FrameworkChannel <- *webFramework
+
+	// Wait for the context to be canceled
+	<-ctx.Done()
+
+	// Perform any necessary cleanup here
+	slog.InfoContext(ctx, "Application exiting")
 }
