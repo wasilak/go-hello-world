@@ -4,16 +4,19 @@ metadata:
   name: "{{ .Release.Name }}"
   labels:
     app: "{{ .Chart.Name }}"
+    app.kubernetes.io/instance: "{{ .Release.Name }}"
     {{- include "annotations" . | indent 2 }}
 spec:
   replicas: {{.Values.replicaCount}}
   selector:
     matchLabels:
       app: "{{ .Chart.Name }}"
+      app.kubernetes.io/instance: "{{ .Release.Name }}"
   template:
     metadata:
       labels:
         app: "{{ .Chart.Name }}"
+        app.kubernetes.io/instance: "{{ .Release.Name }}"
       {{- include "podAnnotations" . | indent 6 }}
     spec:
       containers:
