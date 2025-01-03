@@ -19,7 +19,7 @@ require (
 	github.com/riandyrn/otelchi v0.11.0
 	github.com/samber/slog-chi v1.12.3
 	github.com/samber/slog-echo v1.14.8
-	github.com/samber/slog-fiber v1.16.5
+	github.com/samber/slog-fiber v1.17.0
 	github.com/samber/slog-gin v1.13.6
 	github.com/samber/slog-http v1.4.4
 	github.com/stretchr/testify v1.10.0
