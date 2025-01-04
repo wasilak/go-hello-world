@@ -20,7 +20,7 @@ require (
 	github.com/samber/slog-chi v1.13.0
 	github.com/samber/slog-echo v1.15.0
 	github.com/samber/slog-fiber v1.17.0
-	github.com/samber/slog-gin v1.13.6
+	github.com/samber/slog-gin v1.14.0
 	github.com/samber/slog-http v1.4.4
 	github.com/stretchr/testify v1.10.0
 	github.com/valyala/fasthttp v1.58.0
