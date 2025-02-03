@@ -6,6 +6,8 @@ github.com/andybalholm/brotli v1.1.1 h1:PR2pgnyFznKEugtsUo0xLdDop5SKXd5Qf5ysW+7X
 github.com/andybalholm/brotli v1.1.1/go.mod h1:05ib4cKhjx3OQYUY22hTVd34Bc8upXjOLL2rKwwZBoA=
 github.com/ansrivas/fiberprometheus/v2 v2.7.0 h1:09XiSzG0J7aZp7RviklngdWdDbSybKjhuWAstp003Gg=
 github.com/ansrivas/fiberprometheus/v2 v2.7.0/go.mod h1:hSJdO65lfnWW70Qn9uGdXXsUUSkckbhuw5r/KesygpU=
+github.com/ansrivas/fiberprometheus/v2 v2.8.0 h1:376dPf/ewfWMS5q3sAmv1NgPgB5PVyxpMeT43kwOYu0=
+github.com/ansrivas/fiberprometheus/v2 v2.8.0/go.mod h1:d/VjLyMxt0R3kv3TU2kFP07BbUaPaWk4TlDHmL2V9uQ=
 github.com/arl/statsviz v0.6.0 h1:jbW1QJkEYQkufd//4NDYRSNBpwJNrdzPahF7ZmoGdyE=
 github.com/arl/statsviz v0.6.0/go.mod h1:0toboo+YGSUXDaS4g1D5TVS4dXs7S7YYT5J/qnW2h8s=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
