@@ -28,7 +28,7 @@ require (
 	github.com/valyala/fasthttp v1.58.0
 	github.com/wasilak/loggergo v1.7.4
 	github.com/wasilak/otelgo v1.2.4
-	github.com/wasilak/profilego v1.0.8
+	github.com/wasilak/profilego v1.0.9
 	github.com/zsais/go-gin-prometheus v0.1.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.59.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.59.0
