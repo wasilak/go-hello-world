@@ -20,7 +20,7 @@ require (
 	github.com/prometheus/client_golang v1.21.1
 	github.com/riandyrn/otelchi v0.12.1
 	github.com/samber/slog-chi v1.14.0
-	github.com/samber/slog-echo v1.15.1
+	github.com/samber/slog-echo v1.16.1
 	github.com/samber/slog-fiber v1.17.2
 	github.com/samber/slog-gin v1.14.1
 	github.com/samber/slog-http v1.5.1
