@@ -186,6 +186,8 @@ github.com/samber/slog-chi v1.13.0 h1:LQaLOG5d7h6p56DQBQvgLtHLUy4FD+BJMhvn2yEiz4
 github.com/samber/slog-chi v1.13.0/go.mod h1:NczezQS5y/GrpUjwiW0f+ahrPDonyl9em381jGHW3zg=
 github.com/samber/slog-chi v1.13.1 h1:398azB2Anob+DFivZcky9XVx4KnJJ+rNGqTETteuvtc=
 github.com/samber/slog-chi v1.13.1/go.mod h1:NczezQS5y/GrpUjwiW0f+ahrPDonyl9em381jGHW3zg=
+github.com/samber/slog-chi v1.14.0 h1:5Jdi9QPrnn8r3sqPhSR+xRv8c7NgRf1UDdDhzrNt+iA=
+github.com/samber/slog-chi v1.14.0/go.mod h1:W8FfgeySPYJPztBLA4Pc7J0vY7OrazTLGH3jmWqSiRY=
 github.com/samber/slog-echo v1.15.0 h1:xzdHyyM9bTyQpEFIGHi6oERY1puUh5zYxiRhOhzT4MA=
 github.com/samber/slog-echo v1.15.0/go.mod h1:K21nbusPmai/MYm8PFactmZoFctkMmkeaTdXXyvhY1c=
 github.com/samber/slog-echo v1.15.1 h1:mzeQNPYPxmpehIRtgQJRgJMVvrRbZHp5D2maxSljTBw=
