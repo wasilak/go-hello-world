@@ -89,6 +89,8 @@ github.com/gofiber/adaptor/v2 v2.2.1 h1:givE7iViQWlsTR4Jh7tB4iXzrlKBgiraB/yTdHs9
 github.com/gofiber/adaptor/v2 v2.2.1/go.mod h1:AhR16dEqs25W2FY/l8gSj1b51Azg5dtPDmm+pruNOrc=
 github.com/gofiber/contrib/otelfiber/v2 v2.2.0 h1:elmYBonZIdBWO7nQl/nXJLtT+7gPDD5GKIH/0lsFpE4=
 github.com/gofiber/contrib/otelfiber/v2 v2.2.0/go.mod h1:52MEjuv8JSiESuedc4yUpi4HiHx2qOGyMrWL78hIHKs=
+github.com/gofiber/contrib/otelfiber/v2 v2.2.1 h1:N5aF/Vftc4QqCzT+5X4/himzfIv2okjVQ0YhIghZau0=
+github.com/gofiber/contrib/otelfiber/v2 v2.2.1/go.mod h1:3cXujlUfJspc3MeEzYgLdIygmU9AkI9c8M/cQwNPJSU=
 github.com/gofiber/fiber/v2 v2.52.6 h1:Rfp+ILPiYSvvVuIPvxrBns+HJp8qGLDnLJawAu27XVI=
 github.com/gofiber/fiber/v2 v2.52.6/go.mod h1:YEcBbO/FB+5M1IZNBP9FO3J9281zgPAreiI1oqg8nDw=
 github.com/golang-cz/devslog v0.0.11 h1:v4Yb9o0ZpuZ/D8ZrtVw1f9q5XrjnkxwHF1XmWwO8IHg=

@@ -12,7 +12,7 @@ require (
 	github.com/gin-gonic/gin v1.10.0
 	github.com/go-chi/chi/v5 v5.2.1
 	github.com/gofiber/adaptor/v2 v2.2.1
-	github.com/gofiber/contrib/otelfiber/v2 v2.2.0
+	github.com/gofiber/contrib/otelfiber/v2 v2.2.1
 	github.com/gofiber/fiber/v2 v2.52.6
 	github.com/gorilla/mux v1.8.1
 	github.com/labstack/echo-contrib v0.17.3
