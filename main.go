@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"flag"
+	"fmt"
 	"os"
 	"os/signal"
 	"strings"
@@ -18,8 +19,6 @@ import (
 	"github.com/wasilak/go-hello-world/web"
 	"github.com/wasilak/go-hello-world/web/common"
 	"github.com/wasilak/loggergo"
-	loggergoLib "github.com/wasilak/loggergo/lib"
-	loggergoTypes "github.com/wasilak/loggergo/lib/types"
 	"github.com/wasilak/profilego"
 )
 
@@ -40,8 +39,8 @@ func main() {
 	}()
 
 	listenAddr := flag.String("listen-addr", "127.0.0.1:3000", "server listen address")
-	logLevel := flag.String("log-level", os.Getenv("LOG_LEVEL"), "log level (debug, info, warn, error, fatal)")
-	logFormat := flag.String("log-format", os.Getenv("LOG_FORMAT"), "log format (json, plain, otel)")
+	logLevel := flag.String("log-level", slog.LevelInfo.String(), fmt.Sprintf("log level %s", loggergo.Types.AllLogLevels()))
+	logFormat := flag.String("log-format", loggergo.Types.LogFormatText.String(), fmt.Sprintf("log format %s", loggergo.Types.AllLogFormats()))
 	otelEnabled := flag.Bool("otel-enabled", false, "OpenTelemetry traces enabled")
 	otelHostMetricsEnabled := flag.Bool("otel-host-metrics", false, "OpenTelemetry host metrics enabled")
 	otelRuntimeMetricsEnabled := flag.Bool("otel-runtime-metrics", false, "OpenTelemetry runtime metrics enabled")
@@ -49,6 +48,8 @@ func main() {
 	profilingEnabled := flag.Bool("profiling-enabled", false, "Profiling enabled")
 	profilingAddress := flag.String("profiling-address", "127.0.0.1:4040", "Profiling address")
 	webFramework := flag.String("web-framework", "gorilla", "Web framework (gorilla, echo, gin, chi, fiber)")
+	devFlavor := flag.String("dev-flavor", loggergo.Types.DevFlavorTint.String(), fmt.Sprintf("Dev flavor %s", loggergo.Types.AllDevFlavors()))
+	outPutType := flag.String("output-type", loggergo.Types.OutputConsole.String(), fmt.Sprintf("Output type %s", loggergo.Types.AllOutputTypes()))
 	flag.Parse()
 
 	if *profilingEnabled {
@@ -61,12 +62,13 @@ func main() {
 		profilego.Init(profileGoConfig)
 	}
 
-	loggerConfig := loggergoTypes.Config{
-		Level:        loggergoLib.LogLevelFromString(*logLevel),
-		Format:       loggergoLib.LogFormatFromString(*logFormat),
+	loggerConfig := loggergo.Config{
+		Level:        loggergo.Types.LogLevelFromString(*logLevel),
+		Format:       loggergo.Types.LogFormatFromString(*logFormat),
 		OutputStream: os.Stdout,
-		DevMode:      loggergoLib.LogLevelFromString(*logLevel) == slog.LevelDebug && *logFormat == "plain",
-		Output:       loggergoTypes.OutputConsole,
+		DevMode:      loggergo.Types.LogLevelFromString(*logLevel) == slog.LevelDebug && *logFormat == "plain",
+		Output:       loggergo.Types.OutputTypeFromString(*outPutType),
+		DevFlavor:    loggergo.Types.DevFlavorFromString(*devFlavor),
 	}
 
 	var traceProvider trace.TracerProvider
@@ -84,7 +86,7 @@ func main() {
 		}
 
 		loggerConfig.OtelServiceName = utils.GetAppName()
-		loggerConfig.Output = loggergoTypes.OutputFanout
+		loggerConfig.Output = loggergo.Types.OutputFanout
 		loggerConfig.OtelLoggerName = "github.com/wasilak/go-hello-world"
 		loggerConfig.OtelTracingEnabled = false
 	}
