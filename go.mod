@@ -15,18 +15,18 @@ require (
 	github.com/gofiber/contrib/otelfiber/v2 v2.2.2
 	github.com/gofiber/fiber/v2 v2.52.6
 	github.com/gorilla/mux v1.8.1
-	github.com/labstack/echo-contrib v0.17.3
+	github.com/labstack/echo-contrib v0.17.4
 	github.com/labstack/echo/v4 v4.13.3
 	github.com/prometheus/client_golang v1.22.0
 	github.com/riandyrn/otelchi v0.12.1
-	github.com/samber/slog-chi v1.14.0
+	github.com/samber/slog-chi v1.15.0
 	github.com/samber/slog-echo v1.16.1
 	github.com/samber/slog-fiber v1.18.0
 	github.com/samber/slog-gin v1.15.0
-	github.com/samber/slog-http v1.6.0
+	github.com/samber/slog-http v1.7.0
 	github.com/stretchr/testify v1.10.0
 	github.com/valyala/fasthttp v1.62.0
-	github.com/wasilak/loggergo v1.7.5
+	github.com/wasilak/loggergo v1.7.6
 	github.com/wasilak/otelgo v1.2.4
 	github.com/wasilak/profilego v1.0.9
 	github.com/zsais/go-gin-prometheus v0.1.0
@@ -39,7 +39,7 @@ require (
 )
 
 require (
-	dario.cat/mergo v1.0.1 // indirect
+	dario.cat/mergo v1.0.2 // indirect
 	github.com/andybalholm/brotli v1.1.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bytedance/sonic v1.13.2 // indirect
@@ -48,9 +48,9 @@ require (
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/cloudwego/base64x v0.1.5 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/ebitengine/purego v0.8.2 // indirect
+	github.com/ebitengine/purego v0.8.3 // indirect
 	github.com/felixge/httpsnoop v1.0.4 // indirect
-	github.com/gabriel-vasile/mimetype v1.4.8 // indirect
+	github.com/gabriel-vasile/mimetype v1.4.9 // indirect
 	github.com/gin-contrib/sse v1.1.0 // indirect
 	github.com/go-chi/chi v1.5.5 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
@@ -60,7 +60,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.26.0 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
-	github.com/golang-cz/devslog v0.0.12 // indirect
+	github.com/golang-cz/devslog v0.0.13 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
 	github.com/grafana/pyroscope-go v1.2.2 // indirect
@@ -84,11 +84,11 @@ require (
 	github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
 	github.com/prometheus/common v0.63.0 // indirect
-	github.com/prometheus/procfs v0.16.0 // indirect
+	github.com/prometheus/procfs v0.16.1 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
-	github.com/samber/lo v1.49.1 // indirect
+	github.com/samber/lo v1.50.0 // indirect
 	github.com/samber/slog-multi v1.4.0 // indirect
-	github.com/shirou/gopsutil/v4 v4.25.3 // indirect
+	github.com/shirou/gopsutil/v4 v4.25.4 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/tklauser/go-sysconf v0.3.15 // indirect
 	github.com/tklauser/numcpus v0.10.0 // indirect
@@ -117,16 +117,16 @@ require (
 	go.opentelemetry.io/otel/sdk v1.35.0 // indirect
 	go.opentelemetry.io/otel/sdk/log v0.11.0 // indirect
 	go.opentelemetry.io/otel/sdk/metric v1.35.0 // indirect
-	go.opentelemetry.io/proto/otlp v1.5.0 // indirect
-	golang.org/x/arch v0.16.0 // indirect
+	go.opentelemetry.io/proto/otlp v1.6.0 // indirect
+	golang.org/x/arch v0.17.0 // indirect
 	golang.org/x/crypto v0.38.0 // indirect
 	golang.org/x/net v0.40.0 // indirect
 	golang.org/x/sys v0.33.0 // indirect
 	golang.org/x/time v0.11.0 // indirect
 	golang.org/x/tools v0.24.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20250409194420-de1ac958c67a // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20250414145226-207652e42e2e // indirect
-	google.golang.org/grpc v1.71.1 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20250505200425-f936aa4a68b2 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250505200425-f936aa4a68b2 // indirect
+	google.golang.org/grpc v1.72.0 // indirect
 	google.golang.org/protobuf v1.36.6 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
