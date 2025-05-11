@@ -133,4 +133,4 @@ require (
 
 // alias to local
 // replace github.com/wasilak/loggergo => ../loggergo
-replace github.com/wasilak/otelgo => ../otelgo
+// replace github.com/wasilak/otelgo => ../otelgo
