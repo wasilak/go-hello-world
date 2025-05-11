@@ -27,7 +27,7 @@ require (
 	github.com/stretchr/testify v1.10.0
 	github.com/valyala/fasthttp v1.62.0
 	github.com/wasilak/loggergo v1.7.6
-	github.com/wasilak/otelgo v1.2.4
+	github.com/wasilak/otelgo v1.2.5
 	github.com/wasilak/profilego v1.0.9
 	github.com/zsais/go-gin-prometheus v0.1.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.60.0
