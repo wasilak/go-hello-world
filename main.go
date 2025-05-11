@@ -13,7 +13,7 @@ import (
 
 	otelgotracer "github.com/wasilak/otelgo/tracing"
 	"go.opentelemetry.io/otel"
-	"go.opentelemetry.io/otel/trace"
+	"go.opentelemetry.io/otel/sdk/trace"
 
 	"github.com/wasilak/go-hello-world/utils"
 	"github.com/wasilak/go-hello-world/web"
@@ -71,7 +71,7 @@ func main() {
 		DevFlavor:    loggergo.Types.DevFlavorFromString(*devFlavor),
 	}
 
-	var traceProvider trace.TracerProvider
+	var traceProvider *trace.TracerProvider
 	var err error
 
 	if *otelEnabled {
@@ -79,7 +79,7 @@ func main() {
 			HostMetricsEnabled:    *otelHostMetricsEnabled,
 			RuntimeMetricsEnabled: *otelRuntimeMetricsEnabled,
 		}
-		_, traceProvider, err = otelgotracer.Init(ctx, otelGoTracingConfig)
+		ctx, traceProvider, err = otelgotracer.Init(ctx, otelGoTracingConfig)
 		if err != nil {
 			slog.ErrorContext(ctx, err.Error())
 			os.Exit(1)
@@ -89,6 +89,8 @@ func main() {
 		loggerConfig.Output = loggergo.Types.OutputFanout
 		loggerConfig.OtelLoggerName = "github.com/wasilak/go-hello-world"
 		loggerConfig.OtelTracingEnabled = false
+
+		traceProvider.Shutdown(ctx)
 	}
 
 	ctx, _, err = loggergo.Init(ctx, loggerConfig)
