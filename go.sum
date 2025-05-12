@@ -152,8 +152,8 @@ github.com/samber/slog-echo v1.16.1 h1:5Q5IUROkFqKcu/qJM/13AP1d3gd1RS+Q/4EvKQU1f
 github.com/samber/slog-echo v1.16.1/go.mod h1:f+B3WR06saRXcaGRZ/I/UPCECDPqTUqadRIf7TmyRhI=
 github.com/samber/slog-fiber v1.18.0 h1:SpqAiKcAK1LNv0YHuE9Qe+CwSWAJ9dicBJXT876K/jo=
 github.com/samber/slog-fiber v1.18.0/go.mod h1:3mIIpt5L4kTt+1zoNTGAWDL6gHtgWD4pUcbC52xNbr0=
-github.com/samber/slog-gin v1.15.0 h1:Kqs/ilXd9divtslWjbz5DVptmLlzyntbBiXUAta2SFg=
-github.com/samber/slog-gin v1.15.0/go.mod h1:mPAEinK/g2jPLauuWO11m3Q0Ca7aG4k9XjXjXY8IhMQ=
+github.com/samber/slog-gin v1.15.1 h1:jsnfr+S5HQPlz9pFPA3tOmKW7wN/znyZiE6hncucrTM=
+github.com/samber/slog-gin v1.15.1/go.mod h1:mPAEinK/g2jPLauuWO11m3Q0Ca7aG4k9XjXjXY8IhMQ=
 github.com/samber/slog-http v1.7.0 h1:sFrwkdw3Nrtcqq6WLkFL0K0Drlh76TPRvo0d8epF2a4=
 github.com/samber/slog-http v1.7.0/go.mod h1:PAcQQrYFo5KM7Qbk50gNNwKEAMGCyfsw6GN5dI0iv9g=
 github.com/samber/slog-multi v1.4.0 h1:pwlPMIE7PrbTHQyKWDU+RIoxP1+HKTNOujk3/kdkbdg=
@@ -188,10 +188,10 @@ github.com/valyala/fasthttp v1.62.0 h1:8dKRBX/y2rCzyc6903Zu1+3qN0H/d2MsxPPmVNami
 github.com/valyala/fasthttp v1.62.0/go.mod h1:FCINgr4GKdKqV8Q0xv8b+UxPV+H/O5nNFo3D+r54Htg=
 github.com/valyala/fasttemplate v1.2.2 h1:lxLXG0uE3Qnshl9QyaK6XJxMXlQZELvChBOCmQD0Loo=
 github.com/valyala/fasttemplate v1.2.2/go.mod h1:KHLXt3tVN2HBp8eijSv/kGJopbvo7S+qRAEEKiv+SiQ=
-github.com/wasilak/loggergo v1.7.6 h1:08PAikeZxuppK4pl2AT5zpgVCElTPz83X6t07wbBnnU=
-github.com/wasilak/loggergo v1.7.6/go.mod h1:DBYBoT6bb+gN0vmDDDd5kjSIWL7EJPc8LsBuGzkroy4=
-github.com/wasilak/otelgo v1.2.5 h1:0ByD2q36y+KMShsflMhHIyb2OpakNdL9f5CnSYYI1D8=
-github.com/wasilak/otelgo v1.2.5/go.mod h1:Htb5gj0dYc1TCihcm7/fQ4P7idcEaW6vNbZ8hH78jmA=
+github.com/wasilak/loggergo v1.7.7 h1:c3FdM09LMdBsTifIJv5iqD5d9wSs/p65Pus3SIAHxhg=
+github.com/wasilak/loggergo v1.7.7/go.mod h1:Kf0DY3WXPcxRQ61+GCttDGZ2YBGk4hFX7aL3caBzdD8=
+github.com/wasilak/otelgo v1.2.6 h1:3utN2SdjrHmrWAujNUKSyscoOOqQR3Psb570o2Dz24Y=
+github.com/wasilak/otelgo v1.2.6/go.mod h1:Htb5gj0dYc1TCihcm7/fQ4P7idcEaW6vNbZ8hH78jmA=
 github.com/wasilak/profilego v1.0.9 h1:I7i+UqBa/kxF+edEptEJpDU4rGQvZoGWkgUME0EEaYk=
 github.com/wasilak/profilego v1.0.9/go.mod h1:pcEwOzZCjmC1/5q5qTk2pyCpf9XWb2HnJpxUHIvW0pI=
 github.com/xybor-x/enum v1.4.0 h1:Bcv9amQlSsz+EDJW9feiDxCzzUkP1Bv2Lzwx1BGvGeU=

@@ -90,7 +90,11 @@ func main() {
 		loggerConfig.OtelLoggerName = "github.com/wasilak/go-hello-world"
 		loggerConfig.OtelTracingEnabled = false
 
-		traceProvider.Shutdown(ctx)
+		defer func() {
+			if err := traceProvider.Shutdown(ctx); err != nil {
+				slog.ErrorContext(ctx, "Failed to shut down trace provider", "error", err)
+			}
+		}()
 	}
 
 	ctx, _, err = loggergo.Init(ctx, loggerConfig)

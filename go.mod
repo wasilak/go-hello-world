@@ -22,12 +22,12 @@ require (
 	github.com/samber/slog-chi v1.15.0
 	github.com/samber/slog-echo v1.16.1
 	github.com/samber/slog-fiber v1.18.0
-	github.com/samber/slog-gin v1.15.0
+	github.com/samber/slog-gin v1.15.1
 	github.com/samber/slog-http v1.7.0
 	github.com/stretchr/testify v1.10.0
 	github.com/valyala/fasthttp v1.62.0
-	github.com/wasilak/loggergo v1.7.6
-	github.com/wasilak/otelgo v1.2.5
+	github.com/wasilak/loggergo v1.7.7
+	github.com/wasilak/otelgo v1.2.6
 	github.com/wasilak/profilego v1.0.9
 	github.com/zsais/go-gin-prometheus v0.1.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.60.0
