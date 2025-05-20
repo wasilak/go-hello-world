@@ -20,9 +20,8 @@ import (
 	"github.com/wasilak/go-hello-world/web/common"
 	"github.com/wasilak/loggergo"
 	"github.com/wasilak/profilego"
+	otel_tracer "go.opentelemetry.io/otel/trace"
 )
-
-var tracer = otel.Tracer(utils.GetAppName())
 
 func main() {
 	// Create a context that listens for system signals
@@ -71,6 +70,7 @@ func main() {
 		DevFlavor:    loggergo.Types.DevFlavorFromString(*devFlavor),
 	}
 
+	var tracer otel_tracer.Tracer
 	var traceProvider *trace.TracerProvider
 	var err error
 
@@ -88,7 +88,10 @@ func main() {
 		loggerConfig.OtelServiceName = utils.GetAppName()
 		loggerConfig.Output = loggergo.Types.OutputFanout
 		loggerConfig.OtelLoggerName = "github.com/wasilak/go-hello-world"
-		loggerConfig.OtelTracingEnabled = false
+		loggerConfig.OtelTracingEnabled = true
+
+		otel.SetTracerProvider(traceProvider)
+		tracer = traceProvider.Tracer(utils.GetAppName())
 
 		defer func() {
 			if err := traceProvider.Shutdown(ctx); err != nil {
@@ -96,6 +99,9 @@ func main() {
 			}
 		}()
 	}
+
+	ctx, span := tracer.Start(ctx, "main")
+	defer span.End()
 
 	ctx, _, err = loggergo.Init(ctx, loggerConfig)
 	if err != nil {

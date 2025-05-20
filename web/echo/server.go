@@ -31,13 +31,13 @@ func (s *Server) setup() {
 
 	s.Server.Debug = strings.EqualFold(s.FrameworkOptions.LogLevelConfig.Level().String(), "debug")
 
-	s.Server.Use(slogecho.New(slog.Default()))
-
 	if s.FrameworkOptions.OtelEnabled {
-		s.Server.Use(otelecho.Middleware(utils.GetAppName(), otelecho.WithSkipper(func(c echo.Context) bool {
+		s.Server.Use(otelecho.Middleware(utils.GetAppName(), otelecho.WithTracerProvider(s.FrameworkOptions.TraceProvider), otelecho.WithSkipper(func(c echo.Context) bool {
 			return strings.Contains(c.Path(), "public/dist") || strings.Contains(c.Path(), "health")
 		})))
 	}
+
+	s.Server.Use(slogecho.New(slog.Default()))
 
 	s.Server.Use(middleware.GzipWithConfig(middleware.GzipConfig{
 		Skipper: func(c echo.Context) bool {
