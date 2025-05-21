@@ -3,6 +3,20 @@ entries:
   go-hello-world:
   - apiVersion: v2
     appVersion: 1.7.10
+    created: "2025-05-21T07:17:02.968472729Z"
+    description: A Helm chart for go-hello-world
+    digest: 6316e43384287ab3c1d8b7e998ef42dad19567933eacd2a14b8c011ac4469f39
+    icon: https://raw.githubusercontent.com/wasilak/go-hello-world/main/icon_small.jpg
+    maintainers:
+    - email: piotr.m.boruc@gmail.com
+      name: wasilak
+    name: go-hello-world
+    type: application
+    urls:
+    - https://github.com/wasilak/go-hello-world/releases/download/go-hello-world-0.4.10/go-hello-world-0.4.10.tgz
+    version: 0.4.10
+  - apiVersion: v2
+    appVersion: 1.7.10
     created: "2025-05-21T06:42:19.276948002Z"
     description: A Helm chart for go-hello-world
     digest: f8a2c7b63ca8cb7abf68f31d8cda2b91ef0aed59a51dc9a1acb74ba966762796
@@ -265,4 +279,4 @@ entries:
     urls:
     - https://github.com/wasilak/go-hello-world/releases/download/go-hello-world-0.0.1/go-hello-world-0.0.1.tgz
     version: 0.0.1
-generated: "2025-05-21T06:42:19.277080099Z"
+generated: "2025-05-21T07:17:02.968622818Z"
