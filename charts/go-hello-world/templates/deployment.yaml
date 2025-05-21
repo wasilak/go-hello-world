@@ -42,10 +42,4 @@ spec:
             initialDelaySeconds: 2
             periodSeconds: 3
 
-            {{- if .Values.env }}
-            env:
-            {{- range $env := .Values.env }}
-              - name: {{ $env.key }}
-                value: {{ $env.value }}
-            {{- end }}
-            {{- end }}
+            {{- include "env_vars" .Values | indent 10 }}

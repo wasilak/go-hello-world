@@ -1,0 +1,22 @@
+{{- define "env_vars" }}
+{{ if or (.env) (.envFromSecret) -}}
+env:
+{{- range .env }}
+  - name: "{{ .name }}"
+    {{ if .value -}}
+    value: "{{ .value }}"
+    {{- end -}}
+    {{ if .valueFrom -}}
+    valueFrom: {{ toYaml .valueFrom | nindent 6 }}
+    {{- end -}}
+{{- end -}}
+
+{{- range .envFromSecret }}
+  - name: "{{ .name }}"
+    valueFrom:
+      secretKeyRef:
+        name: "{{ .secret.name }}"
+        key: "{{ .secret.key }}"
+{{- end -}}
+{{- end }}
+{{- end }}
