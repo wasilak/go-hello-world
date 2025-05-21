@@ -20,7 +20,6 @@ import (
 	"github.com/wasilak/go-hello-world/web/common"
 	"github.com/wasilak/loggergo"
 	"github.com/wasilak/profilego"
-	otel_tracer "go.opentelemetry.io/otel/trace"
 )
 
 func main() {
@@ -70,7 +69,7 @@ func main() {
 		DevFlavor:    loggergo.Types.DevFlavorFromString(*devFlavor),
 	}
 
-	var tracer otel_tracer.Tracer
+	var tracer = otel.Tracer(utils.GetAppName())
 	var traceProvider *trace.TracerProvider
 	var err error
 
