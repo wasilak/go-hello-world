@@ -16,7 +16,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.52.6
 	github.com/gorilla/mux v1.8.1
 	github.com/labstack/echo-contrib v0.17.4
-	github.com/labstack/echo/v4 v4.13.3
+	github.com/labstack/echo/v4 v4.13.4
 	github.com/prometheus/client_golang v1.22.0
 	github.com/riandyrn/otelchi v0.12.1
 	github.com/samber/slog-chi v1.15.0
