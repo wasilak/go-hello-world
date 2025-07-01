@@ -25,7 +25,7 @@ require (
 	github.com/samber/slog-gin v1.15.1
 	github.com/samber/slog-http v1.7.0
 	github.com/stretchr/testify v1.10.0
-	github.com/valyala/fasthttp v1.62.0
+	github.com/valyala/fasthttp v1.63.0
 	github.com/wasilak/loggergo v1.7.8
 	github.com/wasilak/otelgo v1.2.6
 	github.com/wasilak/profilego v1.0.9
@@ -41,7 +41,7 @@ require (
 
 require (
 	dario.cat/mergo v1.0.2 // indirect
-	github.com/andybalholm/brotli v1.1.1 // indirect
+	github.com/andybalholm/brotli v1.2.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/bytedance/sonic v1.13.3 // indirect
 	github.com/bytedance/sonic/loader v0.2.4 // indirect
