@@ -12,6 +12,8 @@ github.com/ansrivas/fiberprometheus/v2 v2.10.0 h1:gzzJ2PSMjYEiZIfI9Ip0gVCOCRnM0C
 github.com/ansrivas/fiberprometheus/v2 v2.10.0/go.mod h1:ujpKAV2VGNhjIBTkp5KEP/ICpSJtFq3tpm+9sJUktDs=
 github.com/ansrivas/fiberprometheus/v2 v2.11.0 h1:CLbxIvpmKPSqXnL26iJ2BmNPmcejmzxr/js8PIa0Pj4=
 github.com/ansrivas/fiberprometheus/v2 v2.11.0/go.mod h1:ujpKAV2VGNhjIBTkp5KEP/ICpSJtFq3tpm+9sJUktDs=
+github.com/ansrivas/fiberprometheus/v2 v2.12.0 h1:R/trfUg1JulKXLKxOIZl6A7mDoYpTVQL8sI3b90aWwQ=
+github.com/ansrivas/fiberprometheus/v2 v2.12.0/go.mod h1:kpfawHbyug8cjEO6uTPyik7s9TZzSfW8vtcdeAZBzc8=
 github.com/arl/statsviz v0.6.0 h1:jbW1QJkEYQkufd//4NDYRSNBpwJNrdzPahF7ZmoGdyE=
 github.com/arl/statsviz v0.6.0/go.mod h1:0toboo+YGSUXDaS4g1D5TVS4dXs7S7YYT5J/qnW2h8s=
 github.com/beorn7/perks v1.0.1 h1:VlbKKnNfV8bJzeqoa4cOKqO6bYr3WgKZxO8Z16+hsOM=
