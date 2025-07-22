@@ -29,7 +29,7 @@ require (
 	github.com/wasilak/loggergo v1.7.8
 	github.com/wasilak/otelgo v1.2.6
 	github.com/wasilak/profilego v1.0.9
-	github.com/zsais/go-gin-prometheus v1.0.0
+	github.com/zsais/go-gin-prometheus v1.0.1
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.62.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.62.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.62.0
