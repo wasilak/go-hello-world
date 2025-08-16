@@ -254,6 +254,8 @@ github.com/zsais/go-gin-prometheus v1.0.0 h1:ucg4uqyIg/Q2vFaKYirVH+WKAGD8NZR8pB6
 github.com/zsais/go-gin-prometheus v1.0.0/go.mod h1:BLzchNYsehhyPNY31G0YgK/Q6BaDbKpoGQe7OAcLMVU=
 github.com/zsais/go-gin-prometheus v1.0.1 h1:PtTa1rQhbXEAx0gNQkXr4+SGcElSF1YR/NmO3f5s3o4=
 github.com/zsais/go-gin-prometheus v1.0.1/go.mod h1:iKBYSOHzvGfe2FyGSOC8JSwUA0MITdnYzI6v+aAbw1Q=
+github.com/zsais/go-gin-prometheus v1.0.2 h1:3asLqrFltMdItpgr/OS4hYc8pLq3HzMa5T1gYuXBIZ0=
+github.com/zsais/go-gin-prometheus v1.0.2/go.mod h1:iKBYSOHzvGfe2FyGSOC8JSwUA0MITdnYzI6v+aAbw1Q=
 gitlab.com/greyxor/slogor v1.6.2 h1:rTiUPgyeV488Wb9iq2Gw38hth0e6qfCjFDxkuZK09Fw=
 gitlab.com/greyxor/slogor v1.6.2/go.mod h1:q1VWPH4KB0x9eH8PoJ+zM5yfHeSG4YNS3uVfs+P+ZL8=
 go.opentelemetry.io/auto/sdk v1.1.0 h1:cH53jehLUN6UFLY71z+NDOiNJqDdPRaXzTel0sJySYA=
