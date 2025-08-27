@@ -24,7 +24,7 @@ require (
 	github.com/samber/slog-fiber v1.18.0
 	github.com/samber/slog-gin v1.16.1
 	github.com/samber/slog-http v1.7.0
-	github.com/stretchr/testify v1.11.0
+	github.com/stretchr/testify v1.11.1
 	github.com/valyala/fasthttp v1.65.0
 	github.com/wasilak/loggergo v1.7.8
 	github.com/wasilak/otelgo v1.2.6
