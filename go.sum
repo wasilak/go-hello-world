@@ -190,6 +190,8 @@ github.com/rogpeppe/go-internal v1.13.1 h1:KvO1DLK/DRN07sQ1LQKScxyZJuNnedQ5/wKSR
 github.com/rogpeppe/go-internal v1.13.1/go.mod h1:uMEvuHeurkdAXX61udpOXGD/AzZDWNMNyH2VO9fmH0o=
 github.com/samber/lo v1.50.0 h1:XrG0xOeHs+4FQ8gJR97zDz5uOFMW7OwFWiFVzqopKgY=
 github.com/samber/lo v1.50.0/go.mod h1:RjZyNk6WSnUFRKK6EyOhsRJMqft3G+pg7dCWHQCWvsc=
+github.com/samber/lo v1.51.0 h1:kysRYLbHy/MB7kQZf5DSN50JHmMsNEdeY24VzJFu7wI=
+github.com/samber/lo v1.51.0/go.mod h1:4+MXEGsJzbKGaUEQFKBq2xtfuznW9oz/WrgyzMzRoM0=
 github.com/samber/slog-chi v1.15.0 h1:3aV4IEv4gOTUzQsMk7FnasZKSRj5kB52+6AqNLjh1m4=
 github.com/samber/slog-chi v1.15.0/go.mod h1:W8FfgeySPYJPztBLA4Pc7J0vY7OrazTLGH3jmWqSiRY=
 github.com/samber/slog-chi v1.16.0 h1:HfeAJzXO6HAgLYRrTA8DZ/RgkK5L+dqC102G4x8Sz0g=
@@ -198,6 +200,8 @@ github.com/samber/slog-chi v1.16.1 h1:cg8U8FXJjBNdxY3NlYP+fMKXmeHBpEJD1rtG+yikVu
 github.com/samber/slog-chi v1.16.1/go.mod h1:Wavzf+B7j20Ud3wvUN6omgtISBxS6N1BEvd3JU6cBz4=
 github.com/samber/slog-echo v1.16.1 h1:5Q5IUROkFqKcu/qJM/13AP1d3gd1RS+Q/4EvKQU1fuo=
 github.com/samber/slog-echo v1.16.1/go.mod h1:f+B3WR06saRXcaGRZ/I/UPCECDPqTUqadRIf7TmyRhI=
+github.com/samber/slog-echo v1.17.1 h1:ItGQGNf4jz8UIMRK7DVwp/HVr2q3EM52DkaIWGpmYrY=
+github.com/samber/slog-echo v1.17.1/go.mod h1:4diugqPTk6iQdL7gZFJIyf6zGMLVMaGnCmNm+DBSMRU=
 github.com/samber/slog-fiber v1.18.0 h1:SpqAiKcAK1LNv0YHuE9Qe+CwSWAJ9dicBJXT876K/jo=
 github.com/samber/slog-fiber v1.18.0/go.mod h1:3mIIpt5L4kTt+1zoNTGAWDL6gHtgWD4pUcbC52xNbr0=
 github.com/samber/slog-gin v1.15.1 h1:jsnfr+S5HQPlz9pFPA3tOmKW7wN/znyZiE6hncucrTM=
