@@ -20,7 +20,7 @@ require (
 	github.com/prometheus/client_golang v1.23.0
 	github.com/riandyrn/otelchi v0.12.1
 	github.com/samber/slog-chi v1.16.1
-	github.com/samber/slog-echo v1.16.1
+	github.com/samber/slog-echo v1.17.1
 	github.com/samber/slog-fiber v1.18.0
 	github.com/samber/slog-gin v1.16.1
 	github.com/samber/slog-http v1.7.0
@@ -87,7 +87,7 @@ require (
 	github.com/prometheus/common v0.65.0 // indirect
 	github.com/prometheus/procfs v0.16.1 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
-	github.com/samber/lo v1.50.0 // indirect
+	github.com/samber/lo v1.51.0 // indirect
 	github.com/samber/slog-multi v1.4.0 // indirect
 	github.com/shirou/gopsutil/v4 v4.25.4 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
