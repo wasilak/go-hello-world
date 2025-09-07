@@ -18,7 +18,7 @@ require (
 	github.com/labstack/echo-contrib v0.17.4
 	github.com/labstack/echo/v4 v4.13.4
 	github.com/prometheus/client_golang v1.23.2
-	github.com/riandyrn/otelchi v0.12.1
+	github.com/riandyrn/otelchi v0.12.2
 	github.com/samber/slog-chi v1.16.1
 	github.com/samber/slog-echo v1.17.1
 	github.com/samber/slog-fiber v1.18.0
