@@ -25,7 +25,7 @@ require (
 	github.com/samber/slog-gin v1.17.2
 	github.com/samber/slog-http v1.8.2
 	github.com/stretchr/testify v1.11.1
-	github.com/valyala/fasthttp v1.66.0
+	github.com/valyala/fasthttp v1.67.0
 	github.com/wasilak/loggergo v1.7.8
 	github.com/wasilak/otelgo v1.2.6
 	github.com/wasilak/profilego v1.0.9
@@ -126,7 +126,7 @@ require (
 	golang.org/x/arch v0.20.0 // indirect
 	golang.org/x/crypto v0.42.0 // indirect
 	golang.org/x/mod v0.27.0 // indirect
-	golang.org/x/net v0.44.0 // indirect
+	golang.org/x/net v0.45.0 // indirect
 	golang.org/x/sync v0.17.0 // indirect
 	golang.org/x/sys v0.36.0 // indirect
 	golang.org/x/time v0.12.0 // indirect
