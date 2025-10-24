@@ -244,6 +244,8 @@ github.com/samber/slog-echo v1.17.1 h1:ItGQGNf4jz8UIMRK7DVwp/HVr2q3EM52DkaIWGpmY
 github.com/samber/slog-echo v1.17.1/go.mod h1:4diugqPTk6iQdL7gZFJIyf6zGMLVMaGnCmNm+DBSMRU=
 github.com/samber/slog-echo v1.17.2 h1:/d1D2ZiJsaqaeyz3Yk9olCeFFpi4EIJZtnoMp5zt9fs=
 github.com/samber/slog-echo v1.17.2/go.mod h1:4diugqPTk6iQdL7gZFJIyf6zGMLVMaGnCmNm+DBSMRU=
+github.com/samber/slog-echo v1.18.0 h1:fnDeUhwqoAsQZxbmIizO0avwE0qjjoefAvhXoByxN3U=
+github.com/samber/slog-echo v1.18.0/go.mod h1:4diugqPTk6iQdL7gZFJIyf6zGMLVMaGnCmNm+DBSMRU=
 github.com/samber/slog-fiber v1.18.0 h1:SpqAiKcAK1LNv0YHuE9Qe+CwSWAJ9dicBJXT876K/jo=
 github.com/samber/slog-fiber v1.18.0/go.mod h1:3mIIpt5L4kTt+1zoNTGAWDL6gHtgWD4pUcbC52xNbr0=
 github.com/samber/slog-fiber v1.18.1 h1:VC1z+FtEk52nh1EWgT2oE185nIrceCyjXZwMYNjVXCA=
