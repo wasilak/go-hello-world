@@ -10,6 +10,7 @@ import (
 	"github.com/gofiber/adaptor/v2"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/compress"
+	"github.com/prometheus/client_golang/prometheus/collectors"
 	"github.com/wasilak/go-hello-world/utils"
 	"github.com/wasilak/go-hello-world/web/common"
 
@@ -30,6 +31,14 @@ func (s *Server) setup(ctx context.Context) {
 	s.Server = fiber.New(fiber.Config{
 		DisableStartupMessage: true, // Disable the Fiber banner
 	})
+
+	// Register Go runtime metrics only if not already registered
+	goCollector := collectors.NewGoCollector()
+	processCollector := collectors.NewProcessCollector(collectors.ProcessCollectorOpts{})
+
+	// Use shared utility to prevent duplicate registration
+	common.RegisterCollectorIfNotRegistered(goCollector)
+	common.RegisterCollectorIfNotRegistered(processCollector)
 
 	// Prometheus Middleware
 	prometheus := fiberprometheus.New(utils.GetAppName())

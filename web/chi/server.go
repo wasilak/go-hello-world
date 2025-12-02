@@ -12,6 +12,7 @@ import (
 	"github.com/arl/statsviz"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
+	"github.com/prometheus/client_golang/prometheus/collectors"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/riandyrn/otelchi"
 	slogchi "github.com/samber/slog-chi"
@@ -30,6 +31,14 @@ var promMiddleware func(next http.Handler) http.Handler
 func (s *Server) setup() {
 
 	r := chi.NewRouter()
+
+	// Register Go runtime metrics only if not already registered
+	goCollector := collectors.NewGoCollector()
+	processCollector := collectors.NewProcessCollector(collectors.ProcessCollectorOpts{})
+
+	// Use shared utility to prevent duplicate registration
+	common.RegisterCollectorIfNotRegistered(goCollector)
+	common.RegisterCollectorIfNotRegistered(processCollector)
 
 	if promMiddleware == nil {
 		promMiddleware = chiprometheus.NewMiddleware(strings.ReplaceAll(utils.GetAppName(), "-", "_"))

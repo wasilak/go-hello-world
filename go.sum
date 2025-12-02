@@ -64,8 +64,8 @@ github.com/go-playground/validator/v10 v10.28.0 h1:Q7ibns33JjyW48gHkuFT91qX48KG0
 github.com/go-playground/validator/v10 v10.28.0/go.mod h1:GoI6I1SjPBh9p7ykNE/yj3fFYbyDOpwMn5KXd+m2hUU=
 github.com/goccy/go-json v0.10.5 h1:Fq85nIqj+gXn/S5ahsiTlK3TmC85qgirsdTP/+DeaC4=
 github.com/goccy/go-json v0.10.5/go.mod h1:oq7eo15ShAhp70Anwd5lgX2pLfOS3QCiwU/PULtXL6M=
-github.com/goccy/go-yaml v1.18.0 h1:8W7wMFS12Pcas7KU+VVkaiCng+kG8QiFeFwzFb+rwuw=
-github.com/goccy/go-yaml v1.18.0/go.mod h1:XBurs7gK8ATbW4ZPGKgcbrY1Br56PdM69F7LkFRi1kA=
+github.com/goccy/go-yaml v1.19.0 h1:EmkZ9RIsX+Uq4DYFowegAuJo8+xdX3T/2dwNPXbxEYE=
+github.com/goccy/go-yaml v1.19.0/go.mod h1:XBurs7gK8ATbW4ZPGKgcbrY1Br56PdM69F7LkFRi1kA=
 github.com/gofiber/adaptor/v2 v2.2.1 h1:givE7iViQWlsTR4Jh7tB4iXzrlKBgiraB/yTdHs9Lv4=
 github.com/gofiber/adaptor/v2 v2.2.1/go.mod h1:AhR16dEqs25W2FY/l8gSj1b51Azg5dtPDmm+pruNOrc=
 github.com/gofiber/contrib/otelfiber/v2 v2.2.3 h1:WKW1XezHFAoohGZwnvC0R8TFJcNkabQwB5YIpdKmz00=
@@ -93,8 +93,6 @@ github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.3 h1:NmZ1PKzSTQbuGHw9DGPFomqkkLW
 github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.3/go.mod h1:zQrxl1YP88HQlA6i9c63DSVPFklWpGX4OWAc9bFuaH4=
 github.com/json-iterator/go v1.1.12 h1:PV8peI4a0ysnczrg+LtxykD8LfKY9ML6u2jnxaEnrnM=
 github.com/json-iterator/go v1.1.12/go.mod h1:e30LSqwooZae/UwlEbR2852Gd8hjQvJoHmT4TnhNGBo=
-github.com/klauspost/compress v1.18.1 h1:bcSGx7UbpBqMChDtsF28Lw6v/G94LPrrbMbdC3JH2co=
-github.com/klauspost/compress v1.18.1/go.mod h1:ZQFFVG+MdnR0P+l6wpXgIL4NTtwiKIdBnrBd8Nrxr+0=
 github.com/klauspost/compress v1.18.2 h1:iiPHWW0YrcFgpBYhsA6D1+fqHssJscY/Tm/y2Uqnapk=
 github.com/klauspost/compress v1.18.2/go.mod h1:R0h/fSBs8DE4ENlcrlib3PsXS61voFxhIs2DeRhCvJ4=
 github.com/klauspost/cpuid/v2 v2.3.0 h1:S4CRMLnYUhGeDFDqkGriYKdfoFlDnMtqTiI/sFzhA9Y=
@@ -171,8 +169,8 @@ github.com/samber/slog-http v1.9.0 h1:zS0Rrb9gz2xpPsuNsc7sY91KU7VFnxxnb6ODYT01hU
 github.com/samber/slog-http v1.9.0/go.mod h1:PAcQQrYFo5KM7Qbk50gNNwKEAMGCyfsw6GN5dI0iv9g=
 github.com/samber/slog-multi v1.6.0 h1:i1uBY+aaln6ljwdf7Nrt4Sys8Kk6htuYuXDHWJsHtZg=
 github.com/samber/slog-multi v1.6.0/go.mod h1:qTqzmKdPpT0h4PFsTN5rYRgLwom1v+fNGuIrl1Xnnts=
-github.com/shirou/gopsutil/v4 v4.25.10 h1:at8lk/5T1OgtuCp+AwrDofFRjnvosn0nkN2OLQ6g8tA=
-github.com/shirou/gopsutil/v4 v4.25.10/go.mod h1:+kSwyC8DRUD9XXEHCAFjK+0nuArFJM0lva+StQAcskM=
+github.com/shirou/gopsutil/v4 v4.25.11 h1:X53gB7muL9Gnwwo2evPSE+SfOrltMoR6V3xJAXZILTY=
+github.com/shirou/gopsutil/v4 v4.25.11/go.mod h1:EivAfP5x2EhLp2ovdpKSozecVXn1TmuG7SMzs/Wh4PU=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
 github.com/sirupsen/logrus v1.9.3/go.mod h1:naHLuLoDiP4jHNo9R0sCBMtWGeIprob74mVsIT4qYEQ=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
@@ -206,10 +204,8 @@ github.com/wasilak/loggergo v1.8.1 h1:afBvsXdPiPrRGUDXNkeY9ySrM3ffqeBES8pP/psgW8
 github.com/wasilak/loggergo v1.8.1/go.mod h1:U34J7Q04+QrV646J1WRK22IcRRlpQBXXF8G73X58IvM=
 github.com/wasilak/otelgo v1.3.0 h1:iUAP/m/U91x6Z5W5iHjFt0QuC5Viv4nOeW1L83CkVBU=
 github.com/wasilak/otelgo v1.3.0/go.mod h1:C07kM4sboOSCRzx+gWf8neuTO8tNoIlBwMUAcbPUWgo=
-github.com/wasilak/profilego v1.0.9 h1:I7i+UqBa/kxF+edEptEJpDU4rGQvZoGWkgUME0EEaYk=
-github.com/wasilak/profilego v1.0.9/go.mod h1:pcEwOzZCjmC1/5q5qTk2pyCpf9XWb2HnJpxUHIvW0pI=
-github.com/wasilak/profilego v1.1.0 h1:/gohQ+uRjUskMNF2aCAcIo3u8g+s6oiZGC0ZKNCTw+I=
-github.com/wasilak/profilego v1.1.0/go.mod h1:HZt3WPPdlwcb5vtYjOCL600ld9kAPWHUWXBAQrTppRk=
+github.com/wasilak/profilego v1.2.0 h1:UBrJGX1RarcvQl847Vh2jO/khBKixbJFDjM7mqvUaLo=
+github.com/wasilak/profilego v1.2.0/go.mod h1:HZt3WPPdlwcb5vtYjOCL600ld9kAPWHUWXBAQrTppRk=
 github.com/xybor-x/enum v1.4.0 h1:Bcv9amQlSsz+EDJW9feiDxCzzUkP1Bv2Lzwx1BGvGeU=
 github.com/xybor-x/enum v1.4.0/go.mod h1:cBN02xug2E1c3UJjZsF5eBg71usBXxX2ePFUFNOFs9o=
 github.com/xyproto/randomstring v1.0.5 h1:YtlWPoRdgMu3NZtP45drfy1GKoojuR7hmRcnhZqKjWU=

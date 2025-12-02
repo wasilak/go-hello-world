@@ -12,6 +12,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/collectors"
 	slogecho "github.com/samber/slog-echo"
 	"github.com/wasilak/go-hello-world/utils"
 	"github.com/wasilak/go-hello-world/web/common"
@@ -30,6 +31,14 @@ func (s *Server) setup() {
 	s.Server.HidePort = true
 
 	s.Server.Debug = strings.EqualFold(s.FrameworkOptions.LogLevelConfig.Level().String(), "debug")
+
+	// Register Go runtime metrics only if not already registered
+	goCollector := collectors.NewGoCollector()
+	processCollector := collectors.NewProcessCollector(collectors.ProcessCollectorOpts{})
+
+	// Use shared utility to prevent duplicate registration
+	common.RegisterCollectorIfNotRegistered(goCollector)
+	common.RegisterCollectorIfNotRegistered(processCollector)
 
 	if s.FrameworkOptions.OtelEnabled {
 		s.Server.Use(otelecho.Middleware(utils.GetAppName(), otelecho.WithTracerProvider(s.FrameworkOptions.TraceProvider), otelecho.WithSkipper(func(c echo.Context) bool {

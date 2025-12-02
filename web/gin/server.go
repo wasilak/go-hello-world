@@ -10,6 +10,7 @@ import (
 	"github.com/arl/statsviz"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
+	"github.com/prometheus/client_golang/prometheus/collectors"
 	sloggin "github.com/samber/slog-gin"
 	"github.com/wasilak/go-hello-world/utils"
 	"github.com/wasilak/go-hello-world/web/common"
@@ -33,6 +34,14 @@ func (sw slogWriter) Write(p []byte) (n int, err error) {
 
 func (s *Server) setup() {
 	gin.DefaultWriter = slogWriter{}
+
+	// Register Go runtime metrics only if not already registered
+	goCollector := collectors.NewGoCollector()
+	processCollector := collectors.NewProcessCollector(collectors.ProcessCollectorOpts{})
+
+	// Use shared utility to prevent duplicate registration
+	common.RegisterCollectorIfNotRegistered(goCollector)
+	common.RegisterCollectorIfNotRegistered(processCollector)
 
 	// Create a Gin router
 	r := gin.Default()

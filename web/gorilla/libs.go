@@ -7,8 +7,10 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus"
+	"github.com/prometheus/client_golang/prometheus/collectors"
 	"github.com/prometheus/client_golang/prometheus/promauto"
 	"github.com/wasilak/go-hello-world/utils"
+	"github.com/wasilak/go-hello-world/web/common"
 )
 
 var (
@@ -23,6 +25,16 @@ var (
 	}, []string{"path", "host"})
 )
 
+func initGeneralMetrics() {
+	// Register Go runtime metrics only if not already registered
+	goCollector := collectors.NewGoCollector()
+	processCollector := collectors.NewProcessCollector(collectors.ProcessCollectorOpts{})
+
+	// Use shared utility to prevent duplicate registration
+	common.RegisterCollectorIfNotRegistered(goCollector)
+	common.RegisterCollectorIfNotRegistered(processCollector)
+}
+
 // prometheusMiddleware implements mux.MiddlewareFunc.
 func prometheusMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -33,4 +45,8 @@ func prometheusMiddleware(next http.Handler) http.Handler {
 		next.ServeHTTP(w, r)
 		timer.ObserveDuration()
 	})
+}
+
+func init() {
+	initGeneralMetrics()
 }

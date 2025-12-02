@@ -20,6 +20,8 @@ import (
 	"github.com/wasilak/go-hello-world/web/common"
 	"github.com/wasilak/loggergo"
 	"github.com/wasilak/profilego"
+	"github.com/wasilak/profilego/config"
+	"github.com/wasilak/profilego/core"
 )
 
 func main() {
@@ -44,20 +46,25 @@ func main() {
 	otelRuntimeMetricsEnabled := flag.Bool("otel-runtime-metrics", false, "OpenTelemetry runtime metrics enabled")
 	statsvizEnabled := flag.Bool("statsviz-enabled", false, "statsviz enabled")
 	profilingEnabled := flag.Bool("profiling-enabled", false, "Profiling enabled")
-	profilingAddress := flag.String("profiling-address", "127.0.0.1:4040", "Profiling address")
+	profilingAddress := flag.String("profiling-address", "http://localhost:4040", "Profiling address")
 	webFramework := flag.String("web-framework", "gorilla", "Web framework (gorilla, echo, gin, chi, fiber)")
 	devFlavor := flag.String("dev-flavor", loggergo.Types.DevFlavorTint.String(), fmt.Sprintf("Dev flavor %s", loggergo.Types.AllDevFlavors()))
 	outPutType := flag.String("output-type", loggergo.Types.OutputConsole.String(), fmt.Sprintf("Output type %s", loggergo.Types.AllOutputTypes()))
 	flag.Parse()
 
 	if *profilingEnabled {
-		profileGoConfig := profilego.Config{
+		profileGoConfig := config.Config{
 			ApplicationName: utils.GetAppName(),
 			ServerAddress:   *profilingAddress,
-			Type:            "pyroscope",
-			Tags:            map[string]string{},
+			Backend:         core.PyroscopeBackend,
+			InitialState:    core.ProfilingEnabled,
 		}
-		profilego.Init(profileGoConfig)
+
+		err := profilego.InitWithConfig(profileGoConfig)
+		if err != nil {
+			slog.ErrorContext(ctx, "Failed to initialize profiling: %v", "error", err)
+			os.Exit(1)
+		}
 	}
 
 	loggerConfig := loggergo.Config{

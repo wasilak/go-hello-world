@@ -26,7 +26,7 @@ require (
 	github.com/valyala/fasthttp v1.68.0
 	github.com/wasilak/loggergo v1.8.1
 	github.com/wasilak/otelgo v1.3.0
-	github.com/wasilak/profilego v1.1.0
+	github.com/wasilak/profilego v1.2.0
 	github.com/zsais/go-gin-prometheus v1.0.2
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.63.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.63.0
@@ -62,7 +62,7 @@ require (
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.28.0 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
-	github.com/goccy/go-yaml v1.18.0 // indirect
+	github.com/goccy/go-yaml v1.19.0 // indirect
 	github.com/golang-cz/devslog v0.0.15 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
@@ -93,7 +93,7 @@ require (
 	github.com/samber/lo v1.52.0 // indirect
 	github.com/samber/slog-common v0.19.0 // indirect
 	github.com/samber/slog-multi v1.6.0 // indirect
-	github.com/shirou/gopsutil/v4 v4.25.10 // indirect
+	github.com/shirou/gopsutil/v4 v4.25.11 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/tklauser/go-sysconf v0.3.16 // indirect
 	github.com/tklauser/numcpus v0.11.0 // indirect
@@ -138,5 +138,5 @@ require (
 
 // alias to local
 // replace github.com/wasilak/loggergo => ../loggergo
-
 // replace github.com/wasilak/otelgo => ../otelgo
+// replace github.com/wasilak/profilego => ../profilego
