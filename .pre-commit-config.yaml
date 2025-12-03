@@ -23,5 +23,6 @@ repos:
     hooks:
       - id: helm-docs
         name: Generate Helm Documentation
+        files: ^charts/.*/(Chart\.yaml|values\.yaml|README\.md\.gotmpl)$
         args:
           - --chart-search-root=charts
