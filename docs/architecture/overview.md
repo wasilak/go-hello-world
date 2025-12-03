@@ -16,25 +16,25 @@ graph TB
             F(Fiber)
         end
     end
-    
+
     subgraph "Common Layer"
         CM[Common Interfaces]
         RF[Route Handler Factory]
         WS[Web Server]
     end
-    
+
     subgraph "Observability Layer"
         L[Loggergo]
         OT[Otelgo]
         P[Profilego]
         PR[Prometheus]
     end
-    
+
     subgraph "Utilities"
         U[Utils]
         ER[Error Handling]
     end
-    
+
     A --> G
     A --> E
     A --> GI
@@ -42,16 +42,16 @@ graph TB
     A --> F
     A --> CM
     A --> U
-    
+
     G --> CM
     E --> CM
     GI --> CM
     CH --> CM
     F --> CM
-    
+
     CM --> RF
     CM --> WS
-    
+
     A --> L
     A --> OT
     A --> P
@@ -60,7 +60,7 @@ graph TB
     GI --> PR
     CH --> PR
     F --> PR
-    
+
     U --> ER
 ```
 
@@ -68,7 +68,7 @@ graph TB
 
 ### Main Application
 - **Purpose**: Entry point of the application
-- **Responsibilities**: 
+- **Responsibilities**:
   - Configuration management
   - Observability setup (logging, tracing, profiling)
   - Framework selection and switching
