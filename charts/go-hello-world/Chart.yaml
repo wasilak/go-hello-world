@@ -1,5 +1,5 @@
 apiVersion: v2
-name: go-hello-world
+name: go-hello-world-chart
 description: A Helm chart for go-hello-world
 icon: https://raw.githubusercontent.com/wasilak/go-hello-world/main/icon_small.jpg
 

@@ -66,3 +66,10 @@ Temporary Items
 
 cookie-jar.txt
 test_headers.txt
+
+# Spec workflow and tool metadata
+.spec-workflow/
+.qwen/
+.serena/
+.zencoder/
+REFACTOR_HELM_OCI_SPEC.md
