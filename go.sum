@@ -224,10 +224,16 @@ go.opentelemetry.io/contrib/bridges/otelslog v0.13.0 h1:bwnLpizECbPr1RrQ27waeY2S
 go.opentelemetry.io/contrib/bridges/otelslog v0.13.0/go.mod h1:3nWlOiiqA9UtUnrcNk82mYasNxD8ehOspL0gOfEo6Y4=
 go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.63.0 h1:5kSIJ0y8ckZZKoDhZHdVtcyjVi6rXyAwyaR8mp4zLbg=
 go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.63.0/go.mod h1:i+fIMHvcSQtsIY82/xgiVWRklrNt/O6QriHLjzGeY+s=
+go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.64.0 h1:7IKZbAYwlwLXAdu7SVPhzTjDjogWZxP4MIa7rovY+PU=
+go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.64.0/go.mod h1:+TF5nf3NIv2X8PGxqfYOaRnAoMM43rUA2C3XsN2DoWA=
 go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.63.0 h1:rATLgFjv0P9qyXQR/aChJ6JVbMtXOQjt49GgT36cBbk=
 go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.63.0/go.mod h1:34csimR1lUhdT5HH4Rii9aKPrvBcnFRwxLwcevsU+Kk=
+go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.64.0 h1:vwZaYp+EEiPUQD1rYKPT0vLfGD7XMv2WypO/59ySpwM=
+go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.64.0/go.mod h1:D96L6/izMrfhIlFm1sFiyEC8zVyMcDzC8dwqUoTmGT8=
 go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.63.0 h1:6YeICKmGrvgJ5th4+OMNpcuoB6q/Xs8gt0YCO7MUv1k=
 go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.63.0/go.mod h1:ZEA7j2B35siNV0T00aapacNzjz4tvOlNoHp0ncCfwNQ=
+go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.64.0 h1:9PCiXc7BmfD7+BI8POoc3bQSoRSEo01eNqPVu1/+pDY=
+go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.64.0/go.mod h1:NGBbj2Bgb5Oe/35f9WaU3qRnOey+7X+bxnnSS5zzvLA=
 go.opentelemetry.io/contrib/instrumentation/host v0.63.0 h1:zsaUrWypCf0NtYSUby+/BS6QqhXVNxMQD5w4dLczKCQ=
 go.opentelemetry.io/contrib/instrumentation/host v0.63.0/go.mod h1:Ru+kuFO+ToZqBKwI59rCStOhW6LWrbGisYrFaX61bJk=
 go.opentelemetry.io/contrib/instrumentation/runtime v0.63.0 h1:PeBoRj6af6xMI7qCupwFvTbbnd49V7n5YpG6pg8iDYQ=
