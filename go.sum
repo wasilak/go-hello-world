@@ -177,6 +177,8 @@ github.com/samber/slog-fiber v1.20.1 h1:BC8cYvMNxoxsRZ9YJz91tmrJen05MDEtvGucoIn0
 github.com/samber/slog-fiber v1.20.1/go.mod h1:NZfJAK5CgX4dHYpr3r+4GFtk/863DLMndMbVwhLo1nw=
 github.com/samber/slog-gin v1.18.0 h1:cshKamtS8Zqk2TTn36lfahtGTmXOzppwx9K2bBWP+0s=
 github.com/samber/slog-gin v1.18.0/go.mod h1:7R4VMQGENllRLLnwGyoB5nUSB+qzxThpGe5G02xla6o=
+github.com/samber/slog-gin v1.19.1 h1:sp5CwWsETlvw1/ad9gGwdUoMMta1vY+/K/Zgy1Gd+6o=
+github.com/samber/slog-gin v1.19.1/go.mod h1:7R4VMQGENllRLLnwGyoB5nUSB+qzxThpGe5G02xla6o=
 github.com/samber/slog-http v1.9.0 h1:zS0Rrb9gz2xpPsuNsc7sY91KU7VFnxxnb6ODYT01hUo=
 github.com/samber/slog-http v1.9.0/go.mod h1:PAcQQrYFo5KM7Qbk50gNNwKEAMGCyfsw6GN5dI0iv9g=
 github.com/samber/slog-multi v1.6.0 h1:i1uBY+aaln6ljwdf7Nrt4Sys8Kk6htuYuXDHWJsHtZg=
