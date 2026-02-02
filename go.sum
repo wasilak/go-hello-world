@@ -187,6 +187,8 @@ github.com/samber/slog-gin v1.18.0 h1:cshKamtS8Zqk2TTn36lfahtGTmXOzppwx9K2bBWP+0
 github.com/samber/slog-gin v1.18.0/go.mod h1:7R4VMQGENllRLLnwGyoB5nUSB+qzxThpGe5G02xla6o=
 github.com/samber/slog-gin v1.19.1 h1:sp5CwWsETlvw1/ad9gGwdUoMMta1vY+/K/Zgy1Gd+6o=
 github.com/samber/slog-gin v1.19.1/go.mod h1:7R4VMQGENllRLLnwGyoB5nUSB+qzxThpGe5G02xla6o=
+github.com/samber/slog-gin v1.20.0 h1:W1f8zv7gsL6pHQG6Sm9qJ2Fvr50ifwDkUvyFChaHIBU=
+github.com/samber/slog-gin v1.20.0/go.mod h1:7R4VMQGENllRLLnwGyoB5nUSB+qzxThpGe5G02xla6o=
 github.com/samber/slog-http v1.9.0 h1:zS0Rrb9gz2xpPsuNsc7sY91KU7VFnxxnb6ODYT01hUo=
 github.com/samber/slog-http v1.9.0/go.mod h1:PAcQQrYFo5KM7Qbk50gNNwKEAMGCyfsw6GN5dI0iv9g=
 github.com/samber/slog-http v1.10.0 h1:/zimEtRqXJeDYzM+0MVzStG3O32gfgNxWfpmFO+iEIE=
