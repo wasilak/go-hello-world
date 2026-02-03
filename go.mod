@@ -22,7 +22,7 @@ require (
 	github.com/samber/slog-echo v1.20.0
 	github.com/samber/slog-fiber v1.20.1
 	github.com/samber/slog-gin v1.20.0
-	github.com/samber/slog-http v1.10.0
+	github.com/samber/slog-http v1.11.0
 	github.com/stretchr/testify v1.11.1
 	github.com/valyala/fasthttp v1.69.0
 	github.com/wasilak/loggergo v1.8.2
