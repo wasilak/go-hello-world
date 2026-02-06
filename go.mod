@@ -28,7 +28,7 @@ require (
 	github.com/valyala/fasthttp v1.69.0
 	github.com/wasilak/loggergo v1.8.2
 	github.com/wasilak/otelgo v1.3.0
-	github.com/wasilak/profilego v1.2.0
+	github.com/wasilak/profilego v1.3.0
 	github.com/zsais/go-gin-prometheus v1.0.2
 	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.65.0
 	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.65.0
@@ -68,6 +68,7 @@ require (
 	github.com/golang-cz/devslog v0.0.15 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
+	github.com/grafana/otel-profiling-go v0.5.1 // indirect
 	github.com/grafana/pyroscope-go v1.2.7 // indirect
 	github.com/grafana/pyroscope-go/godeltaprof v0.1.9 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.4 // indirect
