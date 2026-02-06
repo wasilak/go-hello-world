@@ -14,7 +14,7 @@ require (
 	github.com/gofiber/fiber/v2 v2.52.10
 	github.com/gofiber/fiber/v3 v3.0.0
 	github.com/gorilla/mux v1.8.1
-	github.com/labstack/echo-contrib v0.17.4
+	github.com/labstack/echo-contrib v0.50.0
 	github.com/labstack/echo/v4 v4.15.0
 	github.com/labstack/echo/v5 v5.0.3
 	github.com/prometheus/client_golang v1.23.2
@@ -88,7 +88,7 @@ require (
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
-	github.com/prometheus/common v0.67.4 // indirect
+	github.com/prometheus/common v0.67.5 // indirect
 	github.com/prometheus/procfs v0.19.2 // indirect
 	github.com/quic-go/qpack v0.6.0 // indirect
 	github.com/quic-go/quic-go v0.59.0 // indirect
