@@ -219,6 +219,8 @@ github.com/samber/slog-http v1.10.0 h1:/zimEtRqXJeDYzM+0MVzStG3O32gfgNxWfpmFO+iE
 github.com/samber/slog-http v1.10.0/go.mod h1:PAcQQrYFo5KM7Qbk50gNNwKEAMGCyfsw6GN5dI0iv9g=
 github.com/samber/slog-http v1.11.0 h1:lgGkDEf4SrQ7FbFNrpbyBsTsDYRCWsMH+0tZn/iW4dA=
 github.com/samber/slog-http v1.11.0/go.mod h1:PAcQQrYFo5KM7Qbk50gNNwKEAMGCyfsw6GN5dI0iv9g=
+github.com/samber/slog-http v1.11.1 h1:bAQveHQo7nbExU/JtyVDUrqUWEeMJgMxY0UOSn0f+/c=
+github.com/samber/slog-http v1.11.1/go.mod h1:PAcQQrYFo5KM7Qbk50gNNwKEAMGCyfsw6GN5dI0iv9g=
 github.com/samber/slog-multi v1.6.0 h1:i1uBY+aaln6ljwdf7Nrt4Sys8Kk6htuYuXDHWJsHtZg=
 github.com/samber/slog-multi v1.6.0/go.mod h1:qTqzmKdPpT0h4PFsTN5rYRgLwom1v+fNGuIrl1Xnnts=
 github.com/samber/slog-multi v1.7.0 h1:GKhbkxU3ujkyMsefkuz4qvE6EcgtSuqjFisPnfdzVLI=
