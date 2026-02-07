@@ -21,7 +21,7 @@ require (
 	github.com/riandyrn/otelchi v0.12.2
 	github.com/samber/slog-chi v1.18.0
 	github.com/samber/slog-echo v1.20.1
-	github.com/samber/slog-fiber v1.20.1
+	github.com/samber/slog-fiber v1.21.0
 	github.com/samber/slog-gin v1.20.1
 	github.com/samber/slog-http v1.11.1
 	github.com/stretchr/testify v1.11.1
@@ -65,6 +65,8 @@ require (
 	github.com/go-playground/validator/v10 v10.30.1 // indirect
 	github.com/goccy/go-json v0.10.5 // indirect
 	github.com/goccy/go-yaml v1.19.2 // indirect
+	github.com/gofiber/schema v1.6.0 // indirect
+	github.com/gofiber/utils/v2 v2.0.0 // indirect
 	github.com/golang-cz/devslog v0.0.15 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
@@ -85,6 +87,7 @@ require (
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/pelletier/go-toml/v2 v2.2.4 // indirect
+	github.com/philhofer/fwd v1.2.0 // indirect
 	github.com/pmezard/go-difflib v1.0.1-0.20181226105442-5d4384ee4fb2 // indirect
 	github.com/power-devops/perfstat v0.0.0-20240221224432-82ca36839d55 // indirect
 	github.com/prometheus/client_model v0.6.2 // indirect
@@ -93,10 +96,11 @@ require (
 	github.com/quic-go/qpack v0.6.0 // indirect
 	github.com/quic-go/quic-go v0.59.0 // indirect
 	github.com/samber/lo v1.52.0 // indirect
-	github.com/samber/slog-common v0.19.0 // indirect
-	github.com/samber/slog-multi v1.7.0 // indirect
+	github.com/samber/slog-common v0.20.0 // indirect
+	github.com/samber/slog-multi v1.7.1 // indirect
 	github.com/shirou/gopsutil/v4 v4.25.11 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
+	github.com/tinylib/msgp v1.6.3 // indirect
 	github.com/tklauser/go-sysconf v0.3.16 // indirect
 	github.com/tklauser/numcpus v0.11.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
