@@ -290,6 +290,8 @@ github.com/yusufpapurcu/wmi v1.2.4 h1:zFUKzehAFReQwLys1b/iSMl+JQGSCSjtVqQn9bBrPo
 github.com/yusufpapurcu/wmi v1.2.4/go.mod h1:SBZ9tNy3G9/m5Oi98Zks0QjeHVDvuK0qfxQmPyzfmi0=
 github.com/zsais/go-gin-prometheus v1.0.2 h1:3asLqrFltMdItpgr/OS4hYc8pLq3HzMa5T1gYuXBIZ0=
 github.com/zsais/go-gin-prometheus v1.0.2/go.mod h1:iKBYSOHzvGfe2FyGSOC8JSwUA0MITdnYzI6v+aAbw1Q=
+github.com/zsais/go-gin-prometheus v1.0.3 h1:NIYXItaoGNiyDWXqrIzfQHWcRnen+iwgAw4sX/UieiM=
+github.com/zsais/go-gin-prometheus v1.0.3/go.mod h1:avQI7yOKIhpOi4QJxFZdmZb47AEjmS4MTC4Z6PsNmiA=
 gitlab.com/greyxor/slogor v1.6.2 h1:rTiUPgyeV488Wb9iq2Gw38hth0e6qfCjFDxkuZK09Fw=
 gitlab.com/greyxor/slogor v1.6.2/go.mod h1:q1VWPH4KB0x9eH8PoJ+zM5yfHeSG4YNS3uVfs+P+ZL8=
 gitlab.com/greyxor/slogor v1.6.6 h1:SE/RbrEhe0dQ3W94wiaPhoQgbAyKme7X7kvcEeDrGOM=
