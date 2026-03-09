@@ -30,9 +30,9 @@ require (
 	github.com/wasilak/otelgo v1.3.0
 	github.com/wasilak/profilego v1.2.0
 	github.com/zsais/go-gin-prometheus v1.0.3
-	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.66.0
-	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.66.0
-	go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.66.0
+	go.opentelemetry.io/contrib/instrumentation/github.com/gin-gonic/gin/otelgin v0.67.0
+	go.opentelemetry.io/contrib/instrumentation/github.com/gorilla/mux/otelmux v0.67.0
+	go.opentelemetry.io/contrib/instrumentation/github.com/labstack/echo/otelecho v0.67.0
 	go.opentelemetry.io/otel v1.42.0
 	go.opentelemetry.io/otel/sdk v1.42.0
 	go.opentelemetry.io/otel/trace v1.42.0
