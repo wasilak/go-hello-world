@@ -6,7 +6,7 @@ require (
 	github.com/766b/chi-prometheus v0.0.0-20211217152057-87afa9aa2ca8
 	github.com/ansrivas/fiberprometheus/v2 v2.17.0
 	github.com/arl/statsviz v0.8.0
-	github.com/gin-contrib/gzip v1.2.5
+	github.com/gin-contrib/gzip v1.2.6
 	github.com/gin-gonic/gin v1.12.0
 	github.com/go-chi/chi/v5 v5.2.5
 	github.com/gofiber/adaptor/v2 v2.2.1
