@@ -33,7 +33,7 @@ jobs:
           version: "latest"
 
       - name: Setup ORAS
-        uses: oras-project/setup-oras@v1
+        uses: oras-project/setup-oras@v2
 
       - name: Log into Helm registry
         run: |
