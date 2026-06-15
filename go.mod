@@ -21,7 +21,7 @@ require (
 	github.com/riandyrn/otelchi v0.12.2
 	github.com/samber/slog-chi v1.19.0
 	github.com/samber/slog-echo v1.21.0
-	github.com/samber/slog-fiber v1.22.0
+	github.com/samber/slog-fiber v1.22.2
 	github.com/samber/slog-gin v1.21.0
 	github.com/samber/slog-http v1.12.0
 	github.com/stretchr/testify v1.11.1
@@ -95,9 +95,9 @@ require (
 	github.com/prometheus/procfs v0.19.2 // indirect
 	github.com/quic-go/qpack v0.6.0 // indirect
 	github.com/quic-go/quic-go v0.59.0 // indirect
-	github.com/samber/lo v1.52.0 // indirect
-	github.com/samber/slog-common v0.20.0 // indirect
-	github.com/samber/slog-multi v1.7.1 // indirect
+	github.com/samber/lo v1.53.0 // indirect
+	github.com/samber/slog-common v0.21.0 // indirect
+	github.com/samber/slog-multi v1.8.0 // indirect
 	github.com/shirou/gopsutil/v4 v4.25.11 // indirect
 	github.com/sirupsen/logrus v1.9.3 // indirect
 	github.com/tinylib/msgp v1.6.4 // indirect

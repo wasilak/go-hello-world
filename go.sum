@@ -237,6 +237,8 @@ github.com/rogpeppe/go-internal v1.14.1 h1:UQB4HGPB6osV0SQTLymcB4TgvyWu6ZyliaW0t
 github.com/rogpeppe/go-internal v1.14.1/go.mod h1:MaRKkUm5W0goXpeCfT7UZI6fk/L7L7so1lCWt35ZSgc=
 github.com/samber/lo v1.52.0 h1:Rvi+3BFHES3A8meP33VPAxiBZX/Aws5RxrschYGjomw=
 github.com/samber/lo v1.52.0/go.mod h1:4+MXEGsJzbKGaUEQFKBq2xtfuznW9oz/WrgyzMzRoM0=
+github.com/samber/lo v1.53.0 h1:t975lj2py4kJPQ6haz1QMgtId2gtmfktACxIXArw3HM=
+github.com/samber/lo v1.53.0/go.mod h1:4+MXEGsJzbKGaUEQFKBq2xtfuznW9oz/WrgyzMzRoM0=
 github.com/samber/slog-chi v1.17.0 h1:zP66fV4LGF1y1Dg/+uHNY9Uxkmw1YNWaZGws6M6mPCk=
 github.com/samber/slog-chi v1.17.0/go.mod h1:a1iIuofF2gS1ii8aXIQhC6TEguLOhOvSM958fY5hToU=
 github.com/samber/slog-chi v1.18.0 h1:GsuTo2CNdZa+3hW+v/8oFozC/lPSkrZHVEZwss4a8Kg=
@@ -247,6 +249,8 @@ github.com/samber/slog-common v0.19.0 h1:fNcZb8B2uOLooeYwFpAlKjkQTUafdjfqKcwcC89
 github.com/samber/slog-common v0.19.0/go.mod h1:dTz+YOU76aH007YUU0DffsXNsGFQRQllPQh9XyNoA3M=
 github.com/samber/slog-common v0.20.0 h1:WaLnm/aCvBJSk5nR5aXZTFBaV0B47A+AEaEOiZDeUnc=
 github.com/samber/slog-common v0.20.0/go.mod h1:+Ozat1jgnnE59UAlmNX1IF3IByHsODnnwf9jUcBZ+m8=
+github.com/samber/slog-common v0.21.0 h1:Wo2hTly1Br5RjYqX/BTWJJeDnTE85oWk/7vqlpZuAUc=
+github.com/samber/slog-common v0.21.0/go.mod h1:d/6OaSlzdkl9PFpfRLgn8FwY1OW6EFmPtBpsHX4MrU0=
 github.com/samber/slog-echo v1.18.0 h1:fnDeUhwqoAsQZxbmIizO0avwE0qjjoefAvhXoByxN3U=
 github.com/samber/slog-echo v1.18.0/go.mod h1:4diugqPTk6iQdL7gZFJIyf6zGMLVMaGnCmNm+DBSMRU=
 github.com/samber/slog-echo v1.19.1 h1:ccrm+nulB02S4EFYNSRVKPwl5hAzQbJrVAZGF5co5zw=
@@ -265,6 +269,8 @@ github.com/samber/slog-fiber v1.21.0 h1:eC9p9ZOD2tOTEoHDUr/8YH4Hh/MQqJgXz/U6CIL6
 github.com/samber/slog-fiber v1.21.0/go.mod h1:+XIXDWhubeTKnRBVQRk4QGshopeZPsS+tMaQRsJILYc=
 github.com/samber/slog-fiber v1.22.0 h1:kQyQeKRb1wQvFyHqdzmbcQgnLT1FF6yC/BPvlI8KvZ0=
 github.com/samber/slog-fiber v1.22.0/go.mod h1:+XIXDWhubeTKnRBVQRk4QGshopeZPsS+tMaQRsJILYc=
+github.com/samber/slog-fiber v1.22.2 h1:eIO5KXj0jYPN5pT+vxOnArhgaHXeqroI1LSbjlHODqQ=
+github.com/samber/slog-fiber v1.22.2/go.mod h1:PoXofc/GyA9aUNdzk028EF0JzJT9pe60Lx32203ATRA=
 github.com/samber/slog-gin v1.18.0 h1:cshKamtS8Zqk2TTn36lfahtGTmXOzppwx9K2bBWP+0s=
 github.com/samber/slog-gin v1.18.0/go.mod h1:7R4VMQGENllRLLnwGyoB5nUSB+qzxThpGe5G02xla6o=
 github.com/samber/slog-gin v1.19.1 h1:sp5CwWsETlvw1/ad9gGwdUoMMta1vY+/K/Zgy1Gd+6o=
@@ -291,6 +297,8 @@ github.com/samber/slog-multi v1.7.0 h1:GKhbkxU3ujkyMsefkuz4qvE6EcgtSuqjFisPnfdzV
 github.com/samber/slog-multi v1.7.0/go.mod h1:qTqzmKdPpT0h4PFsTN5rYRgLwom1v+fNGuIrl1Xnnts=
 github.com/samber/slog-multi v1.7.1 h1:aCLXHRxgU+2v0PVlEOh7phynzM7CRo89ZgFtOwaqVEE=
 github.com/samber/slog-multi v1.7.1/go.mod h1:A4KQC99deqfkCDJcL/cO3kX6McX7FffQAx/8QHink+c=
+github.com/samber/slog-multi v1.8.0 h1:E05c1wnQ+8M58oQDBABlJ4TEIJWssNgtckso3zlaLlI=
+github.com/samber/slog-multi v1.8.0/go.mod h1:6+3j/ILxDvAcLD75YdQAm6iKWu6AmwlohLgQxL/2aiI=
 github.com/shirou/gopsutil/v4 v4.25.11 h1:X53gB7muL9Gnwwo2evPSE+SfOrltMoR6V3xJAXZILTY=
 github.com/shirou/gopsutil/v4 v4.25.11/go.mod h1:EivAfP5x2EhLp2ovdpKSozecVXn1TmuG7SMzs/Wh4PU=
 github.com/sirupsen/logrus v1.9.3 h1:dueUQJ1C2q9oE3F7wvmSGAaVtTmUizReu6fjN8uqzbQ=
