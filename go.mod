@@ -25,7 +25,7 @@ require (
 	github.com/samber/slog-gin v1.21.1
 	github.com/samber/slog-http v1.12.1
 	github.com/stretchr/testify v1.11.1
-	github.com/valyala/fasthttp v1.71.0
+	github.com/valyala/fasthttp v1.72.0
 	github.com/wasilak/loggergo v1.8.2
 	github.com/wasilak/otelgo v1.3.0
 	github.com/wasilak/profilego v1.2.0
