@@ -11,8 +11,8 @@ require (
 	github.com/go-chi/chi/v5 v5.3.1
 	github.com/gofiber/adaptor/v2 v2.2.1
 	github.com/gofiber/contrib/otelfiber/v2 v2.2.3
-	github.com/gofiber/fiber/v2 v2.52.14
-	github.com/gofiber/fiber/v3 v3.4.0
+	github.com/gofiber/fiber/v2 v2.52.12
+	github.com/gofiber/fiber/v3 v3.5.0
 	github.com/gorilla/mux v1.8.1
 	github.com/labstack/echo-contrib v0.50.1
 	github.com/labstack/echo/v4 v4.15.4
@@ -26,7 +26,7 @@ require (
 	github.com/samber/slog-gin v1.21.1
 	github.com/samber/slog-http v1.12.1
 	github.com/stretchr/testify v1.11.1
-	github.com/valyala/fasthttp v1.72.0
+	github.com/valyala/fasthttp v1.73.0
 	github.com/wasilak/loggergo v1.8.2
 	github.com/wasilak/otelgo v1.3.0
 	github.com/wasilak/profilego v1.2.0
@@ -66,8 +66,8 @@ require (
 	github.com/go-playground/validator/v10 v10.30.2 // indirect
 	github.com/goccy/go-json v0.10.6 // indirect
 	github.com/goccy/go-yaml v1.19.2 // indirect
-	github.com/gofiber/schema v1.8.0 // indirect
-	github.com/gofiber/utils/v2 v2.1.1 // indirect
+	github.com/gofiber/schema v1.8.3 // indirect
+	github.com/gofiber/utils/v2 v2.4.1 // indirect
 	github.com/golang-cz/devslog v0.0.15 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/gorilla/websocket v1.5.3 // indirect
@@ -75,14 +75,14 @@ require (
 	github.com/grafana/pyroscope-go/godeltaprof v0.1.9 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.27.4 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
-	github.com/klauspost/compress v1.19.0 // indirect
+	github.com/klauspost/compress v1.19.2 // indirect
 	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
 	github.com/labstack/gommon v0.5.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/lmittmann/tint v1.1.2 // indirect
 	github.com/lufia/plan9stats v0.0.0-20251013123823-9fd1530e3ec3 // indirect
 	github.com/mattn/go-colorable v0.1.15 // indirect
-	github.com/mattn/go-isatty v0.0.22 // indirect
+	github.com/mattn/go-isatty v0.0.24 // indirect
 	github.com/mattn/go-runewidth v0.0.19 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
@@ -132,9 +132,9 @@ require (
 	go.opentelemetry.io/proto/otlp v1.9.0 // indirect
 	go.yaml.in/yaml/v2 v2.4.3 // indirect
 	golang.org/x/arch v0.27.0 // indirect
-	golang.org/x/crypto v0.53.0 // indirect
-	golang.org/x/net v0.56.0 // indirect
-	golang.org/x/sys v0.46.0 // indirect
+	golang.org/x/crypto v0.54.0 // indirect
+	golang.org/x/net v0.57.0 // indirect
+	golang.org/x/sys v0.47.0 // indirect
 	golang.org/x/time v0.15.0 // indirect
 	golang.org/x/tools v0.47.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260114163908-3f89685c29c3 // indirect
