@@ -8,7 +8,7 @@ require (
 	github.com/arl/statsviz v0.8.2
 	github.com/gin-contrib/gzip v1.2.7
 	github.com/gin-gonic/gin v1.12.0
-	github.com/go-chi/chi/v5 v5.3.1
+	github.com/go-chi/chi/v5 v5.3.2
 	github.com/gofiber/adaptor/v2 v2.2.1
 	github.com/gofiber/contrib/otelfiber/v2 v2.2.3
 	github.com/gofiber/fiber/v2 v2.52.14
