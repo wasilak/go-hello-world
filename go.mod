@@ -16,12 +16,12 @@ require (
 	github.com/gorilla/mux v1.8.1
 	github.com/labstack/echo-contrib v0.50.1
 	github.com/labstack/echo/v4 v4.15.4
-	github.com/labstack/echo/v5 v5.3.0
+	github.com/labstack/echo/v5 v5.3.1
 	github.com/prometheus/client_golang v1.23.2
 	github.com/riandyrn/otelchi v0.12.3
 	github.com/samber/slog-chi v1.19.1
 	github.com/samber/slog-echo v1.23.0
-	github.com/samber/slog-echo/v2 v2.0.0
+	github.com/samber/slog-echo/v2 v2.1.0
 	github.com/samber/slog-fiber v1.22.2
 	github.com/samber/slog-gin v1.21.1
 	github.com/samber/slog-http v1.12.1
