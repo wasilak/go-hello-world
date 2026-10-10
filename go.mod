@@ -26,7 +26,7 @@ require (
 	github.com/samber/slog-gin v1.21.1
 	github.com/samber/slog-http v1.12.1
 	github.com/stretchr/testify v1.12.1
-	github.com/valyala/fasthttp v1.73.0
+	github.com/valyala/fasthttp v1.75.0
 	github.com/wasilak/loggergo v1.8.2
 	github.com/wasilak/otelgo v1.3.0
 	github.com/wasilak/profilego v1.2.0
@@ -86,6 +86,7 @@ require (
 	github.com/mattn/go-runewidth v0.0.19 // indirect
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
+	github.com/molecule-man/go-brrr v1.1.1 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/pelletier/go-toml/v2 v2.4.3 // indirect
 	github.com/philhofer/fwd v1.2.0 // indirect
