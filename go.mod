@@ -1,12 +1,12 @@
 module github.com/wasilak/go-hello-world
 
-go 1.26.0
+go 1.26.10
 
 require (
 	github.com/766b/chi-prometheus v0.0.0-20211217152057-87afa9aa2ca8
 	github.com/ansrivas/fiberprometheus/v2 v2.18.0
 	github.com/arl/statsviz v0.8.2
-	github.com/gin-contrib/gzip v1.2.8
+	github.com/gin-contrib/gzip v1.2.10
 	github.com/gin-gonic/gin v1.12.0
 	github.com/go-chi/chi/v5 v5.4.0
 	github.com/gofiber/adaptor/v2 v2.2.1
